@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing | CTRAX Technologies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(0,102,255,0.15), transparent 35%),
+    radial-gradient(circle at 80% 20%, rgba(0,180,255,0.10), transparent 30%),
+    linear-gradient(180deg, #020611 0%, #030a18 50%, #020611 100%);
+  line-height: 1.6;
+}
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(2,6,17,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav {
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo img {
+  height: 78px;
+  max-width: 420px;
+  width: auto;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.nav-links a {
+  color: #dce8ff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all .25s ease;
+}
+.btn-primary {
+  background: linear-gradient(90deg, #0066ff, #00bfff);
+  color: white;
+  box-shadow: 0 0 24px rgba(0,140,255,0.35);
+}
+.btn-secondary {
+  border: 1px solid rgba(255,255,255,0.18);
+  color: white;
+}
+.hero {
+  padding: 90px 0 60px;
+  text-align: center;
+}
+.eyebrow {
+  color: #58a6ff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: 76px;
+  line-height: 0.95;
+  font-weight: 900;
+  margin-bottom: 24px;
+}
+.hero h1 span {
+  background: linear-gradient(180deg, #67b6ff, #1d78ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p {
+  max-width: 850px;
+  margin: 0 auto;
+  font-size: 22px;
+  color: #c7d7f3;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin: 50px 0 70px;
+}
+.card {
+  background: rgba(7,15,30,0.94);
+  border: 1px solid rgba(88,166,255,0.08);
+  border-radius: 28px;
+  padding: 42px;
+  box-shadow: 0 0 45px rgba(0,0,0,0.45);
+  position: relative;
+}
+.card.featured {
+  border-color: rgba(88,166,255,0.35);
+  transform: scale(1.03);
+}
+.badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: linear-gradient(90deg, #0066ff, #00bfff);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.plan-name {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.plan-subtitle {
+  color: #c7d7f3;
+  margin-bottom: 24px;
+}
+.price {
+  font-size: 58px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.price small {
+  font-size: 18px;
+  color: #9db6dc;
+}
+.setup-fee {
+  margin-top: 10px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #58a6ff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.custom {
+  font-size: 42px;
+}
+.features {
+  list-style: none;
+  margin: 28px 0;
+}
+.features li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: #dbe7ff;
+}
+.hardware, .faq {
+  margin-bottom: 40px;
+}
+.section-card {
+  background: rgba(7,15,30,0.94);
+  border: 1px solid rgba(88,166,255,0.08);
+  border-radius: 28px;
+  padding: 42px;
+  box-shadow: 0 0 45px rgba(0,0,0,0.45);
+}
+.section-card h2 {
+  font-size: 42px;
+  margin-bottom: 16px;
+}
+.section-card p, .section-card li {
+  color: #c7d7f3;
+  font-size: 18px;
+}
+.section-card ul {
+  margin-top: 14px;
+  padding-left: 22px;
+}
+.cta {
+  text-align: center;
+  padding: 30px 0 80px;
+}
+footer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 40px 0 60px;
+  text-align: center;
+  color: #8ea4c6;
+}
+footer img {
+  height: 56px;
+  margin-bottom: 16px;
+}
+@media (max-width: 1024px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .card.featured {
+    transform: none;
+  }
+  .hero h1 {
+    font-size: 48px;
+  }
+  .nav-links {
+    display: none;
+  }
+  .logo img {
+    height: 56px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="/homepage.html" class="logo">
+      <img src="images/ctrax-logo.png" alt="CTRAX Technologies">
+    </a>
+    <div class="nav-links">
+      <a href="/homepage.html">HOME</a>
+      <a href="/pricing.html">PRICING</a>
+      <a href="/about.html">ABOUT</a>
+      <a href="/login.html" class="btn btn-secondary">LOGIN</a>
+      <a href="/request-demo.html" class="btn btn-primary">REQUEST A DEMO</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">ENTERPRISE VEHICLE INTELLIGENCE PRICING</div>
+    <h1>Simple Pricing. <span>Powerful Results.</span></h1>
+    <p>
+      Flexible plans for HOAs, property managers, security firms, law enforcement,
+      and enterprise organizations.
+    </p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="pricing-grid">
+
+    <div class="card">
+      <div class="plan-name">Starter Community</div>
+      <div class="plan-subtitle">Perfect for small HOAs and pilot deployments</div>
+      <div class="price">$199 <small>/month</small></div>
+      <div class="setup-fee">+ $1,200 One-Time Installation</div>
+      <ul class="features">
+        <li>1 TRAX Safety Camera</li>
+        <li>Live Detection Feed</li>
+        <li>Basic Alerts</li>
+        <li>CTRAX Dashboard Access</li>
+        <li>License Plate Recognition</li>
+        <li>Speed Monitoring</li>
+      </ul>
+      <a href="/request-demo.html" class="btn btn-secondary" style="width:100%;">REQUEST A DEMO</a>
+    </div>
+
+    <div class="card featured">
+      <div class="badge">MOST POPULAR</div>
+      <div class="plan-name">Standard Intelligence</div>
+      <div class="plan-subtitle">Ideal for HOAs, property managers, and businesses</div>
+      <div class="price">$250 <small>/month</small></div>
+      <div class="setup-fee">+ $1,200 One-Time Installation
+      <ul class="features">
+        <li>3–5 Cameras</li>
+        <li>Heatmaps</li>
+        <li>Timeline Playback</li>
+        <li>Advanced Search</li>
+        <li>Real-Time Notifications</li>
+        <li>Vehicle Make & Model Recognition</li>
+      </ul>
+      <a href="/request-demo.html" class="btn btn-primary" style="width:100%;">REQUEST A DEMO</a>
+    </div>
+
+    <div class="card">
+      <div class="plan-name">Enterprise Command</div>
+      <div class="plan-subtitle">For cities, law enforcement, and enterprise</div>
+      <div class="price custom">Custom</div>
+      <ul class="features">
+        <li>Unlimited Cameras</li>
+        <li>Multi-Site Deployment</li>
+        <li>API Integrations</li>
+        <li>Dedicated Account Manager</li>
+        <li>24/7 Premium Support</li>
+        <li>Custom Analytics</li>
+      </ul>
+      <a href="/request-demo.html" class="btn btn-secondary" style="width:100%;">CONTACT SALES</a>
+    </div>
+
+  </div>
+
+  <div class="hardware">
+    <div class="section-card">
+      <h2>TRAX Safety Camera Hardware</h2>
+      <p>
+        TRAX Safety camera systems are quoted based on deployment size, mounting requirements,
+        connectivity, and installation needs.
+      </p>
+      <ul>
+        <li>Commercial-grade hardware</li>
+        <li>Night vision and AI-enabled processing</li>
+        <li>Optional installation and maintenance</li>
+        <li>Volume discounts for multi-camera deployments</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="faq">
+    <div class="section-card">
+      <h2>Frequently Asked Questions</h2>
+      <ul>
+        <li>All software plans include secure cloud dashboard access.</li>
+        <li>Annual agreements may qualify for discounted pricing.</li>
+        <li>Hardware, installation, and cellular connectivity are quoted separately.</li>
+        <li>Custom integrations are available for enterprise customers.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <a href="/request-demo.html" class="btn btn-primary">REQUEST A DEMO</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <img src="images/ctrax-logo.png" alt="CTRAX Technologies">
+    <p>AI-powered vehicle intelligence and analytics for safer roads and smarter communities.</p>
+    <p style="margin-top:12px;">© 2026 CTRAX Technologies. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

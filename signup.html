@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTRAX Sign Up</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at top right, rgba(0,122,255,0.18), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(0,122,255,0.10), transparent 35%),
+    linear-gradient(135deg, #020814 0%, #071a38 45%, #03101f 100%);
+  color: #ffffff;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 48px 40px;
+  border-radius: 22px;
+  background: rgba(9, 22, 48, 0.82);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  backdrop-filter: blur(14px);
+}
+
+.logo {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 10px;
+  margin-bottom: 36px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.96);
+  color: #111827;
+  font-size: 15px;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0a84ff, #2ea8ff);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#message {
+  margin-top: 14px;
+  min-height: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-link {
+  margin-top: 24px;
+  text-align: center;
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #2ea8ff;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<div class="signup-card">
+  <div class="logo">CTRAX</div>
+
+  <form onsubmit="signup(event)">
+    <div class="form-group">
+      <input type="email" id="email" placeholder="Email Address" required>
+    </div>
+
+    <div class="form-group">
+      <input type="password" id="password" placeholder="Password" required>
+    </div>
+
+    <button type="submit">Create Account</button>
+
+    <div id="message"></div>
+  </form>
+
+  <div class="login-link">
+    Already have an account?
+    <a href="login.html">Sign In</a>
+  </div>
+</div>
+
+<script>
+async function signup(event) {
+  event.preventDefault();
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const message = document.getElementById('message');
+
+  message.textContent = '';
+  message.style.color = '#ff5f57';
+
+  try {
+    const response = await fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      message.style.color = '#00d084';
+      message.textContent = 'Account created successfully! Redirecting...';
+
+      setTimeout(() => {
+        window.location.href = '/login.html';
+      }, 1200);
+    } else {
+      message.textContent =
+        data.message || 'Unable to create account';
+    }
+  } catch (error) {
+    console.error('Signup error:', error);
+    message.textContent = 'Server returned HTML instead of JSON';
+  }
+}
+</script>
+
+</body>
+</html>

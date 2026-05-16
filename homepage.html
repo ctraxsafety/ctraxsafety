@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTRAX Technologies | Safer Roads. Smarter Communities.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(0,102,255,0.15), transparent 35%),
+    radial-gradient(circle at 80% 20%, rgba(0,180,255,0.10), transparent 30%),
+    linear-gradient(180deg, #020611 0%, #030a18 50%, #020611 100%);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* HEADER */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(2, 6, 17, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.nav {
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo img {
+  height: 78px;
+  width: auto;
+  max-width: 420px;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(0,140,255,0.20));
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-links a {
+  color: #dce8ff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.nav-links a:hover {
+  color: #4aa8ff;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #0066ff, #00bfff);
+  color: #ffffff;
+  box-shadow: 0 0 24px rgba(0,140,255,0.35);
+}
+
+.btn-secondary {
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #ffffff;
+  background: rgba(255,255,255,0.02);
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 36px rgba(0,140,255,0.55);
+}
+
+/* HERO */
+.hero {
+  padding: 50px 0 30px;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.eyebrow {
+  color: #58a6ff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 110px;
+  line-height: 0.9;
+  font-weight: 900;
+  letter-spacing: -3px;
+  margin-bottom: 24px;
+}
+
+.hero h1 .blue {
+  background: linear-gradient(180deg, #67b6ff, #1d78ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 24px;
+  color: #c7d7f3;
+  max-width: 720px;
+  margin-bottom: 36px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hero-image {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  background: transparent;
+  border-radius: 0;
+  filter: drop-shadow(0 0 80px rgba(0,0,0,0.85));
+}
+
+/* STATS */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 50px;
+}
+
+.stat {
+  background: rgba(6, 14, 28, 0.92);
+  border: 1px solid rgba(88,166,255,0.08);
+  border-radius: 18px;
+  padding: 26px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: #58a6ff;
+  margin-bottom: 6px;
+}
+
+/* SECTIONS */
+.section {
+  padding: 40px 0;
+}
+
+.card {
+  background: rgba(7, 15, 30, 0.94);
+  border: 1px solid rgba(88,166,255,0.08);
+  border-radius: 28px;
+  padding: 48px;
+  box-shadow: 0 0 45px rgba(0,0,0,0.45);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.55);
+  border-color: rgba(88,166,255,0.18);
+}
+
+.section-title {
+  font-size: 58px;
+  line-height: 1;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.section-title span {
+  color: #58a6ff;
+}
+
+.section-subtitle {
+  color: #c7d7f3;
+  font-size: 20px;
+  margin-bottom: 32px;
+}
+
+/* SOLUTIONS */
+.intelligence-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.55fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.single-demo {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(88,166,255,0.08);
+  box-shadow: 0 0 35px rgba(0,0,0,0.45);
+  background: #050b18;
+}
+
+.single-demo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* FOUNDER */
+.founder-grid {
+  display: grid;
+  grid-template-columns: 430px 1fr;
+  gap: 45px;
+  align-items: center;
+}
+
+.founder-photo img {
+  width: 100%;
+  border-radius: 28px;
+  display: block;
+}
+
+.founder-label {
+  color: #58a6ff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.founder-name {
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+
+.founder-title {
+  color: #58a6ff;
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+.founder-text {
+  font-size: 23px;
+  color: #d7e4ff;
+  margin-bottom: 30px;
+}
+
+.signature {
+  max-width: 320px;
+  width: 100%;
+  display: block;
+  margin-bottom: 28px;
+}
+
+.badges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.badge {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(88,166,255,0.10);
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+}
+
+.badge strong {
+  display: block;
+  color: #58a6ff;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+/* CTA + FOOTER */
+.cta-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+footer {
+  padding: 50px 0 70px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+  color: #8ea4c6;
+}
+
+.footer-logo img {
+  height: 56px;
+  width: auto;
+  display: block;
+  margin: 0 auto 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero-grid,
+  .intelligence-grid,
+  .founder-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 56px;
+  }
+
+  .founder-name {
+    font-size: 42px;
+  }
+
+  .stats,
+  .badges {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .card {
+    padding: 30px;
+  }
+
+  .logo img {
+    height: 56px;
+    max-width: 280px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="/homepage.html" class="logo">
+      <img src="images/ctrax-logo.png" alt="CTRAX Technologies">
+    </a>
+
+    <div class="nav-links">
+      <a href="#solutions">SOLUTIONS</a>
+      <a href="/pricing.html">PRICING</a>
+      <a href="#about">ABOUT</a>
+      <a href="/login.html" class="btn btn-secondary">LOGIN</a>
+      <a href="/request-demo.html" class="btn btn-primary">REQUEST A DEMO</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="eyebrow">CTRAX TECHNOLOGIES</div>
+
+        <h1>
+          SAFER ROADS.<br>
+          <span class="blue">SMARTER</span><br>
+          <span class="blue">COMMUNITIES.</span>
+        </h1>
+
+        <p>
+          AI-powered vehicle intelligence and real-time analytics for HOAs,
+          property managers, and security teams.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="/request-demo.html" class="btn btn-primary">REQUEST A DEMO</a>
+          <a href="/pricing.html" class="btn btn-secondary">VIEW PRICING</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="images/hero-camera.png" alt="TRAX Safety Camera">
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><strong>24/7</strong>Real-Time Monitoring</div>
+      <div class="stat"><strong>AI</strong>Powered Detection</div>
+      <div class="stat"><strong>LIVE</strong>Vehicle Intelligence</div>
+      <div class="stat"><strong>CLOUD</strong>Dashboard Access</div>
+    </div>
+  </div>
+</section>
+
+<section id="solutions" class="section">
+  <div class="container">
+    <div class="card">
+      <div class="intelligence-grid">
+        <div>
+          <div class="eyebrow">REAL-TIME VEHICLE INTELLIGENCE</div>
+          <h2 class="section-title">AI-POWERED. <span>REAL RESULTS.</span></h2>
+          <p class="section-subtitle">
+            License plate recognition, speed monitoring, and advanced analytics
+            provide actionable intelligence to help protect communities.
+          </p>
+        </div>
+
+        <div class="single-demo">
+          <img
+            src="images/trax-applications.png"
+            alt="TRAX Safety deployment applications"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="container">
+    <div class="card">
+      <div class="founder-grid">
+        <div class="founder-photo">
+          <img src="images/ceo-card.png" alt="Christopher C. Davis">
+        </div>
+
+        <div>
+          <div class="founder-label">FOUNDER & CEO</div>
+
+          <div class="founder-name">
+            CHRISTOPHER C. DAVIS
+          </div>
+
+          <div class="founder-title">
+            Founder & CEO, CTRAX Technologies
+          </div>
+
+          <div class="founder-text">
+            My mission is to empower communities with the intelligence and
+            technology they need to stay safe. CTRAX is the future of
+            community security and logistics.
+          </div>
+
+          <img
+            src="images/signature.png"
+            alt="Christopher C. Davis Signature"
+            class="signature"
+          >
+
+          <div class="badges">
+            <div class="badge">
+              <strong>AI</strong>
+              Powered Intelligence
+            </div>
+            <div class="badge">
+              <strong>24/7</strong>
+              Real-Time Threat Detection
+            </div>
+            <div class="badge">
+              <strong>SAFE</strong>
+              Stronger Communities
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="card">
+      <div class="cta-box">
+        <div>
+          <div class="eyebrow">BUILT FOR SAFETY. DESIGNED FOR RESULTS.</div>
+
+          <h2 class="section-title">
+            Join communities using <span>CTRAX</span>.
+          </h2>
+
+          <p class="section-subtitle" style="margin-bottom: 0;">
+            Transform safety and logistics with real-time vehicle intelligence.
+          </p>
+        </div>
+
+        <a href="/request-demo.html" class="btn btn-primary">
+          REQUEST A DEMO
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER COLUMNS - MATCHING YOUR REFERENCE IMAGE -->
+<footer class="ctrax-footer-modern">
+
+  <!-- SOLUTIONS -->
+  <div class="footer-column">
+    <h4>SOLUTIONS</h4>
+    <a href="#solutions">HOA Communities</a>
+    <a href="#solutions">Property Managers</a>
+    <a href="#solutions">Businesses</a>
+    <a href="#solutions">Law Enforcement</a>
+  </div>
+
+  <!-- PLATFORM -->
+  <div class="footer-column">
+    <h4>PLATFORM</h4>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#features">Features</a>
+    <a href="#integrations">Integrations</a>
+    <a href="#technology">Technology</a>
+  </div>
+
+  <!-- COMPANY -->
+  <div class="footer-column">
+    <h4>COMPANY</h4>
+    <a href="#about">About Us</a>
+    <a href="/careers.html">Careers</a>
+    <a href="/partners.html">Partners</a>
+    <a href="/press.html">Press</a>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="footer-column">
+    <h4>RESOURCES</h4>
+    <a href="/blog.html">Blog</a>
+    <a href="/videos.html">Videos</a>
+    <a href="/case-studies.html">Case Studies</a>
+    <a href="/support.html">Support</a>
+  </div>
+
+  <!-- FOLLOW US -->
+  <div class="footer-column social-column">
+    <h4>FOLLOW US</h4>
+
+    <div class="social-icons">
+      <a href="#" aria-label="LinkedIn">in</a>
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="Instagram">◎</a>
+      <a href="#" aria-label="YouTube">▶</a>
+      <a href="#" aria-label="X">𝕏</a>
+    </div>
+
+    <p class="copyright">
+      © 2026 CTRAX Technologies. All rights reserved.
+    </p>
+  </div>
+
+</footer>
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.15
+});
+
+document.querySelectorAll('.reveal').forEach((el) => {
+  observer.observe(el);
+});
+</script>
+<!-- GSAP Animation Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<!-- CTRAX Homepage Animations -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof gsap === 'undefined') {
+    console.error('GSAP failed to load.');
+    return;
+  }
+
+  // Hero text elements
+  const heroTitle = document.querySelector('.hero h1');
+  const heroText = document.querySelector('.hero p');
+  const heroButtons = document.querySelector('.hero .hero-buttons, .hero .cta-buttons');
+  const heroImage = document.querySelector('.hero img, .hero .hero-image');
+
+  // Timeline animation
+  const tl = gsap.timeline({
+    defaults: { ease: 'power3.out' }
+  });
+
+  if (heroTitle) {
+    tl.from(heroTitle, {
+      y: 60,
+      opacity: 0,
+      duration: 1
+    });
+  }
+
+  if (heroText) {
+    tl.from(heroText, {
+      y: 30,
+      opacity: 0,
+      duration: 0.8
+    }, "-=0.5");
+  }
+
+  if (heroButtons) {
+    tl.from(heroButtons, {
+      y: 20,
+      opacity: 0,
+      duration: 0.7
+    }, "-=0.4");
+  }
+
+  if (heroImage) {
+    tl.from(heroImage, {
+      x: 50,
+      opacity: 0,
+      scale: 0.95,
+      duration: 1
+    }, "-=0.8");
+  }
+
+  // Floating animation for camera image
+  const cameraImage = document.querySelector(
+    '.camera-image, .product-image, .trax-device'
+  );
+
+  if (cameraImage) {
+    gsap.to(cameraImage, {
+      y: -10,
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+  }
+});
+</script>
+</body>
+</html>

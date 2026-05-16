@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request a Demo | CTRAX Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background:
+    radial-gradient(circle at top right, rgba(0,122,255,0.18), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(0,122,255,0.10), transparent 35%),
+    linear-gradient(135deg, #020814 0%, #071a38 45%, #03101f 100%);
+  color: #fff;
+}
+.card {
+  width: 100%; max-width: 760px;
+  padding: 48px;
+  border-radius: 24px;
+  background: rgba(9, 22, 48, 0.84);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  backdrop-filter: blur(14px);
+}
+.logo { text-align: center; margin-bottom: 24px; }
+.logo img { max-width: 280px; width: 100%; height: auto; }
+h1 {
+  font-size: 42px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.subtitle {
+  text-align: center;
+  color: #c7d7f3;
+  margin-bottom: 36px;
+  font-size: 18px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.form-group { margin-bottom: 18px; }
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #dce8ff;
+}
+input, select, textarea {
+  width: 100%; padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.96);
+  color: #111827;
+  font-size: 15px;
+  outline: none;
+}
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #0a84ff;
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.18);
+}
+button {
+  width: 100%; padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #0a84ff, #2ea8ff);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+}
+button:hover {
+  box-shadow: 0 0 36px rgba(10,132,255,0.45);
+}
+#message {
+  margin-top: 16px;
+  text-align: center;
+  min-height: 24px;
+  font-size: 14px;
+}
+.back-link {
+  margin-top: 24px;
+  text-align: center;
+}
+.back-link a {
+  color: #58a6ff;
+  text-decoration: none;
+}
+@media (max-width: 768px) {
+  .card { padding: 32px 24px; }
+  .grid { grid-template-columns: 1fr; }
+  h1 { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <img src="images/ctrax-logo.png" alt="CTRAX Technologies">
+  </div>
+
+  <h1>Request a Demo</h1>
+  <p class="subtitle">See how TRAX Safety delivers real-time vehicle intelligence for your organization.</p>
+
+  <form id="demoForm">
+    <div class="grid">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" id="firstName" required>
+      </div>
+
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" id="lastName" required>
+      </div>
+
+      <div class="form-group">
+        <label>Work Email</label>
+        <input type="email" id="email" required>
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone">
+      </div>
+
+      <div class="form-group">
+        <label>Organization</label>
+        <input type="text" id="organization" required>
+      </div>
+
+      <div class="form-group">
+        <label>Affiliation</label>
+        <select id="affiliation" required>
+          <option value="">Select Your Organization Type</option>
+          <option>Law Enforcement</option>
+          <option>HOA</option>
+          <option>Property Management</option>
+          <option>Law Firm</option>
+          <option>Bank</option>
+          <option>Private Investigation</option>
+          <option>Security Company</option>
+          <option>Retail</option>
+          <option>School District</option>
+          <option>Government Agency</option>
+          <option>Insurance Company</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>What challenges are you trying to solve?</label>
+      <textarea id="notes" placeholder="Speeding, unauthorized vehicles, crime prevention, parking enforcement, investigations..."></textarea>
+    </div>
+
+    <button type="submit">Request My Demo</button>
+    <div id="message"></div>
+  </form>
+
+  <div class="back-link">
+    <a href="homepage.html">← Back to Homepage</a>
+  </div>
+</div>
+
+<script>
+document.getElementById('demoForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const message = document.getElementById('message');
+  message.style.color = '#00d084';
+  message.textContent = 'Thank you! Your demo request has been received.';
+
+  // Optional: send to your backend later
+  // await fetch('/request-demo', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({...}) });
+
+  this.reset();
+});
+</script>
+
+</body>
+</html>
+		
