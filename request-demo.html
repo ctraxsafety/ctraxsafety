@@ -1,199 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Request a Demo | CTRAX Technologies</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="description" content="Request a live demonstration of CTRAX and TRAX Safety vehicle intelligence technology." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #020611;
+  --bg-secondary: #071225;
+  --card: rgba(10, 20, 40, 0.92);
+  --border: rgba(88, 166, 255, 0.12);
+  --blue: #0a66ff;
+  --blue-light: #4da3ff;
+  --text: #ffffff;
+  --text-secondary: #c6d8f5;
+  --text-muted: #8ea7cc;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --radius: 24px;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
+  color: var(--text);
   background:
-    radial-gradient(circle at top right, rgba(0,122,255,0.18), transparent 40%),
-    radial-gradient(circle at bottom left, rgba(0,122,255,0.10), transparent 35%),
-    linear-gradient(135deg, #020814 0%, #071a38 45%, #03101f 100%);
-  color: #fff;
+    linear-gradient(rgba(2, 6, 17, 0.88), rgba(2, 6, 17, 0.92)),
+    url('hero-camera.png') center center / cover no-repeat fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
 }
-.card {
-  width: 100%; max-width: 760px;
-  padding: 48px;
-  border-radius: 24px;
-  background: rgba(9, 22, 48, 0.84);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-  backdrop-filter: blur(14px);
+
+.demo-card {
+  width: 100%;
+  max-width: 920px;
+  background: rgba(7, 18, 37, 0.92);
+  border: 1px solid rgba(88, 166, 255, 0.18);
+  border-radius: 28px;
+  padding: 50px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
 }
-.logo { text-align: center; margin-bottom: 24px; }
-.logo img { max-width: 280px; width: 100%; height: auto; }
-h1 {
-  font-size: 42px;
-  font-weight: 900;
+
+.logo {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
+
+.logo img {
+  height: 60px;
+  width: auto;
+}
+
+h1 {
+  text-align: center;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+
 .subtitle {
   text-align: center;
-  color: #c7d7f3;
-  margin-bottom: 36px;
-  font-size: 18px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 650px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
 }
-.grid {
+
+form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
 }
-.form-group { margin-bottom: 18px; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
 label {
-  display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  font-weight: 700;
   font-size: 14px;
-  font-weight: 600;
-  color: #dce8ff;
+  color: #ffffff;
 }
-input, select, textarea {
-  width: 100%; padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.12);
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.96);
   color: #111827;
   font-size: 15px;
+  font-family: inherit;
   outline: none;
+  transition: all 0.3s ease;
 }
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(10, 102, 255, 0.15);
+}
+
 textarea {
   min-height: 120px;
   resize: vertical;
 }
-input:focus, select:focus, textarea:focus {
-  border-color: #0a84ff;
-  box-shadow: 0 0 0 3px rgba(10,132,255,0.18);
-}
-button {
-  width: 100%; padding: 15px;
+
+.submit-btn {
+  grid-column: 1 / -1;
+  padding: 18px 28px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(90deg, #0a84ff, #2ea8ff);
-  color: #fff;
+  background: linear-gradient(90deg, #0a66ff, #00a2ff);
+  color: white;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
-  margin-top: 8px;
+  box-shadow: 0 12px 30px rgba(10, 102, 255, 0.35);
+  transition: all 0.3s ease;
 }
-button:hover {
-  box-shadow: 0 0 36px rgba(10,132,255,0.45);
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(10, 102, 255, 0.45);
 }
-#message {
-  margin-top: 16px;
-  text-align: center;
-  min-height: 24px;
+
+.back-link {
+  display: inline-block;
+  margin-top: 24px;
+  color: var(--text-secondary);
+  text-decoration: none;
   font-size: 14px;
 }
-.back-link {
+
+.back-link:hover {
+  color: #ffffff;
+}
+
+.success-message {
+  display: none;
   margin-top: 24px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #86efac;
   text-align: center;
+  font-weight: 600;
 }
-.back-link a {
-  color: #58a6ff;
-  text-decoration: none;
-}
+
 @media (max-width: 768px) {
-  .card { padding: 32px 24px; }
-  .grid { grid-template-columns: 1fr; }
-  h1 { font-size: 32px; }
+  .demo-card {
+    padding: 32px 24px;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 </style>
 </head>
 <body>
 
-<div class="card">
+<div class="demo-card">
   <div class="logo">
-    <img src="images/ctrax-logo.png" alt="CTRAX Technologies">
+    <img src="ctrax-logo.png" alt="CTRAX Technologies">
   </div>
 
   <h1>Request a Demo</h1>
-  <p class="subtitle">See how TRAX Safety delivers real-time vehicle intelligence for your organization.</p>
+
+  <p class="subtitle">
+    See how TRAX Safety delivers real-time vehicle intelligence, AI-powered
+    analytics, and advanced threat detection for your organization.
+  </p>
 
   <form id="demoForm">
-    <div class="grid">
-      <div class="form-group">
-        <label>First Name</label>
-        <input type="text" id="firstName" required>
-      </div>
-
-      <div class="form-group">
-        <label>Last Name</label>
-        <input type="text" id="lastName" required>
-      </div>
-
-      <div class="form-group">
-        <label>Work Email</label>
-        <input type="email" id="email" required>
-      </div>
-
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" id="phone">
-      </div>
-
-      <div class="form-group">
-        <label>Organization</label>
-        <input type="text" id="organization" required>
-      </div>
-
-      <div class="form-group">
-        <label>Affiliation</label>
-        <select id="affiliation" required>
-          <option value="">Select Your Organization Type</option>
-          <option>Law Enforcement</option>
-          <option>HOA</option>
-          <option>Property Management</option>
-          <option>Law Firm</option>
-          <option>Bank</option>
-          <option>Private Investigation</option>
-          <option>Security Company</option>
-          <option>Retail</option>
-          <option>School District</option>
-          <option>Government Agency</option>
-          <option>Insurance Company</option>
-          <option>Other</option>
-        </select>
-      </div>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" required>
     </div>
 
     <div class="form-group">
-      <label>What challenges are you trying to solve?</label>
-      <textarea id="notes" placeholder="Speeding, unauthorized vehicles, crime prevention, parking enforcement, investigations..."></textarea>
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" required>
     </div>
 
-    <button type="submit">Request My Demo</button>
-    <div id="message"></div>
+    <div class="form-group">
+      <label for="email">Work Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone">
+    </div>
+
+    <div class="form-group">
+      <label for="organization">Organization</label>
+      <input type="text" id="organization" name="organization" required>
+    </div>
+
+    <div class="form-group">
+      <label for="affiliation">Affiliation</label>
+      <select id="affiliation" name="affiliation" required>
+        <option value="">Select Your Organization Type</option>
+        <option>Law Enforcement</option>
+        <option>HOA Community</option>
+        <option>Property Management Company</option>
+        <option>Law Firm</option>
+        <option>Bank or Financial Institution</option>
+        <option>Private Investigation Firm</option>
+        <option>Security Company</option>
+        <option>Business or Commercial Property</option>
+        <option>Industrial Facility</option>
+        <option>Government Agency</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group full">
+      <label for="challenges">What challenges are you trying to solve?</label>
+      <textarea
+        id="challenges"
+        name="challenges"
+        placeholder="Speeding, unauthorized vehicles, crime prevention, parking enforcement, investigative support..."
+      ></textarea>
+    </div>
+
+    <div class="form-group full">
+      <label for="timeline">Desired Implementation Timeline</label>
+      <select id="timeline" name="timeline">
+        <option value="">Select Timeline</option>
+        <option>Immediately</option>
+        <option>Within 30 Days</option>
+        <option>Within 60 Days</option>
+        <option>Within 90 Days</option>
+        <option>Evaluating Options</option>
+      </select>
+    </div>
+
+    <button type="submit" class="submit-btn">
+      REQUEST MY DEMO →
+    </button>
   </form>
 
-  <div class="back-link">
-    <a href="homepage.html">← Back to Homepage</a>
+  <div class="success-message" id="successMessage">
+    Thank you! Your demo request has been submitted successfully.
+    A CTRAX representative will contact you shortly.
   </div>
+
+  <a href="homepage.html" class="back-link">← Back to Homepage</a>
 </div>
 
 <script>
-document.getElementById('demoForm').addEventListener('submit', async function (e) {
+document.getElementById('demoForm').addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  const message = document.getElementById('message');
-  message.style.color = '#00d084';
-  message.textContent = 'Thank you! Your demo request has been received.';
+  const formData = {
+    firstName: document.getElementById('firstName').value,
+    lastName: document.getElementById('lastName').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    organization: document.getElementById('organization').value,
+    affiliation: document.getElementById('affiliation').value,
+    challenges: document.getElementById('challenges').value,
+    timeline: document.getElementById('timeline').value
+  };
 
-  // Optional: send to your backend later
-  // await fetch('/request-demo', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({...}) });
+  try {
+    const response = await fetch('/request-demo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
 
-  this.reset();
+    if (response.ok) {
+      document.getElementById('demoForm').reset();
+      document.getElementById('successMessage').style.display = 'block';
+      document.getElementById('successMessage').scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    } else {
+      alert('There was a problem submitting your request. Please try again.');
+    }
+  } catch (error) {
+    alert('Unable to submit your request right now. Please try again later.');
+  }
 });
 </script>
 
 </body>
 </html>
-		
