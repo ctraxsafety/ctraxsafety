@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CTRAX Technologies | Safer Roads. Smarter Communities.</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CTRAX Technologies | AI-Powered Vehicle Intelligence</title>
+<meta name="description" content="CTRAX Technologies delivers AI-powered vehicle intelligence, license plate recognition, and real-time analytics for safer communities." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,25 +17,128 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg: #020611;
+  --bg-secondary: #071225;
+  --card: rgba(10, 20, 40, 0.92);
+  --card-solid: #0b1730;
+  --border: rgba(88, 166, 255, 0.12);
+  --blue: #0a66ff;
+  --blue-light: #4da3ff;
+  --text: #ffffff;
+  --text-secondary: #c6d8f5;
+  --text-muted: #8ea7cc;
+  --success: #22c55e;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --radius: 24px;
+  --max-width: 1400px;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Inter', Arial, sans-serif;
-  color: #ffffff;
+  font-family: 'Inter', sans-serif;
   background:
-    radial-gradient(circle at 20% 10%, rgba(0,102,255,0.15), transparent 35%),
-    radial-gradient(circle at 80% 20%, rgba(0,180,255,0.10), transparent 30%),
-    linear-gradient(180deg, #020611 0%, #030a18 50%, #020611 100%);
+    radial-gradient(circle at 20% 0%, rgba(10, 102, 255, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.10), transparent 35%),
+    linear-gradient(180deg, #020611 0%, #040a18 50%, #020611 100%);
+  color: var(--text);
   line-height: 1.6;
-  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .container {
-  max-width: 1500px;
+  width: min(var(--max-width), calc(100% - 48px));
   margin: 0 auto;
-  padding: 0 32px;
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 48px;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(10, 102, 255, 0.12);
+  border: 1px solid rgba(10, 102, 255, 0.25);
+  color: #6fb8ff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.section-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--blue), #00a2ff);
+  color: white;
+  box-shadow: 0 10px 30px rgba(10, 102, 255, 0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(10, 102, 255, 0.45);
+}
+
+.btn-secondary {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
 }
 
 /* HEADER */
@@ -42,656 +146,703 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(2, 6, 17, 0.92);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: rgba(2, 6, 17, 0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .nav {
-  height: 88px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 86px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
+  gap: 12px;
 }
 
 .logo img {
-  height: 78px;
+  height: 46px;
   width: auto;
-  max-width: 420px;
-  display: block;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(0,140,255,0.20));
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 34px;
 }
 
 .nav-links a {
-  color: #dce8ff;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .nav-links a:hover {
-  color: #4aa8ff;
+  color: #ffffff;
 }
 
-/* BUTTONS */
-.btn {
-  display: inline-flex;
+.nav-actions {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 14px 28px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 700;
-  white-space: nowrap;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    opacity 0.25s ease;
-}
-
-.btn-primary {
-  background: linear-gradient(90deg, #0066ff, #00bfff);
-  color: #ffffff;
-  box-shadow: 0 0 24px rgba(0,140,255,0.35);
-}
-
-.btn-secondary {
-  border: 1px solid rgba(255,255,255,0.18);
-  color: #ffffff;
-  background: rgba(255,255,255,0.02);
-}
-
-.btn:hover {
-  transform: translateY(-3px) scale(1.02);
-}
-
-.btn-primary:hover {
-  box-shadow: 0 0 36px rgba(0,140,255,0.55);
+  gap: 14px;
 }
 
 /* HERO */
 .hero {
-  padding: 50px 0 30px;
+  position: relative;
   overflow: hidden;
+  padding: 80px 0 50px;
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 30px;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
   align-items: center;
 }
 
-.eyebrow {
-  color: #58a6ff;
+.hero-badge {
+  color: #5ec3ff;
+  font-weight: 800;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 0.12em;
   margin-bottom: 20px;
 }
 
 .hero h1 {
-  font-size: 110px;
-  line-height: 0.9;
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  line-height: 0.95;
   font-weight: 900;
-  letter-spacing: -3px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .hero h1 .blue {
-  background: linear-gradient(180deg, #67b6ff, #1d78ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  display: block;
+  color: #0a66ff;
 }
 
 .hero p {
-  font-size: 24px;
-  color: #c7d7f3;
-  max-width: 720px;
-  margin-bottom: 36px;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin-bottom: 32px;
 }
 
 .hero-buttons {
   display: flex;
-  flex-wrap: wrap;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .hero-image {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  position: relative;
 }
 
 .hero-image img {
   width: 100%;
-  max-width: 900px;
-  height: auto;
-  background: transparent;
-  border-radius: 0;
-  filter: drop-shadow(0 0 80px rgba(0,0,0,0.85));
+  max-width: 620px;
+  margin: 0 auto;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
 }
 
-/* STATS */
-.stats {
+/* FEATURE STRIP */
+.feature-strip {
+  margin-top: 40px;
+}
+
+.feature-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-top: 50px;
+  gap: 0;
 }
 
-.stat {
-  background: rgba(6, 14, 28, 0.92);
-  border: 1px solid rgba(88,166,255,0.08);
-  border-radius: 18px;
-  padding: 26px;
-  text-align: center;
+.feature-card {
+  padding: 28px 26px;
+  border-right: 1px solid rgba(255,255,255,0.05);
 }
 
-.stat strong {
-  display: block;
-  font-size: 28px;
+.feature-card:last-child {
+  border-right: none;
+}
+
+.feature-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+  color: #69b6ff;
   font-weight: 800;
-  color: #58a6ff;
-  margin-bottom: 6px;
 }
 
-/* SECTIONS */
-.section {
-  padding: 40px 0;
-}
-
-.card {
-  background: rgba(7, 15, 30, 0.94);
-  border: 1px solid rgba(88,166,255,0.08);
-  border-radius: 28px;
-  padding: 48px;
-  box-shadow: 0 0 45px rgba(0,0,0,0.45);
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 25px 70px rgba(0,0,0,0.55);
-  border-color: rgba(88,166,255,0.18);
-}
-
-.section-title {
-  font-size: 58px;
-  line-height: 1;
-  font-weight: 900;
-  margin-bottom: 16px;
-}
-
-.section-title span {
-  color: #58a6ff;
-}
-
-.section-subtitle {
-  color: #c7d7f3;
-  font-size: 20px;
-  margin-bottom: 32px;
-}
-
-/* SOLUTIONS */
-.intelligence-grid {
-  display: grid;
-  grid-template-columns: 0.85fr 1.55fr;
-  gap: 30px;
-  align-items: center;
-}
-
-.single-demo {
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(88,166,255,0.08);
-  box-shadow: 0 0 35px rgba(0,0,0,0.45);
-  background: #050b18;
-}
-
-.single-demo img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* FOUNDER */
-.founder-grid {
-  display: grid;
-  grid-template-columns: 430px 1fr;
-  gap: 45px;
-  align-items: center;
-}
-
-.founder-photo img {
-  width: 100%;
-  border-radius: 28px;
-  display: block;
-}
-
-.founder-label {
-  color: #58a6ff;
-  font-size: 14px;
+.feature-card h4 {
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 3px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.founder-name {
-  font-size: 64px;
-  line-height: 1;
-  font-weight: 900;
-  margin-bottom: 14px;
-}
-
-.founder-title {
-  color: #58a6ff;
-  font-size: 28px;
-  margin-bottom: 24px;
-}
-
-.founder-text {
-  font-size: 23px;
-  color: #d7e4ff;
-  margin-bottom: 30px;
-}
-
-.signature {
-  max-width: 320px;
-  width: 100%;
-  display: block;
-  margin-bottom: 28px;
-}
-
-.badges {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.badge {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(88,166,255,0.10);
-  border-radius: 16px;
-  padding: 18px;
-  text-align: center;
-}
-
-.badge strong {
-  display: block;
-  color: #58a6ff;
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-/* CTA + FOOTER */
-.cta-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-footer {
-  padding: 50px 0 70px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  text-align: center;
-  color: #8ea4c6;
-}
-
-.footer-logo img {
-  height: 56px;
-  width: auto;
-  display: block;
-  margin: 0 auto 16px;
+.feature-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
 }
 
 /* RESPONSIVE */
-@media (max-width: 1024px) {
-  .hero-grid,
-  .intelligence-grid,
-  .founder-grid {
+@media (max-width: 1100px) {
+  .hero-grid {
     grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  .hero h1 {
-    font-size: 56px;
+  .hero-buttons {
+    justify-content: center;
   }
 
-  .founder-name {
-    font-size: 42px;
-  }
-
-  .stats,
-  .badges {
-    grid-template-columns: 1fr;
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .nav-links {
     display: none;
   }
+}
 
+@media (max-width: 768px) {
   .container {
-    padding: 0 20px;
+    width: calc(100% - 24px);
   }
 
-  .card {
-    padding: 30px;
+  .section {
+    padding: 60px 0;
   }
 
-  .logo img {
-    height: 56px;
-    max-width: 280px;
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-actions .btn-secondary {
+    display: none;
   }
 }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="container nav">
-    <a href="/homepage.html" class="logo">
-      <img src=src="ctrax-logo.png" alt="CTRAX Technologies">
+    <a href="/" class="logo">
+      <img src="ctrax-logo.png" alt="CTRAX Technologies">
     </a>
 
-    <div class="nav-links">
+    <nav class="nav-links">
       <a href="#solutions">SOLUTIONS</a>
-      <a href="/pricing.html">PRICING</a>
-      <a href="#about">ABOUT</a>
-      <a href="/login.html" class="btn btn-secondary">LOGIN</a>
-      <a href="/request-demo.html" class="btn btn-primary">REQUEST A DEMO</a>
+      <a href="#platform">HOW IT WORKS</a>
+      <a href="#deploy">USE CASES</a>
+      <a href="pricing.html">PRICING</a>
+      <a href="about.html">ABOUT</a>
+      <a href="terms.html">LEGAL</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-secondary">LOGIN</a>
+      <a href="request-demo.html" class="btn btn-primary">REQUEST A DEMO →</a>
     </div>
   </div>
 </header>
 
+<!-- HERO -->
 <section class="hero">
   <div class="container">
     <div class="hero-grid">
+
       <div class="hero-content">
-        <div class="eyebrow">CTRAX TECHNOLOGIES</div>
+        <div class="hero-badge">AI-POWERED VEHICLE INTELLIGENCE</div>
 
         <h1>
-          SAFER ROADS.<br>
-          <span class="blue">SMARTER</span><br>
-          <span class="blue">COMMUNITIES.</span>
+          SAFER ROADS.
+          <span class="blue">SMARTER</span>
+          COMMUNITIES.
         </h1>
 
         <p>
-          AI-powered vehicle intelligence and real-time analytics for HOAs,
-          property managers, and security teams.
+          CTRAX Technologies delivers real-time vehicle intelligence,
+          license plate recognition, speed analytics, and AI-powered alerts
+          to help communities prevent crime and improve public safety.
         </p>
 
         <div class="hero-buttons">
-          <a href="/request-demo.html" class="btn btn-primary">REQUEST A DEMO</a>
-          <a href="/pricing.html" class="btn btn-secondary">VIEW PRICING</a>
+          <a href="request-demo.html" class="btn btn-primary">REQUEST A DEMO →</a>
+          <a href="#platform" class="btn btn-secondary">SEE HOW IT WORKS</a>
         </div>
       </div>
 
       <div class="hero-image">
-        <img src=src="hero-camera.png" alt="TRAX Safety Camera">
+        <img src="hero-camera.png" alt="TRAX Safety Camera" class="camera-image">
       </div>
+
     </div>
 
-    <div class="stats">
-      <div class="stat"><strong>24/7</strong>Real-Time Monitoring</div>
-      <div class="stat"><strong>AI</strong>Powered Detection</div>
-      <div class="stat"><strong>LIVE</strong>Vehicle Intelligence</div>
-      <div class="stat"><strong>CLOUD</strong>Dashboard Access</div>
-    </div>
-  </div>
-</section>
-
-<section id="solutions" class="section">
-  <div class="container">
-    <div class="card">
-      <div class="intelligence-grid">
-        <div>
-          <div class="eyebrow">REAL-TIME VEHICLE INTELLIGENCE</div>
-          <h2 class="section-title">AI-POWERED. <span>REAL RESULTS.</span></h2>
-          <p class="section-subtitle">
-            License plate recognition, speed monitoring, and advanced analytics
-            provide actionable intelligence to help protect communities.
-          </p>
+    <div class="feature-strip">
+      <div class="card feature-grid">
+        <div class="feature-card">
+          <h3>24/7</h3>
+          <h4>REAL-TIME MONITORING</h4>
+          <p>Always on. Always protecting.</p>
         </div>
 
-        <div class="single-demo">
-          <img
-            src="trax-applications.png"
-            alt="TRAX Safety deployment applications"
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="about" class="section">
-  <div class="container">
-    <div class="card">
-      <div class="founder-grid">
-        <div class="founder-photo">
-          <img src="ceo-card.png" alt="Christopher C. Davis">
+        <div class="feature-card">
+          <h3>AI</h3>
+          <h4>POWERED DETECTION</h4>
+          <p>Advanced analytics for accurate recognition.</p>
         </div>
 
-        <div>
-          <div class="founder-label">FOUNDER & CEO</div>
+        <div class="feature-card">
+          <h3>LIVE</h3>
+          <h4>VEHICLE INTELLIGENCE</h4>
+          <p>Instant alerts and actionable insights.</p>
+        </div>
 
-          <div class="founder-name">
-            CHRISTOPHER C. DAVIS
-          </div>
-
-          <div class="founder-title">
-            Founder & CEO, CTRAX Technologies
-          </div>
-
-          <div class="founder-text">
-            My mission is to empower communities with the intelligence and
-            technology they need to stay safe. CTRAX is the future of
-            community security and logistics.
-          </div>
-
-          <img
-            src="signature.png"
-            alt="Christopher C. Davis Signature"
-            class="signature"
-          >
-
-          <div class="badges">
-            <div class="badge">
-              <strong>AI</strong>
-              Powered Intelligence
-            </div>
-            <div class="badge">
-              <strong>24/7</strong>
-              Real-Time Threat Detection
-            </div>
-            <div class="badge">
-              <strong>SAFE</strong>
-              Stronger Communities
-            </div>
-          </div>
+        <div class="feature-card">
+          <h3>CLOUD</h3>
+          <h4>SECURE & SCALABLE</h4>
+          <p>Enterprise-grade infrastructure and security.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<section class="section reveal">
+<!-- PLATFORM + CEO SECTION -->
+<section id="platform" class="section">
   <div class="container">
-    <div class="card">
-      <div class="cta-box">
-        <div>
-          <div class="eyebrow">BUILT FOR SAFETY. DESIGNED FOR RESULTS.</div>
+    <div
+      style="
+        display:grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 28px;
+        align-items: stretch;
+      "
+    >
+      <!-- PLATFORM CARD -->
+      <div class="card" style="padding: 34px;">
+        <div class="section-badge">REAL-TIME VEHICLE INTELLIGENCE</div>
 
-          <h2 class="section-title">
-            Join communities using <span>CTRAX</span>.
-          </h2>
+        <h2
+          style="
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            line-height: 1.05;
+            margin-bottom: 18px;
+            font-weight: 900;
+          "
+        >
+          SEE <span style="color:#0a66ff;">EVERYTHING.</span><br>
+          KNOW <span style="color:#0a66ff;">EVERYTHING.</span>
+        </h2>
 
-          <p class="section-subtitle" style="margin-bottom: 0;">
-            Transform safety and logistics with real-time vehicle intelligence.
-          </p>
-        </div>
+        <p
+          style="
+            color: var(--text-secondary);
+            margin-bottom: 26px;
+            max-width: 720px;
+          "
+        >
+          Our AI-powered platform captures and analyzes vehicle data in real time,
+          delivering the intelligence you need when it matters most.
+        </p>
 
-        <a href="/request-demo.html" class="btn btn-primary">
-          REQUEST A DEMO
+        <ul
+          style="
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            margin-bottom: 28px;
+            color: var(--text-secondary);
+          "
+        >
+          <li>✓ License Plate Recognition (LPR)</li>
+          <li>✓ Speed Detection & Analytics</li>
+          <li>✓ Vehicle Make, Model & Color Recognition</li>
+          <li>✓ Real-Time Alerts & Notifications</li>
+          <li>✓ Historical Search & Investigations</li>
+          <li>✓ Cloud-Based Dashboard Access</li>
+        </ul>
+
+        <a href="signup.html" class="btn btn-primary">
+          EXPLORE THE PLATFORM →
         </a>
+
+        <div style="margin-top: 34px;">
+          <img
+            src="cro-card.png"
+            alt="CTRAX Dashboard"
+            style="
+              width: 100%;
+              border-radius: 18px;
+              border: 1px solid rgba(88,166,255,0.12);
+              box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            "
+          >
+        </div>
+      </div>
+
+      <!-- FOUNDER & CEO CARD -->
+      <div class="card" style="padding: 34px;">
+        <div class="section-badge">FOUNDER & CEO</div>
+
+        <h3
+          style="
+            font-size: 2.1rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            line-height: 1.1;
+          "
+        >
+          CHRISTOPHER C. DAVIS
+        </h3>
+
+        <p
+          style="
+            color: #69b6ff;
+            font-weight: 700;
+            margin-bottom: 24px;
+          "
+        >
+          Founder & CEO, CTRAX Technologies
+        </p>
+
+        <img
+          src="ceo-headshot.png"
+          alt="Christopher C. Davis"
+          style="
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 24px;
+            border: 4px solid rgba(10,102,255,0.35);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+          "
+        >
+
+        <p
+          style="
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.8;
+          "
+        >
+          “My mission is to empower communities with the intelligence and
+          technology they need to stay safe. CTRAX is the future of community
+          security and logistics.”
+        </p>
+
+        <img
+          src="signature.png"
+          alt="Christopher C. Davis Signature"
+          style="
+            width: 220px;
+            margin: 0 auto 28px;
+            opacity: 0.9;
+          "
+        >
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+          "
+        >
+          <div
+            style="
+              padding: 16px 18px;
+              border-radius: 14px;
+              background: rgba(255,255,255,0.03);
+              border: 1px solid rgba(255,255,255,0.05);
+            "
+          >
+            <strong style="display:block; margin-bottom:4px;">VISION</strong>
+            <span style="color: var(--text-secondary);">
+              Building smarter, safer communities through innovation.
+            </span>
+          </div>
+
+          <div
+            style="
+              padding: 16px 18px;
+              border-radius: 14px;
+              background: rgba(255,255,255,0.03);
+              border: 1px solid rgba(255,255,255,0.05);
+            "
+          >
+            <strong style="display:block; margin-bottom:4px;">EXPERIENCE</strong>
+            <span style="color: var(--text-secondary);">
+              Leadership in security, government, AI, and technology.
+            </span>
+          </div>
+
+          <div
+            style="
+              padding: 16px 18px;
+              border-radius: 14px;
+              background: rgba(255,255,255,0.03);
+              border: 1px solid rgba(255,255,255,0.05);
+            "
+          >
+            <strong style="display:block; margin-bottom:4px;">COMMITMENT</strong>
+            <span style="color: var(--text-secondary);">
+              Dedicated to protecting people, property, and possibilities.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- DEPLOY ANYWHERE -->
+<section id="deploy" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">DEPLOY ANYWHERE</div>
+      <h2>Purpose-Built for Every Security Environment</h2>
+      <p>
+        CTRAX and TRAX Safety are designed for communities, businesses,
+        financial institutions, investigators, and public safety agencies.
+      </p>
+    </div>
+
+    <div
+      style="
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      "
+    >
+      <div class="card" style="padding: 28px;">
+        <h3 style="font-size:1.4rem; margin-bottom:10px;">HOA Communities</h3>
+        <p style="color: var(--text-secondary);">
+          Protect neighborhoods with automated vehicle intelligence,
+          speed monitoring, and real-time alerts.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 28px;">
+        <h3 style="font-size:1.4rem; margin-bottom:10px;">Businesses</h3>
+        <p style="color: var(--text-secondary);">
+          Monitor parking lots, loading zones, and commercial facilities
+          with enterprise-grade analytics.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 28px;">
+        <h3 style="font-size:1.4rem; margin-bottom:10px;">Law Enforcement</h3>
+        <p style="color: var(--text-secondary);">
+          Deliver actionable intelligence to patrol officers,
+          investigators, and command staff.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 28px;">
+        <h3 style="font-size:1.4rem; margin-bottom:10px;">Banks</h3>
+        <p style="color: var(--text-secondary);">
+          Enhance branch and ATM security with vehicle analytics
+          and investigative search tools.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 28px;">
+        <h3 style="font-size:1.4rem; margin-bottom:10px;">Private Investigators</h3>
+        <p style="color: var(--text-secondary);">
+          Access historical search, watch lists, and detailed
+          vehicle movement intelligence.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 28px;">
+        <h3 style="font-size:1.4rem; margin-bottom:10px;">Security Companies</h3>
+        <p style="color: var(--text-secondary);">
+          Add advanced vehicle intelligence to your security
+          and monitoring services.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER COLUMNS - MATCHING YOUR REFERENCE IMAGE -->
-<footer class="ctrax-footer-modern">
+<!-- FINAL CTA -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div
+      class="card"
+      style="
+        padding: 44px;
+        text-align: center;
+        background:
+          linear-gradient(135deg, rgba(10,102,255,0.12), rgba(3,10,24,0.96)),
+          rgba(7,15,30,0.95);
+      "
+    >
+      <div class="section-badge">READY TO MAKE YOUR COMMUNITY SAFER?</div>
 
-  <!-- SOLUTIONS -->
-  <div class="footer-column">
-    <h4>SOLUTIONS</h4>
-    <a href="#solutions">HOA Communities</a>
-    <a href="#solutions">Property Managers</a>
-    <a href="#solutions">Businesses</a>
-    <a href="#solutions">Law Enforcement</a>
+      <h2
+        style="
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          font-weight: 900;
+          line-height: 1.05;
+          margin-bottom: 18px;
+        "
+      >
+        REQUEST A DEMO TODAY.
+      </h2>
+
+      <p
+        style="
+          color: var(--text-secondary);
+          max-width: 760px;
+          margin: 0 auto 28px;
+          font-size: 1.1rem;
+        "
+      >
+        See how CTRAX can help you prevent crime, reduce risk,
+        and build a safer tomorrow.
+      </p>
+
+      <a href="request-demo.html" class="btn btn-primary">
+        REQUEST A DEMO →
+      </a>
+    </div>
   </div>
+</section>
 
-  <!-- PLATFORM -->
-  <div class="footer-column">
-    <h4>PLATFORM</h4>
-    <a href="#how-it-works">How It Works</a>
-    <a href="#features">Features</a>
-    <a href="#integrations">Integrations</a>
-    <a href="#technology">Technology</a>
-  </div>
+<!-- FOOTER -->
+<footer
+  style="
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 70px 0 40px;
+  "
+>
+  <div class="container">
+    <div
+      style="
+        display:grid;
+        grid-template-columns: 1.4fr repeat(4, 1fr);
+        gap: 40px;
+      "
+    >
+      <!-- BRAND -->
+      <div>
+        <img
+          src="ctrax-logo.png"
+          alt="CTRAX Technologies"
+          style="height: 50px; width: auto; margin-bottom: 18px;"
+        >
+        <p style="color: var(--text-secondary); max-width: 320px;">
+          AI-powered vehicle intelligence and real-time analytics
+          for safer roads and smarter communities.
+        </p>
+      </div>
 
-  <!-- COMPANY -->
-  <div class="footer-column">
-    <h4>COMPANY</h4>
-    <a href="#about">About Us</a>
-    <a href="/careers.html">Careers</a>
-    <a href="/partners.html">Partners</a>
-    <a href="/press.html">Press</a>
-  </div>
+      <!-- SOLUTIONS -->
+      <div>
+        <h4 style="margin-bottom: 16px; font-size: 14px; letter-spacing: 0.08em;">SOLUTIONS</h4>
+        <div style="display:grid; gap:10px; color: var(--text-secondary);">
+          <a href="#deploy">HOA Communities</a>
+          <a href="#deploy">Businesses</a>
+          <a href="#deploy">Law Enforcement</a>
+          <a href="#deploy">Security Companies</a>
+        </div>
+      </div>
 
-  <!-- RESOURCES -->
-  <div class="footer-column">
-    <h4>RESOURCES</h4>
-    <a href="/blog.html">Blog</a>
-    <a href="/videos.html">Videos</a>
-    <a href="/case-studies.html">Case Studies</a>
-    <a href="/support.html">Support</a>
-  </div>
+      <!-- PLATFORM -->
+      <div>
+        <h4 style="margin-bottom: 16px; font-size: 14px; letter-spacing: 0.08em;">PLATFORM</h4>
+        <div style="display:grid; gap:10px; color: var(--text-secondary);">
+          <a href="#platform">How It Works</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="request-demo.html">Request Demo</a>
+          <a href="signup.html">Create Account</a>
+        </div>
+      </div>
 
-  <!-- FOLLOW US -->
-  <div class="footer-column social-column">
-    <h4>FOLLOW US</h4>
+      <!-- COMPANY -->
+      <div>
+        <h4 style="margin-bottom: 16px; font-size: 14px; letter-spacing: 0.08em;">COMPANY</h4>
+        <div style="display:grid; gap:10px; color: var(--text-secondary);">
+          <a href="about.html">About Us</a>
+          <a href="login.html">Customer Login</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+      </div>
 
-    <div class="social-icons">
-      <a href="#" aria-label="LinkedIn">in</a>
-      <a href="#" aria-label="Facebook">f</a>
-      <a href="#" aria-label="Instagram">◎</a>
-      <a href="#" aria-label="YouTube">▶</a>
-      <a href="#" aria-label="X">𝕏</a>
+      <!-- CONTACT -->
+      <div>
+        <h4 style="margin-bottom: 16px; font-size: 14px; letter-spacing: 0.08em;">CONTACT</h4>
+        <div style="display:grid; gap:10px; color: var(--text-secondary);">
+          <a href="mailto:sales@ctraxsafety.com">sales@ctraxsafety.com</a>
+          <a href="mailto:info@ctraxsafety.com">info@ctraxsafety.com</a>
+          <a href="https://ctraxsafety.com">ctraxsafety.com</a>
+        </div>
+      </div>
     </div>
 
-    <p class="copyright">
+    <div
+      style="
+        margin-top: 50px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        color: var(--text-muted);
+        font-size: 14px;
+      "
+    >
       © 2026 CTRAX Technologies. All rights reserved.
-    </p>
+    </div>
   </div>
-
 </footer>
-<script>
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, {
-  threshold: 0.15
-});
 
-document.querySelectorAll('.reveal').forEach((el) => {
-  observer.observe(el);
-});
-</script>
-<!-- GSAP Animation Library -->
+<!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
-<!-- CTRAX Homepage Animations -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof gsap === 'undefined') {
-    console.error('GSAP failed to load.');
-    return;
-  }
+  if (typeof gsap === 'undefined') return;
 
-  // Hero text elements
-  const heroTitle = document.querySelector('.hero h1');
-  const heroText = document.querySelector('.hero p');
-  const heroButtons = document.querySelector('.hero .hero-buttons, .hero .cta-buttons');
-  const heroImage = document.querySelector('.hero img, .hero .hero-image');
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-  // Timeline animation
-  const tl = gsap.timeline({
-    defaults: { ease: 'power3.out' }
-  });
+  tl.from('.hero-badge', {
+    y: 20,
+    opacity: 0,
+    duration: 0.6
+  })
+  .from('.hero h1', {
+    y: 60,
+    opacity: 0,
+    duration: 1
+  }, '-=0.2')
+  .from('.hero p', {
+    y: 30,
+    opacity: 0,
+    duration: 0.8
+  }, '-=0.5')
+  .from('.hero-buttons', {
+    y: 20,
+    opacity: 0,
+    duration: 0.7
+  }, '-=0.4')
+  .from('.hero-image', {
+    x: 50,
+    opacity: 0,
+    scale: 0.95,
+    duration: 1
+  }, '-=0.8');
 
-  if (heroTitle) {
-    tl.from(heroTitle, {
-      y: 60,
-      opacity: 0,
-      duration: 1
-    });
-  }
-
-  if (heroText) {
-    tl.from(heroText, {
-      y: 30,
-      opacity: 0,
-      duration: 0.8
-    }, "-=0.5");
-  }
-
-  if (heroButtons) {
-    tl.from(heroButtons, {
-      y: 20,
-      opacity: 0,
-      duration: 0.7
-    }, "-=0.4");
-  }
-
-  if (heroImage) {
-    tl.from(heroImage, {
-      x: 50,
-      opacity: 0,
-      scale: 0.95,
-      duration: 1
-    }, "-=0.8");
-  }
-
-  // Floating animation for camera image
-  const cameraImage = document.querySelector(
-    '.camera-image, .product-image, .trax-device'
-  );
-
-  if (cameraImage) {
-    gsap.to(cameraImage, {
+  const camera = document.querySelector('.camera-image');
+  if (camera) {
+    gsap.to(camera, {
       y: -10,
       duration: 3,
       repeat: -1,
@@ -701,5 +852,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
 </body>
 </html>
