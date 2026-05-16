@@ -85,8 +85,11 @@ app.use(express.static(__dirname));
 // HOME PAGE
 // =====================================================
 
+app.use(express.static(__dirname));
+
+// Homepage route
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'homepage.html'));
+  res.sendFile(__dirname + '/homepage.html');
 });
 
 // =====================================================
@@ -276,7 +279,8 @@ app.get('/api/sightings', async (req, res) => {
 // START SERVER
 // =====================================================
 
-app.listen(PORT, () => {
-  console.log(`CTRAX running on http://localhost:${PORT}`);
-  console.log('Stripe mode: TEST');
+const PORT = process.env.PORT || 5050;
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`CTRAX server running on port ${PORT}`);
 });

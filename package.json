@@ -1,0 +1,17 @@
+{
+  "name": "ctrax-technologies",
+  "version": "1.0.0",
+  "description": "CTRAX Technologies AI-powered vehicle intelligence platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "mongoose": "^8.18.0",
+    "stripe": "^18.3.0"
+  }
+}
