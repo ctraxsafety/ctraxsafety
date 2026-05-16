@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const app = express();
-const PORT = 5050;
 
 // =====================================================
 // MONGODB CONNECTION
