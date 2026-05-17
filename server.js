@@ -13,14 +13,13 @@ const app = express();
 // MONGODB CONNECTION
 // =====================================================
 
-mongoose.connect('mongodb://127.0.0.1:27017/ctrax')
-.then(() => {
-  console.log('MongoDB connected');
-})
-.catch((err) => {
-  console.error('MongoDB connection error:', err);
-});
-
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('MongoDB connected');
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+  });
 // =====================================================
 // USER SCHEMA
 // =====================================================
