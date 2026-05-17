@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Solutions | CTRAX Technologies</title>
+<meta name="description" content="Purpose-built vehicle intelligence solutions for HOA communities, businesses, law enforcement, and industrial facilities." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #020611;
+  --bg-secondary: #071225;
+  --card: rgba(10, 20, 40, 0.88);
+  --border: rgba(88, 166, 255, 0.12);
+  --blue: #0a66ff;
+  --blue-light: #4da3ff;
+  --text: #ffffff;
+  --text-secondary: #c6d8f5;
+  --text-muted: #8ea7cc;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --radius: 24px;
+  --container: 1280px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background:
+    radial-gradient(circle at top right, rgba(10,102,255,0.14), transparent 40%),
+    linear-gradient(180deg, #020611 0%, #061326 100%);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container {
+  width: min(var(--container), calc(100% - 48px));
+  margin: 0 auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section {
+  padding: 110px 0;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(10,102,255,0.12);
+  border: 1px solid rgba(88,166,255,0.15);
+  color: #7cc6ff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 0.95;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  font-size: clamp(2.3rem, 5vw, 4.2rem);
+  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #0a66ff, #00a2ff);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(10,102,255,0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(10,102,255,0.45);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+}
+
+/* HEADER */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(2, 6, 17, 0.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.nav {
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 42px;
+  width: auto;
+  display: block;
+}
+
+.nav-links {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.88);
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.login-btn {
+  padding: 12px 22px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.demo-btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #0a66ff, #00a2ff);
+  box-shadow: 0 10px 25px rgba(10,102,255,0.35);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* HERO */
+.hero {
+  padding: 90px 0 120px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-copy p {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  max-width: 720px;
+  margin: 28px 0 40px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-visual {
+  padding: 18px;
+}
+
+.hero-visual img {
+  width: 100%;
+  border-radius: 20px;
+  display: block;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: min(var(--container), calc(100% - 28px));
+  }
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .login-btn,
+  .demo-btn {
+    padding: 10px 14px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="homepage.html" class="logo">
+      <img src="ctrax-logo.png" alt="CTRAX Technologies">
+    </a>
+
+    <nav class="nav-links">
+      <a href="homepage.html">Home</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
+      <a href="legal.html">Legal</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="login.html" class="login-btn">Login</a>
+      <a href="request-demo.html" class="demo-btn">Request a Demo →</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="section-badge">ENTERPRISE VEHICLE INTELLIGENCE</div>
+
+        <h1>
+          Purpose-Built<br>
+          Solutions for Every<br>
+          Security Environment
+        </h1>
+
+        <p>
+          CTRAX and TRAX Safety deliver real-time vehicle intelligence,
+          AI-powered analytics, and automated threat detection for HOA
+          communities, businesses, law enforcement agencies, and industrial
+          facilities.
+        </p>
+
+        <div class="hero-actions">
+          <a href="request-demo.html" class="btn btn-primary">
+            Request a Demo →
+          </a>
+
+          <a href="pricing.html" class="btn btn-secondary">
+            View Pricing
+          </a>
+        </div>
+      </div>
+
+      <div class="card hero-visual">
+        <img
+          src="solutions-grid.png"
+          alt="TRAX Safety deployment environments"
+        >
+      </div>
+    </div>
+  </div>
+</section>
+<!-- SOLUTIONS OVERVIEW -->
+<section class="section" style="padding-top: 20px;">
+  <div class="container">
+
+    <div style="text-align: center; max-width: 900px; margin: 0 auto 70px;">
+      <div class="section-badge">DEPLOYMENT ENVIRONMENTS</div>
+
+      <h2 style="margin: 24px 0 24px;">
+        One Platform. Unlimited Applications.
+      </h2>
+
+      <p style="font-size: 1.15rem; line-height: 1.9;">
+        TRAX Safety is engineered to operate across residential communities,
+        retail centers, commercial properties, industrial campuses, and public
+        safety environments. Every deployment captures actionable vehicle
+        intelligence in real time.
+      </p>
+    </div>
+
+    <!-- SIX SOLUTION CARDS -->
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+    ">
+
+      <!-- Neighborhoods -->
+      <div class="card" style="padding: 36px;">
+        <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 18px;">
+          Neighborhoods & Residential Communities
+        </h3>
+        <p style="line-height: 1.9;">
+          Monitor vehicle activity entering and leaving neighborhoods to help
+          deter theft, identify suspicious vehicles, and provide residents with
+          an added layer of security.
+        </p>
+      </div>
+
+      <!-- Retail -->
+      <div class="card" style="padding: 36px;">
+        <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 18px;">
+          Retail Parking Lots
+        </h3>
+        <p style="line-height: 1.9;">
+          Detect loitering, repeat offenders, and known vehicles associated
+          with organized retail theft and parking lot incidents.
+        </p>
+      </div>
+
+      <!-- Urban -->
+      <div class="card" style="padding: 36px;">
+        <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 18px;">
+          Alleyways & Urban Surveillance
+        </h3>
+        <p style="line-height: 1.9;">
+          Illuminate hidden areas where illegal dumping, drug activity, and
+          property crimes often occur, providing investigators with
+          time-stamped evidence.
+        </p>
+      </div>
+
+      <!-- Commercial -->
+      <div class="card" style="padding: 36px;">
+        <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 18px;">
+          Commercial Properties
+        </h3>
+        <p style="line-height: 1.9;">
+          Protect office parks and mixed-use developments with automated
+          vehicle intelligence and occupancy analytics.
+        </p>
+      </div>
+
+      <!-- HOA -->
+      <div class="card" style="padding: 36px;">
+        <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 18px;">
+          HOA Communities
+        </h3>
+        <p style="line-height: 1.9;">
+          Give boards and property managers enterprise-grade security tools
+          without the cost and complexity of traditional surveillance systems.
+        </p>
+      </div>
+
+      <!-- Industrial -->
+      <div class="card" style="padding: 36px;">
+        <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 18px;">
+          Industrial & Logistics Facilities
+        </h3>
+        <p style="line-height: 1.9;">
+          Monitor trucks, contractors, and after-hours access at warehouses,
+          distribution centers, and transportation hubs.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- HIGHWAY MONITORING -->
+<section class="section">
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="card hero-visual">
+        <img
+          src="highway-monitoring.jpg"
+          alt="TRAX Safety highway vehicle monitoring"
+        >
+      </div>
+
+      <div class="hero-copy">
+        <div class="section-badge">TRANSPORTATION SECURITY</div>
+
+        <h2 style="margin-top: 24px;">
+          Highway & Roadway Monitoring
+        </h2>
+
+        <p>
+          Track speed, direction, and vehicle movement patterns across
+          highways, toll roads, and critical transportation corridors.
+          TRAX Safety provides transportation agencies and law enforcement
+          with powerful tools to identify dangerous driving and support
+          ongoing investigations.
+        </p>
+
+        <div class="hero-actions">
+          <a href="request-demo.html" class="btn btn-primary">
+            Schedule a Live Demo →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- LAW ENFORCEMENT SOLUTIONS -->
+<section class="section" style="padding-top: 20px;">
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-copy">
+        <div class="section-badge">PUBLIC SAFETY & INVESTIGATIONS</div>
+
+        <h2 style="margin-top: 24px;">
+          Built to Support Law Enforcement
+        </h2>
+
+        <p>
+          CTRAX was designed to help investigators and public safety agencies
+          identify vehicles connected to crimes, locate persons of interest,
+          and build stronger cases through searchable, time-stamped vehicle
+          intelligence.
+        </p>
+
+        <p style="margin-top: 22px;">
+          From BOLO alerts and suspect tracking to interagency collaboration,
+          TRAX Safety provides a force multiplier for detectives, patrol
+          units, task forces, and federal partners.
+        </p>
+
+        <div class="hero-actions">
+          <a href="request-demo.html" class="btn btn-primary">
+            Request a Government Demo →
+          </a>
+        </div>
+      </div>
+
+      <div class="card hero-visual">
+        <img
+          src="law-enforcement.jpg"
+          alt="Law enforcement using CTRAX intelligence tools"
+        >
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INDIANAPOLIS MISSION SECTION -->
+<section class="section">
+  <div class="container">
+
+    <div class="card" style="
+      overflow: hidden;
+      border-radius: 32px;
+      position: relative;
+    ">
+      <div style="position: relative;">
+        <img
+          src="indianapolis-skyline.webp"
+          alt="Indianapolis Indiana skyline"
+          style="
+            width: 100%;
+            display: block;
+            max-height: 520px;
+            object-fit: cover;
+            filter: brightness(0.45);
+          "
+        >
+
+        <div style="
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 60px;
+          background:
+            linear-gradient(
+              180deg,
+              rgba(2,6,17,0.15),
+              rgba(2,6,17,0.75)
+            );
+        ">
+          <div style="max-width: 900px;">
+            <div class="section-badge">BORN IN INDIANAPOLIS. BUILT FOR AMERICA.</div>
+
+            <h2 style="margin: 24px 0;">
+              Protecting Communities Through Technology
+            </h2>
+
+            <p style="
+              font-size: 1.15rem;
+              line-height: 1.95;
+              color: #dcecff;
+            ">
+              Founded by Christopher C. Davis, CTRAX Technologies was inspired
+              by a lifelong commitment to public safety and innovation.
+              Born and raised on the east side of Indianapolis, Indiana,
+              Christopher created CTRAX to provide law enforcement,
+              communities, and businesses with advanced tools to detect
+              threats, solve crimes, and make America safer.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- FINAL CALL TO ACTION -->
+<section class="section" style="padding-top: 20px;">
+  <div class="container">
+    <div
+      class="card"
+      style="
+        padding: 60px 50px;
+        text-align: center;
+        background:
+          linear-gradient(135deg, rgba(10,102,255,0.14), rgba(0,162,255,0.06)),
+          rgba(7,18,37,0.96);
+      "
+    >
+      <div class="section-badge">READY TO PROTECT WHAT MATTERS MOST?</div>
+
+      <h2 style="margin: 24px auto 22px; max-width: 900px;">
+        Discover How CTRAX Can Transform Your Security Operations
+      </h2>
+
+      <p
+        style="
+          max-width: 760px;
+          margin: 0 auto 36px;
+          font-size: 1.1rem;
+          line-height: 1.9;
+        "
+      >
+        From homeowners associations and commercial properties to law
+        enforcement agencies and industrial facilities, CTRAX and TRAX Safety
+        provide the intelligence needed to detect threats, accelerate
+        investigations, and build safer communities.
+      </p>
+
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          gap: 18px;
+          flex-wrap: wrap;
+        "
+      >
+        <a href="request-demo.html" class="btn btn-primary">
+          Request a Demo →
+        </a>
+
+        <a href="pricing.html" class="btn btn-secondary">
+          View Pricing
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer
+  style="
+    padding: 70px 0 35px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: rgba(1,8,20,0.9);
+  "
+>
+  <div class="container">
+
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 45px;
+      "
+    >
+      <!-- BRAND -->
+      <div>
+        <img
+          src="ctrax-logo.png"
+          alt="CTRAX Technologies"
+          style="height: 48px; width: auto; margin-bottom: 20px;"
+        >
+
+        <p style="max-width: 340px; line-height: 1.85;">
+          AI-powered vehicle intelligence and real-time analytics designed
+          to help communities, businesses, and public safety agencies detect
+          threats and protect what matters most.
+        </p>
+      </div>
+
+      <!-- SOLUTIONS -->
+      <div>
+        <h4
+          style="
+            margin-bottom: 18px;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            font-weight: 800;
+          "
+        >
+          SOLUTIONS
+        </h4>
+
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          "
+        >
+          <a href="solutions.html">HOA Communities</a>
+          <a href="solutions.html">Businesses</a>
+          <a href="solutions.html">Law Enforcement</a>
+          <a href="solutions.html">Industrial Facilities</a>
+        </div>
+      </div>
+
+      <!-- COMPANY -->
+      <div>
+        <h4
+          style="
+            margin-bottom: 18px;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            font-weight: 800;
+          "
+        >
+          COMPANY
+        </h4>
+
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          "
+        >
+          <a href="about.html">About Us</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="request-demo.html">Request a Demo</a>
+          <a href="signup.html">Get Started</a>
+        </div>
+      </div>
+
+      <!-- LEGAL -->
+      <div>
+        <h4
+          style="
+            margin-bottom: 18px;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            font-weight: 800;
+          "
+        >
+          LEGAL
+        </h4>
+
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          "
+        >
+          <a href="terms.html">Terms of Use</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="login.html">Customer Login</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div
+      style="
+        padding-top: 28px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      "
+    >
+      <p style="color: var(--text-muted); font-size: 14px;">
+        © 2026 CTRAX Technologies. All rights reserved.
+      </p>
+
+      <p style="color: var(--text-muted); font-size: 14px;">
+        Founded in Indianapolis, Indiana.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- OPTIONAL GSAP ANIMATIONS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof gsap === 'undefined') return;
+
+  gsap.from('.hero-copy > *', {
+    y: 30,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.12,
+    ease: 'power3.out'
+  });
+
+  gsap.from('.hero-visual', {
+    x: 40,
+    opacity: 0,
+    scale: 0.97,
+    duration: 1,
+    ease: 'power3.out'
+  });
+});
+</script>
+
+</body>
+</html>
