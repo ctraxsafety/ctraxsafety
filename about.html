@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About Us | CTRAX Technologies</title>
+<meta name="description" content="Learn about CTRAX Technologies and founder Christopher C. Davis, creator of CTRAX and TRAX Safety." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #020611;
+  --bg-secondary: #071225;
+  --card: rgba(10, 20, 40, 0.92);
+  --border: rgba(88, 166, 255, 0.12);
+  --blue: #0a66ff;
+  --text: #ffffff;
+  --text-secondary: #c6d8f5;
+  --text-muted: #8ea7cc;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --radius: 24px;
+  --max-width: 1280px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  line-height: 1.7;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(10, 102, 255, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.10), transparent 35%),
+    linear-gradient(180deg, #020611 0%, #040a18 50%, #020611 100%);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(var(--max-width), calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.section {
+  padding: 90px 0;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #0a66ff, #00a2ff);
+  color: white;
+  box-shadow: 0 12px 30px rgba(10, 102, 255, 0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(2, 6, 17, 0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 86px;
+}
+
+.logo img {
+  height: 46px;
+  width: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.hero {
+  padding: 100px 0 70px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(10, 102, 255, 0.12);
+  border: 1px solid rgba(10, 102, 255, 0.25);
+  color: #6fb8ff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.95;
+  font-weight: 900;
+  margin-bottom: 24px;
+}
+
+h1 .blue {
+  color: var(--blue);
+}
+
+.hero p {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.hero-photo {
+  padding: 32px;
+  text-align: center;
+}
+
+.hero-photo img {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: 28px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+.section-title {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 48px;
+}
+
+.section-title h2 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.05;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.section-title p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.story-card {
+  padding: 44px;
+}
+
+.story-card p {
+  color: var(--text-secondary);
+  margin-bottom: 22px;
+  font-size: 1.05rem;
+}
+
+.highlight {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.value-card {
+  padding: 30px;
+}
+
+.value-card h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.value-card p {
+  color: var(--text-secondary);
+}
+
+.timeline {
+  display: grid;
+  gap: 20px;
+}
+
+.timeline-item {
+  padding: 24px 28px;
+}
+
+.timeline-item h4 {
+  color: #6fb8ff;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.timeline-item p {
+  color: var(--text-secondary);
+}
+
+.cta {
+  text-align: center;
+  padding: 56px;
+}
+
+.cta p {
+  color: var(--text-secondary);
+  max-width: 760px;
+  margin: 18px auto 28px;
+}
+
+footer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 40px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .hero-grid,
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .section {
+    padding: 70px 0;
+  }
+
+  .story-card,
+  .cta,
+  .hero-photo {
+    padding: 28px;
+  }
+
+  .nav-actions .btn-secondary {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="homepage.html" class="logo">
+      <img src="ctrax-logo.png" alt="CTRAX Technologies">
+    </a>
+
+    <nav class="nav-links">
+      <a href="homepage.html">HOME</a>
+      <a href="pricing.html">PRICING</a>
+      <a href="about.html">ABOUT</a>
+      <a href="terms.html">LEGAL</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-secondary">LOGIN</a>
+      <a href="request-demo.html" class="btn btn-primary">REQUEST A DEMO →</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="badge">FOUNDER STORY</div>
+        <h1>
+          BUILT IN <span class="blue">INDIANAPOLIS.</span><br>
+          DESIGNED TO PROTECT COMMUNITIES.
+        </h1>
+        <p>
+          CTRAX Technologies was founded by <strong>Christopher C. Davis</strong>, an entrepreneur and visionary born and raised on the east side of Indianapolis, Indiana. Inspired by a deep commitment to public safety and innovation, Christopher created CTRAX and TRAX Safety to help communities, businesses, and law enforcement prevent crime and make faster, more informed decisions.
+        </p>
+        <a href="request-demo.html" class="btn btn-primary">REQUEST A DEMO →</a>
+      </div>
+
+      <div class="card hero-photo">
+        <img src="ceo-headshot.png" alt="Christopher C. Davis, Founder and CEO of CTRAX Technologies">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <div class="badge">OUR STORY</div>
+      <h2>From East Indianapolis to Building a National Safety Platform</h2>
+      <p>
+        A personal journey rooted in resilience, innovation, and a mission to create safer communities.
+      </p>
+    </div>
+
+    <div class="card story-card">
+      <p>
+        <span class="highlight">Christopher C. Davis was born and raised in East Indianapolis, Indiana</span>, where he developed a strong appreciation for community, perseverance, and the importance of safety. Growing up on Indianapolis' east side gave him firsthand insight into the challenges neighborhoods face and the impact that better technology and stronger infrastructure can have on people's lives.
+      </p>
+
+      <p>
+        Christopher graduated from <span class="highlight">Lawrence Central High School</span> in Lawrence Township, a school known for developing leaders, innovators, and public servants. His education and life experiences helped shape his entrepreneurial mindset and commitment to building solutions that address real-world problems.
+      </p>
+
+      <p>
+        With a passion for technology, security, and operational intelligence, Christopher envisioned a platform that could combine artificial intelligence, vehicle analytics, and real-time alerts into one powerful system. That vision became <span class="highlight">CTRAX Technologies</span> and its flagship solution, <span class="highlight">TRAX Safety</span>.
+      </p>
+
+      <p>
+        CTRAX is designed to provide advanced vehicle intelligence, license plate recognition, speed analytics, watch lists, and historical search capabilities to homeowners associations, businesses, financial institutions, private investigators, security firms, and law enforcement agencies.
+      </p>
+
+      <p>
+        Christopher's mission is simple but ambitious: <span class="highlight">to build safer roads and smarter communities through innovation.</span> His leadership continues to drive CTRAX Technologies toward becoming a nationally recognized public safety and logistics platform.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <div class="badge">CORE VALUES</div>
+      <h2>The Principles Behind CTRAX</h2>
+    </div>
+
+    <div class="values-grid">
+      <div class="card value-card">
+        <h3>Innovation</h3>
+        <p>
+          We leverage artificial intelligence and advanced analytics to create powerful, practical solutions for real-world safety challenges.
+        </p>
+      </div>
+
+      <div class="card value-card">
+        <h3>Community</h3>
+        <p>
+          Every product we build is focused on helping neighborhoods, organizations, and agencies protect the people they serve.
+        </p>
+      </div>
+
+      <div class="card value-card">
+        <h3>Integrity</h3>
+        <p>
+          We are committed to building trusted technology with transparency, accountability, and long-term impact.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <div class="badge">JOURNEY</div>
+      <h2>Key Milestones</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="card timeline-item">
+        <h4>EAST INDIANAPOLIS ROOTS</h4>
+        <p>Born and raised on the east side of Indianapolis, Indiana.</p>
+      </div>
+
+      <div class="card timeline-item">
+        <h4>LAWRENCE CENTRAL HIGH SCHOOL</h4>
+        <p>Graduated from Lawrence Central and developed a strong entrepreneurial vision.</p>
+      </div>
+
+      <div class="card timeline-item">
+        <h4>CTRAX TECHNOLOGIES FOUNDED</h4>
+        <p>Established the company to <!-- FOUNDER STORY -->
+<section class="section">
+  <div class="container">
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 48px;
+        align-items: start;
+      "
+    >
+      <!-- FOUNDER IMAGE -->
+      <div class="card" style="padding: 24px;">
+        <img
+          src="about-ceo.png"
+          alt="Christopher C. Davis, Founder and CEO of CTRAX Technologies"
+          style="
+            width: 100%;
+            border-radius: 24px;
+            display: block;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+          "
+        >
+
+        <div style="text-align:center; margin-top: 24px;">
+          <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 6px;">
+            Christopher C. Davis
+          </h3>
+          <p style="color: #69b6ff; font-weight: 700;">
+            Founder & CEO, CTRAX Technologies
+          </p>
+        </div>
+      </div>
+
+      <!-- BIOGRAPHY -->
+      <div>
+        <div class="section-badge">THE FOUNDER STORY</div>
+
+        <h2 style="margin-bottom: 24px;">
+          Born to Build Technology That Helps Make America Safer
+        </h2>
+
+        <p style="color: var(--text-secondary); margin-bottom: 22px; line-height: 1.9;">
+          Christopher C. Davis was born and raised on the east side of
+          :contentReference[oaicite:0]{index=0}, where he developed an
+          early fascination with both technology and public safety. From a young age,
+          he believed that one day he would create something meaningful that would
+          help make this country safer and stronger.
+        </p>
+
+        <p style="color: var(--text-secondary); margin-bottom: 22px; line-height: 1.9;">
+          He graduated from :contentReference[oaicite:1]{index=1}
+          as part of the Class of 2013. During high school, he studied computer
+          programming and computer science through the
+          :contentReference[oaicite:2]{index=2},
+          where he strengthened the technical foundation that would later support
+          the creation of CTRAX Technologies.
+        </p>
+
+        <p style="color: var(--text-secondary); margin-bottom: 22px; line-height: 1.9;">
+          Driven by a deep interest in criminal behavior, investigative strategy,
+          and human decision-making, Christopher continued his education in
+          :contentReference[oaicite:3]{index=3}, studying criminology and
+          psychology at :contentReference[oaicite:4]{index=4}.
+          This interdisciplinary background gave him a unique perspective on how
+          technology, behavioral science, and law enforcement can work together
+          to prevent crime and improve public safety outcomes.
+        </p>
+
+        <p style="color: var(--text-secondary); margin-bottom: 22px; line-height: 1.9;">
+          Over the years, Christopher recognized a growing need for smarter,
+          more accessible vehicle intelligence systems that could serve not only
+          law enforcement agencies, but also homeowners associations, property
+          managers, businesses, banks, private investigators, and security firms.
+          He envisioned a platform that would combine artificial intelligence,
+          license plate recognition, speed analytics, and real-time alerts into
+          one powerful and affordable solution.
+        </p>
+
+        <p style="color: var(--text-secondary); margin-bottom: 22px; line-height: 1.9;">
+          That vision became CTRAX Technologies and its flagship solution,
+          TRAX Safety. The mission is simple but ambitious: to empower communities
+          and organizations with real-time intelligence that helps detect threats,
+          investigate incidents, reduce risk, and protect the people they serve.
+        </p>
+
+        <p style="color: var(--text-secondary); line-height: 1.9;">
+          Today, Christopher leads CTRAX with a long-term vision of building one
+          of the nation’s most innovative public safety technology companies.
+          His goal is to deliver enterprise-grade intelligence tools that help
+          create safer roads, smarter communities, and a stronger future for
+          generations to come.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION & VISION -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div
+      style="
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      "
+    >
+      <div class="card" style="padding: 30px;">
+        <div class="section-badge">MISSION</div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 14px;">Protect Communities</h3>
+        <p style="color: var(--text-secondary); line-height: 1.8;">
+          Deliver AI-powered vehicle intelligence that helps organizations detect
+          threats, respond faster, and make better decisions.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 30px;">
+        <div class="section-badge">VISION</div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 14px;">Build a Safer Nation</h3>
+        <p style="color: var(--text-secondary); line-height: 1.8;">
+          Create a nationwide intelligence network that supports public safety,
+          crime prevention, and operational excellence.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 30px;">
+        <div class="section-badge">PURPOSE</div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 14px;">Innovate With Impact</h3>
+        <p style="color: var(--text-secondary); line-height: 1.8;">
+          Transform a lifelong commitment to technology and safety into solutions
+          that serve communities across America.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div
+      class="card"
+      style="
+        padding: 60px 50px;
+        text-align: center;
+        background:
+          linear-gradient(135deg, rgba(10,102,255,0.15), rgba(0,162,255,0.08)),
+          rgba(7,18,37,0.95);
+      "
+    >
+      <div class="section-badge">THE FUTURE OF COMMUNITY SAFETY</div>
+
+      <h2
+        style="
+          max-width: 900px;
+          margin: 18px auto 24px;
+        "
+      >
+        Building Technology That Helps Communities Stay One Step Ahead
+      </h2>
+
+      <p
+        style="
+          max-width: 760px;
+          margin: 0 auto 36px;
+          color: var(--text-secondary);
+          line-height: 1.9;
+          font-size: 1.08rem;
+        "
+      >
+        CTRAX Technologies was founded on a simple belief: advanced intelligence
+        tools should not be reserved for only the largest agencies and organizations.
+        By combining artificial intelligence, real-time analytics, and modern
+        investigative technology, CTRAX and TRAX Safety are designed to help
+        communities of every size detect threats faster, reduce risk, and protect
+        what matters most.
+      </p>
+
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          gap: 18px;
+          flex-wrap: wrap;
+        "
+      >
+        <a href="request-demo.html" class="btn btn-primary">
+          Request a Demo →
+        </a>
+
+        <a href="pricing.html" class="btn btn-secondary">
+          View Pricing
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer
+  style="
+    padding: 60px 0 30px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: rgba(1, 8, 20, 0.85);
+  "
+>
+  <div class="container">
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 1.3fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      "
+    >
+      <!-- COMPANY -->
+      <div>
+        <img
+          src="ctrax-logo.png"
+          alt="CTRAX Technologies"
+          style="height: 46px; width: auto; margin-bottom: 20px;"
+        >
+
+        <p
+          style="
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 340px;
+          "
+        >
+          Advanced vehicle intelligence and AI-powered security solutions designed
+          to help organizations detect threats, reduce risk, and protect their
+          communities.
+        </p>
+      </div>
+
+      <!-- SOLUTIONS -->
+      <div>
+        <h4 style="margin-bottom: 18px; font-size: 0.95rem; letter-spacing: 0.08em;">
+          SOLUTIONS
+        </h4>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="homepage.html#solutions" style="color: var(--text-secondary); text-decoration: none;">HOA Communities</a>
+          <a href="homepage.html#solutions" style="color: var(--text-secondary); text-decoration: none;">Property Managers</a>
+          <a href="homepage.html#solutions" style="color: var(--text-secondary); text-decoration: none;">Businesses</a>
+          <a href="homepage.html#solutions" style="color: var(--text-secondary); text-decoration: none;">Law Enforcement</a>
+        </div>
+      </div>
+
+      <!-- COMPANY -->
+      <div>
+        <h4 style="margin-bottom: 18px; font-size: 0.95rem; letter-spacing: 0.08em;">
+          COMPANY
+        </h4>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="about.html" style="color: var(--text-secondary); text-decoration: none;">About Us</a>
+          <a href="request-demo.html" style="color: var(--text-secondary); text-decoration: none;">Request a Demo</a>
+          <a href="pricing.html" style="color: var(--text-secondary); text-decoration: none;">Pricing</a>
+          <a href="signup.html" style="color: var(--text-secondary); text-decoration: none;">Get Started</a>
+        </div>
+      </div>
+
+      <!-- LEGAL -->
+      <div>
+        <h4 style="margin-bottom: 18px; font-size: 0.95rem; letter-spacing: 0.08em;">
+          LEGAL
+        </h4>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="terms.html" style="color: var(--text-secondary); text-decoration: none;">Terms of Use</a>
+          <a href="privacy.html" style="color: var(--text-secondary); text-decoration: none;">Privacy Policy</a>
+          <a href="login.html" style="color: var(--text-secondary); text-decoration: none;">Client Login</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div
+      style="
+        padding-top: 28px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      "
+    >
+      <p style="color: var(--text-muted); font-size: 14px;">
+        © 2026 CTRAX Technologies. All rights reserved.
+      </p>
+
+      <p style="color: var(--text-muted); font-size: 14px;">
+        Founded by Christopher C. Davis in Indianapolis, Indiana.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- RESPONSIVE STYLES -->
+<style>
+@media (max-width: 992px) {
+  .section .container > div[style*="grid-template-columns: 0.9fr 1.1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .section .container > div[style*="repeat(3, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  footer .container > div[style*="grid-template-columns: 1.3fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  footer .container > div[style*="grid-template-columns: 1.3fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  footer .container > div[style*="justify-content: space-between"] {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+}
+</style>
+
+</body>
+</html>
+
+
