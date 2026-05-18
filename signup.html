@@ -1,160 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CTRAX Sign Up</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account | CTRAX Safety</title>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background:
-    radial-gradient(circle at top right, rgba(0,122,255,0.18), transparent 40%),
-    radial-gradient(circle at bottom left, rgba(0,122,255,0.10), transparent 35%),
-    linear-gradient(135deg, #020814 0%, #071a38 45%, #03101f 100%);
-  color: #ffffff;
-}
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at top left, rgba(0,170,255,0.25), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(0,80,255,0.25), transparent 40%),
+        linear-gradient(135deg, #081a44 0%, #0d2f8f 50%, #0b1d4f 100%);
+      padding: 20px;
+    }
 
-.signup-card {
-  width: 100%;
-  max-width: 440px;
-  padding: 48px 40px;
-  border-radius: 22px;
-  background: rgba(9, 22, 48, 0.82);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-  backdrop-filter: blur(14px);
-}
+    .signup-card {
+      width: 100%;
+      max-width: 460px;
+      padding: 50px 40px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+      text-align: center;
+    }
 
-.logo {
-  text-align: center;
-  font-size: 42px;
-  font-weight: 900;
-  letter-spacing: 10px;
-  margin-bottom: 36px;
-}
+    .logo {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: 0.35em;
+      color: #ffffff;
+      margin-bottom: 36px;
+      text-shadow: 0 0 20px rgba(0, 160, 255, 0.35);
+    }
 
-.form-group {
-  margin-bottom: 18px;
-}
+    .form-group {
+      margin-bottom: 18px;
+    }
 
-input {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.96);
-  color: #111827;
-  font-size: 15px;
-  outline: none;
-}
+    input {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.95);
+      color: #111827;
+    }
 
-button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #0a84ff, #2ea8ff);
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-}
+    input::placeholder {
+      color: #6b7280;
+    }
 
-#message {
-  margin-top: 14px;
-  min-height: 20px;
-  text-align: center;
-  font-size: 14px;
-}
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      margin-top: 8px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(90deg, #0099ff, #1d4ed8);
+      box-shadow: 0 12px 30px rgba(0, 140, 255, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.login-link {
-  margin-top: 24px;
-  text-align: center;
-  color: rgba(255,255,255,0.75);
-  font-size: 14px;
-}
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(0, 140, 255, 0.45);
+    }
 
-.login-link a {
-  color: #2ea8ff;
-  text-decoration: none;
-}
-</style>
+    .message {
+      min-height: 24px;
+      margin-top: 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .message.error {
+      color: #ff6b6b;
+    }
+
+    .message.success {
+      color: #7ef9a9;
+    }
+
+    .login-link {
+      margin-top: 22px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .login-link a {
+      color: #00b7ff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .signup-card {
+        padding: 40px 24px;
+      }
+
+      .logo {
+        font-size: 2.4rem;
+        letter-spacing: 0.25em;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="signup-card">
+    <div class="logo">CTRAX</div>
 
-<div class="signup-card">
-  <div class="logo">CTRAX</div>
+    <form id="signupForm">
+      <div class="form-group">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email Address"
+          required
+        />
+      </div>
 
-  <form onsubmit="signup(event)">
-    <div class="form-group">
-      <input type="email" id="email" placeholder="Email Address" required>
+      <div class="form-group">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Create Account
+      </button>
+    </form>
+
+    <div id="message" class="message"></div>
+
+    <div class="login-link">
+      Already have an account?
+      <a href="login.html">Sign In</a>
     </div>
-
-    <div class="form-group">
-      <input type="password" id="password" placeholder="Password" required>
-    </div>
-
-    <button type="submit">Create Account</button>
-
-    <div id="message"></div>
-  </form>
-
-  <div class="login-link">
-    Already have an account?
-    <a href="login.html">Sign In</a>
   </div>
-</div>
 
-<script>
-async function signup(event) {
-  event.preventDefault();
+  <script>
+    const form = document.getElementById('signupForm');
+    const message = document.getElementById('message');
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const message = document.getElementById('message');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-  message.textContent = '';
-  message.style.color = '#ff5f57';
+      message.textContent = '';
+      message.className = 'message';
 
-  try {
-    const response = await fetch('/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          message.textContent = 'Account created successfully! Redirecting...';
+          message.classList.add('success');
+
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          message.textContent = data.message || 'Unable to create account.';
+          message.classList.add('error');
+        }
+      } catch (error) {
+        message.textContent = 'Server error. Please try again.';
+        message.classList.add('error');
+      }
     });
-
-    const data = await response.json();
-
-    if (data.success) {
-      message.style.color = '#00d084';
-      message.textContent = 'Account created successfully! Redirecting...';
-
-      setTimeout(() => {
-        window.location.href = '/login.html';
-      }, 1200);
-    } else {
-      message.textContent =
-        data.message || 'Unable to create account';
-    }
-  } catch (error) {
-    console.error('Signup error:', error);
-    message.textContent = 'Server returned HTML instead of JSON';
-  }
-}
-</script>
-
+  </script>
 </body>
 </html>
