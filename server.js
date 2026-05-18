@@ -75,6 +75,11 @@ const Sighting =
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'ctrax-secret-key',
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(express.static(__dirname));
 
 // =====================================================
@@ -139,7 +144,6 @@ app.post('/signup', async (req, res) => {
 // =====================================================
 // LOGIN ROUTE
 // =====================================================
-
 app.post('/login', async (req, res) => {
   try {
     const email = (req.body.email || '').toLowerCase().trim();
@@ -170,6 +174,7 @@ app.post('/login', async (req, res) => {
       });
     }
 
+    // Store session data
     req.session.userId = user._id;
     req.session.userEmail = user.email;
 
@@ -184,7 +189,8 @@ app.post('/login', async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: 'Server error'
+      message: 'Server error',
+      error: error.message
     });
   }
 });
