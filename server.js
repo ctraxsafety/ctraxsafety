@@ -5,9 +5,8 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
-
-const app = express();
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 
 // =====================================================
 // MONGODB CONNECTION
@@ -91,37 +90,26 @@ app.get('/', (req, res) => {
 });
 
 // =====================================================
-// SIGNUP ROUTE
+// SIGN UP ROUTE
 // =====================================================
-
 app.post('/signup', async (req, res) => {
   try {
-    const {
-      fullName,
-      organization,
-      affiliation,
-      email,
-      password
-    } = req.body;
+    console.log('Signup request body:', req.body);
 
-    if (
-      !fullName ||
-      !organization ||
-      !affiliation ||
-      !email ||
-      !password
-    ) {
+    // Get submitted values
+    const email = (req.body.email || '').toLowerCase().trim();
+    const password = req.body.password || '';
+
+    // Validate required fields
+    if (!email || !password) {
       return res.status(400).json({
         success: false,
         message: 'All fields are required'
       });
     }
 
-    const normalizedEmail = email.toLowerCase().trim();
-
-    const existingUser = await User.findOne({
-      email: normalizedEmail
-    });
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({
@@ -130,29 +118,29 @@ app.post('/signup', async (req, res) => {
       });
     }
 
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user
     const user = new User({
-      fullName: fullName.trim(),
-      organization: organization.trim(),
-      affiliation,
-      email: normalizedEmail,
-      password
+      email,
+      password: hashedPassword
     });
 
     await user.save();
 
-    console.log('New user created:', normalizedEmail);
-
+    // Success response
     res.json({
       success: true,
       message: 'Account created successfully'
     });
+
   } catch (error) {
     console.error('Signup error:', error);
 
     res.status(500).json({
       success: false,
-      message: 'Server error',
-      error: error.message
+      message: 'Server error'
     });
   }
 });
