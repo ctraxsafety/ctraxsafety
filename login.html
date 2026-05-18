@@ -166,15 +166,13 @@ async function login(event) {
 
     const data = await response.json();
 
-    if (data.success) {
-      window.location.href = '/homepage.html';
-    } else {
-      errorBox.textContent = data.message || 'Login failed';
-    }
-  } catch (error) {
-    console.error('Login error:', error);
-    errorBox.textContent = 'Server error';
-  }
+   if (data.success) {
+  window.location.href = data.redirect || '/dashboard';
+} else {
+  message.textContent = data.message || 'Login failed';
+  message.classList.add('error');
+}
+
 }
 </script>
 
