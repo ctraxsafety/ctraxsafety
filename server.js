@@ -5,8 +5,10 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // =====================================================
 // MONGODB CONNECTION
@@ -24,26 +26,20 @@ mongoose.connect(process.env.MONGODB_URI)
 // =====================================================
 
 const userSchema = new mongoose.Schema({
-  fullName: {
-    type: String,
-    required: true
-  },
-  organization: {
-    type: String,
-    required: true
-  },
-  affiliation: {
-    type: String,
-    required: true
-  },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    lowercase: true,
+    trim: true
   },
   password: {
     type: String,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 
@@ -94,13 +90,9 @@ app.get('/', (req, res) => {
 // =====================================================
 app.post('/signup', async (req, res) => {
   try {
-    console.log('Signup request body:', req.body);
-
-    // Get submitted values
     const email = (req.body.email || '').toLowerCase().trim();
     const password = req.body.password || '';
 
-    // Validate required fields
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -108,7 +100,6 @@ app.post('/signup', async (req, res) => {
       });
     }
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -118,10 +109,8 @@ app.post('/signup', async (req, res) => {
       });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = new User({
       email,
       password: hashedPassword
@@ -129,7 +118,6 @@ app.post('/signup', async (req, res) => {
 
     await user.save();
 
-    // Success response
     res.json({
       success: true,
       message: 'Account created successfully'
@@ -161,7 +149,7 @@ app.post('/login', async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email, password });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(401).json({
@@ -170,22 +158,30 @@ app.post('/login', async (req, res) => {
       });
     }
 
-    console.log('Login successful:', user.email);
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password'
+      });
+    }
+
+    req.session.userId = user._id;
+    req.session.userEmail = user.email;
 
     res.json({
       success: true,
       message: 'Login successful',
-      user: {
-        email: user.email
-      }
+      redirect: '/dashboard'
     });
+
   } catch (error) {
     console.error('Login error:', error);
 
     res.status(500).json({
       success: false,
-      message: 'Server error',
-      error: error.message
+      message: 'Server error'
     });
   }
 });
