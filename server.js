@@ -276,7 +276,11 @@ const PORT = process.env.PORT || 5050;
 // DASHBOARD ROUTE
 // =====================================================
 app.get('/dashboard', (req, res) => {
-  res.sendFile(__dirname + '/admin.html');
+  if (!req.session.userId) {
+    return res.redirect('/login.html');
+  }
+
+  res.sendFile(__dirname + '/test.html');
 });
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`CTRAX server running on port ${PORT}`);
