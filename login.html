@@ -143,38 +143,65 @@ button:hover {
 </div>
 
 <script>
-async function login(event) {
-  event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('loginForm');
+  const message = document.getElementById('message');
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const errorBox = document.getElementById('error');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  errorBox.textContent = '';
+    // Clear previous message
+    message.textContent = '';
+    message.style.color = '';
 
-  try {
-    const response = await fetch('/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
-    });
+    // Get form values
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
 
-    const data = await response.json();
+    // Basic validation
+    if (!email || !password) {
+      message.textContent = 'Email and password are required';
+      message.style.color = '#ff4d4f';
+      return;
+    }
 
-   if (data.success) {
-  window.location.href = data.redirect || '/dashboard';
-} else {
-  message.textContent = data.message || 'Login failed';
-  message.classList.add('error');
-}
+    try {
+      // Send login request
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
 
-}
+      const data = await response.json();
+
+      if (data.success) {
+        // Show success message briefly
+        message.textContent = 'Login successful...';
+        message.style.color = '#00ff99';
+
+        // Redirect to dashboard
+        setTimeout(() => {
+          window.location.href = data.redirect || '/dashboard';
+        }, 500);
+      } else {
+        // Show server-provided message
+        message.textContent = data.message || 'Login failed';
+        message.style.color = '#ff4d4f';
+      }
+
+    } catch (error) {
+      console.error('Login error:', error);
+      message.textContent = 'Unable to connect to server';
+      message.style.color = '#ff4d4f';
+    }
+  });
+});
 </script>
-
 </body>
 </html>
