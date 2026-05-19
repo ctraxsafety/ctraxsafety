@@ -201,17 +201,14 @@ body {
 </head>
 <body>
 
-<div class="topbar">
-    <div class="logo">CTRAX <span>SAFETY</span></div>
-
-    <div class="tabs">
-        <span class="active">Plate</span>
-        <span>VIN</span>
-        <span>Heatmap</span>
-        <span>Playback</span>
-        <span>Reports</span>
-        <span>Account</span>
-    </div>
+<div class="tabs">
+    <span class="active" onclick="setView('plate', this)">Plate</span>
+    <span onclick="setView('vin', this)">VIN</span>
+    <span onclick="setView('heatmap', this)">Heatmap</span>
+    <span onclick="setView('playback', this)">Playback</span>
+    <span onclick="setView('reports', this)">Reports</span>
+    <span onclick="setView('account', this)">Account</span>
+</div>
 
     <a href="/login.html" class="logout-btn">Logout</a>
 </div>
@@ -220,7 +217,23 @@ body {
     <div class="sidebar">
         <div class="sidebar-header">
             <h2>Live Detections</h2>
-            <p>Auto-refreshing every 5 seconds</p>
+            <p>Auto-refreshing every 10 seconds</p>
+<input
+    type="text"
+    id="searchInput"
+    placeholder="Search plate, vehicle, or location..."
+    style="
+        width:100%;
+        margin-top:15px;
+        padding:12px 14px;
+        border-radius:10px;
+        border:1px solid rgba(255,255,255,0.08);
+        background:rgba(255,255,255,0.05);
+        color:white;
+        outline:none;
+        font-size:0.9rem;
+    "
+>
         </div>
 
         <div class="detections" id="detections">
@@ -317,7 +330,13 @@ function renderMarkers(sightings) {
         const lng = sighting.longitude ||
                     (-86.1581 + (Math.random() - 0.5) * 0.1);
 
-        const marker = L.marker([lat, lng]).addTo(map);
+        const marker = L.circleMarker([lat, lng], {
+    radius: 8,
+    color: '#00d4ff',
+    fillColor: '#00bfff',
+    fillOpacity: 0.95,
+    weight: 2
+}).addTo(map);
 
         marker.bindPopup(`
             <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
@@ -328,6 +347,34 @@ function renderMarkers(sightings) {
 
         markers.push(marker);
     });
+}
+
+function setView(view, element) {
+    document.querySelectorAll('.tabs span').forEach(tab => {
+        tab.classList.remove('active');
+    });
+
+    element.classList.add('active');
+
+    switch (view) {
+        case 'heatmap':
+            alert('Heatmap mode activated');
+            break;
+        case 'playback':
+            alert('Playback mode activated');
+            break;
+        case 'reports':
+            alert('Reports dashboard coming soon');
+            break;
+        case 'account':
+            alert('Account settings coming soon');
+            break;
+        case 'vin':
+            alert('VIN search activated');
+            break;
+        default:
+            break;
+    }
 }
 
 // Load sightings from the CTRAX API
@@ -354,7 +401,7 @@ async function loadSightings() {
 // Initial load
 loadSightings();
 
-// Refresh every 5 seconds
+// Refresh every 10 seconds
 setInterval(loadSightings, 5000);
 </script>
 
