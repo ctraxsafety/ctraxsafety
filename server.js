@@ -282,6 +282,24 @@ app.get('/dashboard', (req, res) => {
 
   res.sendFile(__dirname + '/test_camera.html');
 });
+app.get('/api/sightings', async (req, res) => {
+  try {
+    const sightings = await Sighting.find()
+      .sort({ timestamp: -1 })
+      .limit(100);
+
+    res.json({
+      success: true,
+      sightings
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to load sightings',
+      error: error.message
+    });
+  }
+});
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`CTRAX server running on port ${PORT}`);
 });
