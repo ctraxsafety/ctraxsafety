@@ -280,7 +280,7 @@ app.get('/dashboard', (req, res) => {
     return res.redirect('/login.html');
   }
 
-  res.sendFile(__dirname + '/test.html');
+  res.sendFile(__dirname + '/test_camera.html');
 });
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`CTRAX server running on port ${PORT}`);
