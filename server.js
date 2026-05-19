@@ -282,6 +282,7 @@ app.get('/dashboard', (req, res) => {
 
   res.sendFile(__dirname + '/test_camera.html');
 });
+
 app.get('/api/sightings', async (req, res) => {
   try {
     const sightings = await Sighting.find()

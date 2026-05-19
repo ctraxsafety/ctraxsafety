@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRAX Safety Dashboard | CTRAX Technologies</title>
+<title>TRAX Safety | Live Intelligence Map</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
 * {
@@ -14,222 +16,338 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #03101f 0%, #0b2f78 50%, #0a84ff 100%);
-    color: white;
-    min-height: 100vh;
+    background: #0a0f1c;
+    color: #ffffff;
+    overflow: hidden;
 }
 
-.header {
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 20px 40px;
+.topbar {
+    height: 70px;
+    background: #101827;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
 }
 
 .logo {
     font-size: 2rem;
     font-weight: 900;
-    letter-spacing: 6px;
+    letter-spacing: 4px;
 }
 
 .logo span {
     color: #00bfff;
 }
 
-.user-info {
+.tabs {
     display: flex;
-    align-items: center;
-    gap: 20px;
+    gap: 25px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.tabs span {
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+}
+
+.tabs span.active {
+    color: #00bfff;
 }
 
 .logout-btn {
     background: linear-gradient(135deg, #0a84ff, #00bfff);
-    color: white;
-    border: none;
-    padding: 10px 22px;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 18px;
     border-radius: 10px;
     font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
 }
 
-.hero {
-    text-align: center;
-    padding: 60px 20px 40px;
+.main {
+    display: flex;
+    height: calc(100vh - 70px);
 }
 
-.hero h1 {
-    font-size: 3rem;
-    font-weight: 900;
-    margin-bottom: 20px;
+.sidebar {
+    width: 380px;
+    background: #111827;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
 }
 
-.hero p {
-    max-width: 900px;
-    margin: 0 auto;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.9);
+.sidebar-header {
+    padding: 25px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.grid {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 30px 20px 80px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
+.sidebar-header h2 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
 }
 
-.card {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border-radius: 24px;
-    padding: 35px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-}
-
-.card h2 {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-    color: #00d4ff;
-}
-
-.card p {
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.92);
-}
-
-.card ul {
-    margin-top: 15px;
-    padding-left: 20px;
-}
-
-.card li {
-    margin-bottom: 10px;
-    line-height: 1.7;
-}
-
-.status {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 8px 14px;
-    border-radius: 999px;
+.sidebar-header p {
+    color: rgba(255,255,255,0.7);
     font-size: 0.9rem;
-    font-weight: 700;
-    background: rgba(0, 255, 128, 0.18);
-    color: #6dffb3;
-    border: 1px solid rgba(0, 255, 128, 0.25);
 }
 
-.footer {
+.detections {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.detection-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 16px;
+}
+
+.detection-card h3 {
+    color: #00d4ff;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.detection-card p {
+    margin: 4px 0;
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.88);
+}
+
+.map-container {
+    flex: 1;
+    position: relative;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.map-title {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(17, 24, 39, 0.92);
+    padding: 14px 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.map-title h1 {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.map-title p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.status-bar {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(17, 24, 39, 0.92);
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.9rem;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #00ff88;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.empty-state {
+    color: rgba(255,255,255,0.6);
     text-align: center;
-    padding: 30px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.95rem;
+    padding: 40px 20px;
+    line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+    .main {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: 45%;
+    }
+
+    .map-container {
+        height: 55%;
+    }
+
+    .tabs {
+        display: none;
+    }
 }
 </style>
 </head>
 <body>
 
-<header class="header">
+<div class="topbar">
     <div class="logo">CTRAX <span>SAFETY</span></div>
 
-    <div class="user-info">
-        <span>Welcome to TRAX Safety</span>
-        <a href="/login.html" class="logout-btn">Logout</a>
-    </div>
-</header>
-
-<section class="hero">
-    <h1>TRAX Safety Command Center</h1>
-    <p>
-        Real-time vehicle intelligence, license plate recognition, speed analytics,
-        historical search, and AI-powered public safety insights for law enforcement,
-        homeowners associations, commercial properties, and enterprise security teams.
-    </p>
-</section>
-
-<section class="grid">
-
-    <div class="card">
-        <h2>📷 Live Camera Feed</h2>
-        <p>
-            Monitor TRAX Safety cameras and capture real-time vehicle detections.
-        </p>
-        <span class="status">System Ready</span>
+    <div class="tabs">
+        <span class="active">Plate</span>
+        <span>VIN</span>
+        <span>Heatmap</span>
+        <span>Playback</span>
+        <span>Reports</span>
+        <span>Account</span>
     </div>
 
-    <div class="card">
-        <h2>🚗 License Plate Recognition</h2>
-        <p>
-            Automatically detect and read vehicle license plates with historical search.
-        </p>
-        <span class="status">AI Active</span>
+    <a href="/login.html" class="logout-btn">Logout</a>
+</div>
+
+<div class="main">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Live Detections</h2>
+            <p>Auto-refreshing every 5 seconds</p>
+        </div>
+
+        <div class="detections" id="detections">
+            <div class="empty-state">
+                Waiting for TRAX Safety detections...
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>⚡ Speed Detection</h2>
-        <p>
-            Measure vehicle speed and identify traffic violations and unsafe driving.
-        </p>
-        <span class="status">Monitoring</span>
+    <div class="map-container">
+        <div class="map-title">
+            <h1>TRAX Safety Intelligence Map</h1>
+            <p>Real-time vehicle detection monitoring</p>
+        </div>
+
+        <div id="map"></div>
+
+        <div class="status-bar">
+            <span class="status-dot"></span>
+            System Online
+        </div>
     </div>
+</div>
 
-    <div class="card">
-        <h2>🎯 Add Sighting</h2>
-        <p>
-            Manually create vehicle sightings for testing and demonstrations.
-        </p>
-        <span class="status">Available</span>
-    </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Initialize map centered on Indianapolis, Indiana
+const map = L.map('map').setView([39.7684, -86.1581], 11);
 
-    <div class="card">
-        <h2>📊 Historical Search</h2>
-        <p>
-            Search prior detections by plate, date, location, and vehicle attributes.
-        </p>
-        <span class="status">Online</span>
-    </div>
+// OpenStreetMap tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
-    <div class="card">
-        <h2>🛡️ Watch Lists</h2>
-        <p>
-            Receive alerts when stolen vehicles or persons of interest are detected.
-        </p>
-        <span class="status">Protected</span>
-    </div>
+// Store current map markers
+let markers = [];
 
-    <div class="card">
-        <h2>🏘️ Community Applications</h2>
-        <ul>
-            <li>Homeowners Associations</li>
-            <li>Apartment Communities</li>
-            <li>Commercial Properties</li>
-            <li>Retail Parking Lots</li>
-            <li>Law Enforcement Agencies</li>
-            <li>Private Investigators</li>
-        </ul>
-    </div>
+// Remove all markers from the map
+function clearMarkers() {
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
+}
 
-    <div class="card">
-        <h2>🚀 Investor Demonstration Ready</h2>
-        <p>
-            Your CTRAX platform now includes secure signup, login authentication,
-            session protection, and a private dashboard experience.
-        </p>
-        <span class="status">Production Ready</span>
-    </div>
+// Render detections in the left sidebar
+function renderDetections(sightings) {
+    const container = document.getElementById('detections');
 
-</section>
+    if (!sightings || sightings.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                Waiting for TRAX Safety detections...
+            </div>
+        `;
+        return;
+    }
 
-<footer class="footer">
-    © 2026 CTRAX Technologies. Safer Roads. Smarter Communities.
-</footer>
+    container.innerHTML = '';
+
+    sightings.forEach(sighting => {
+        const card = document.createElement('div');
+        card.className = 'detection-card';
+
+        card.innerHTML = `
+            <h3>${sighting.plate || 'UNKNOWN'}</h3>
+            <p><strong>Vehicle:</strong> ${sighting.vehicle || 'Unknown Vehicle'}</p>
+            <p><strong>Speed:</strong> ${sighting.speed || 0} mph</p>
+            <p><strong>Location:</strong> ${sighting.location || 'Unknown Location'}</p>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+// Add markers to the map
+function renderMarkers(sightings) {
+    clearMarkers();
+
+    sightings.forEach(sighting => {
+        // Use saved coordinates if available,
+        // otherwise place markers near Indianapolis.
+        const lat = sighting.latitude ||
+                    (39.7684 + (Math.random() - 0.5) * 0.1);
+
+        const lng = sighting.longitude ||
+                    (-86.1581 + (Math.random() - 0.5) * 0.1);
+
+        const marker = L.marker([lat, lng]).addTo(map);
+
+        marker.bindPopup(`
+            <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
+            ${sighting.vehicle || 'Unknown Vehicle'}<br>
+            ${sighting.speed || 0} mph<br>
+            ${sighting.location || 'Unknown Location'}
+        `);
+
+        markers.push(marker);
+    });
+}
+
+// Load sightings from the CTRAX API
+async function loadSightings() {
+    try {
+        const response = await fetch('/api/sightings');
+        const data = await response.json();
+
+        // Support both response formats:
+        // 1. { success: true, sightings: [...] }
+        // 2. [ ... ]
+        const sightings = Array.isArray(data)
+            ? data
+            : (data.sightings || []);
+
+        renderDetections(sightings);
+        renderMarkers(sightings);
+
+    } catch (error) {
+        console.error('Failed to load sightings:', error);
+    }
+}
+
+// Initial load
+loadSightings();
+
+// Refresh every 5 seconds
+setInterval(loadSightings, 5000);
+</script>
 
 </body>
 </html>
