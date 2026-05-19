@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRAX Safety | Live Intelligence Map</title>
+<title>CTRAX SAFETY | Elite Intelligence Platform</title>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
 * {
@@ -16,270 +17,550 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #0a0f1c;
+    background: #050b16;
     color: #ffffff;
     overflow: hidden;
 }
 
+.app {
+    display: grid;
+    grid-template-rows: 72px 1fr 110px;
+    height: 100vh;
+}
 .topbar {
-    height: 70px;
-    background: #101827;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: grid;
+    grid-template-columns: 220px 1fr auto auto;
+    align-items: center;
+    gap: 24px;
+    padding: 0 24px;
+    background: linear-gradient(180deg, rgba(8,16,32,0.98), rgba(5,11,22,0.96));
+    border-bottom: 1px solid rgba(0, 170, 255, 0.12);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand .title {
+    font-size: 2.1rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    line-height: 1;
+}
+
+.brand .title span {
+    color: #00bfff;
+}
+
+.brand .tagline {
+    margin-top: 4px;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.55);
+}
+
+.search-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 30px;
+    gap: 12px;
+    height: 48px;
+    padding: 0 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,191,255,0.12);
+    box-shadow: inset 0 0 30px rgba(0,191,255,0.03);
 }
 
-.logo {
-    font-size: 2rem;
-    font-weight: 900;
-    letter-spacing: 4px;
+.search-bar input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 1rem;
 }
 
-.logo span {
-    color: #00bfff;
+.search-bar input::placeholder {
+    color: rgba(255,255,255,0.45);
 }
 
 .tabs {
     display: flex;
-    gap: 25px;
-    font-size: 0.95rem;
-    font-weight: 600;
+    align-items: center;
+    gap: 8px;
 }
 
 .tabs span {
-    color: rgba(255,255,255,0.75);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.72);
     cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.tabs span:hover {
+    background: rgba(0,191,255,0.08);
+    color: #ffffff;
 }
 
 .tabs span.active {
-    color: #00bfff;
+    background: linear-gradient(135deg, rgba(0,122,255,0.22), rgba(0,191,255,0.14));
+    border: 1px solid rgba(0,191,255,0.18);
+    color: #7fdcff;
+    box-shadow: 0 0 20px rgba(0,191,255,0.12);
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.live-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #57ff9f;
+}
+
+.live-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00ff88;
+    box-shadow: 0 0 14px #00ff88;
 }
 
 .logout-btn {
-    background: linear-gradient(135deg, #0a84ff, #00bfff);
-    color: #fff;
-    text-decoration: none;
     padding: 10px 18px;
-    border-radius: 10px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0a84ff, #00bfff);
+    color: #ffffff;
+    text-decoration: none;
     font-weight: 700;
+    box-shadow: 0 10px 24px rgba(0, 140, 255, 0.22);
 }
 
 .main {
-    display: flex;
-    height: calc(100vh - 70px);
+    display: grid;
+    grid-template-columns: 380px 1fr 320px;
+    gap: 18px;
+    padding: 18px;
+    overflow: hidden;
 }
 
-.sidebar {
-    width: 380px;
-    background: #111827;
-    border-right: 1px solid rgba(255,255,255,0.08);
+.panel {
+    background: linear-gradient(180deg, rgba(12,20,38,0.96), rgba(7,13,25,0.96));
+    border: 1px solid rgba(0,191,255,0.08);
+    border-radius: 22px;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        inset 0 0 40px rgba(0,191,255,0.02);
+    overflow: hidden;
+}
+
+.left-panel,
+.right-panel {
     display: flex;
     flex-direction: column;
+    min-height: 0;
 }
 
-.sidebar-header {
-    padding: 25px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+.panel-header {
+    padding: 22px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.sidebar-header h2 {
-    font-size: 1.4rem;
-    margin-bottom: 8px;
+.panel-header h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 6px;
 }
 
-.sidebar-header p {
-    color: rgba(255,255,255,0.7);
-    font-size: 0.9rem;
+.panel-header p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.58);
 }
 
-.detections {
+.scroll-area {
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
+    padding: 18px;
 }
 
 .detection-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
     padding: 18px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.25s ease;
+}
+
+.detection-card:hover {
+    border-color: rgba(0,191,255,0.18);
+    box-shadow: 0 0 24px rgba(0,191,255,0.08);
 }
 
 .detection-card h3 {
-    color: #00d4ff;
-    font-size: 1.2rem;
+    color: #6edbff;
+    font-size: 1.15rem;
     margin-bottom: 10px;
+    letter-spacing: 1px;
 }
 
 .detection-card p {
     margin: 4px 0;
-    font-size: 0.92rem;
-    color: rgba(255,255,255,0.88);
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.82);
 }
 
-.map-container {
-    flex: 1;
+.alert-card {
+    padding: 18px;
+    margin-bottom: 14px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.alert-card h3 {
+    color: #ffcb6b;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.alert-card p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.78);
+}
+
+.metric {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 0.9rem;
+}
+
+.metric strong {
+    color: #7fdcff;
+}
+
+.map-panel {
     position: relative;
 }
 
 #map {
     width: 100%;
     height: 100%;
+    border-radius: 22px;
 }
 
-.map-title {
+.map-overlay {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 18px;
+    left: 18px;
     z-index: 1000;
-    background: rgba(17, 24, 39, 0.92);
-    padding: 14px 20px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: rgba(5,11,22,0.88);
+    border: 1px solid rgba(0,191,255,0.10);
+    backdrop-filter: blur(14px);
 }
 
-.map-title h1 {
+.map-overlay h1 {
     font-size: 1.2rem;
+    font-weight: 800;
     margin-bottom: 4px;
 }
 
-.map-title p {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.7);
+.map-overlay p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.58);
 }
 
-.status-bar {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    z-index: 1000;
-    background: rgba(17, 24, 39, 0.92);
-    padding: 12px 18px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.08);
-    font-size: 0.9rem;
+.bottom-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    padding: 0 18px 18px;
 }
 
-.status-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background: #00ff88;
-    border-radius: 50%;
-    margin-right: 8px;
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 18px 22px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(12,20,38,0.96), rgba(7,13,25,0.96));
+    border: 1px solid rgba(0,191,255,0.08);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+}
+
+.stat-card .label {
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.52);
+    margin-bottom: 6px;
+}
+
+.stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #7fdcff;
 }
 
 .empty-state {
-    color: rgba(255,255,255,0.6);
     text-align: center;
-    padding: 40px 20px;
-    line-height: 1.6;
+    padding: 48px 20px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.8;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1400px) {
     .main {
-        flex-direction: column;
+        grid-template-columns: 320px 1fr 280px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .main {
+        grid-template-columns: 320px 1fr;
     }
 
-    .sidebar {
-        width: 100%;
-        height: 45%;
-    }
-
-    .map-container {
-        height: 55%;
+    .right-panel {
+        display: none;
     }
 
     .tabs {
         display: none;
     }
+
+    .bottom-bar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .app {
+        grid-template-rows: auto 1fr auto;
+    }
+
+    .topbar {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+        height: auto;
+    }
+
+    .main {
+        grid-template-columns: 1fr;
+    }
+
+    .left-panel {
+        display: none;
+    }
+
+    .bottom-bar {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
 <body>
+<div class="app">
 
-<div class="tabs">
-    <span class="active" onclick="setView('plate', this)">Plate</span>
-    <span onclick="setView('vin', this)">VIN</span>
-    <span onclick="setView('heatmap', this)">Heatmap</span>
-    <span onclick="setView('playback', this)">Playback</span>
-    <span onclick="setView('reports', this)">Reports</span>
-    <span onclick="setView('account', this)">Account</span>
-</div>
-
-    <a href="/login.html" class="logout-btn">Logout</a>
-</div>
-
-<div class="main">
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h2>Live Detections</h2>
-            <p>Auto-refreshing every 10 seconds</p>
-<input
-    type="text"
-    id="searchInput"
-    placeholder="Search plate, vehicle, or location..."
-    style="
-        width:100%;
-        margin-top:15px;
-        padding:12px 14px;
-        border-radius:10px;
-        border:1px solid rgba(255,255,255,0.08);
-        background:rgba(255,255,255,0.05);
-        color:white;
-        outline:none;
-        font-size:0.9rem;
-    "
->
+    <header class="topbar">
+        <div class="brand">
+            <div class="title">CTRAX <span>SAFETY</span></div>
+            <div class="tagline">SAFER ROADS. SMARTER COMMUNITIES.</div>
         </div>
 
-        <div class="detections" id="detections">
-            <div class="empty-state">
-                Waiting for TRAX Safety detections...
+        <div class="search-bar">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search plate, VIN, vehicle, or location..."
+            >
+        </div>
+
+        <div class="tabs">
+            <span class="active" onclick="setView('plate', this)">Plate</span>
+            <span onclick="setView('vin', this)">VIN</span>
+            <span onclick="setView('people', this)">People</span>
+            <span onclick="setView('heatmap', this)">Heatmap</span>
+            <span onclick="setView('playback', this)">Playback</span>
+            <span onclick="setView('reports', this)">Reports</span>
+            <span onclick="setView('account', this)">Account</span>
+        </div>
+
+        <div class="top-actions">
+            <div class="live-status">
+                <span class="live-dot"></span>
+                LIVE
             </div>
+            <a href="/login.html" class="logout-btn">Logout</a>
         </div>
-    </div>
+    </header>
+    <main class="main">
 
-    <div class="map-container">
-        <div class="map-title">
-            <h1>TRAX Safety Intelligence Map</h1>
-            <p>Real-time vehicle detection monitoring</p>
+        <!-- LEFT PANEL: LIVE DETECTIONS -->
+        <aside class="panel left-panel">
+            <div class="panel-header">
+                <h2>Live Detections</h2>
+                <p>Real-time TRAX Safety vehicle sightings</p>
+            </div>
+
+            <div class="scroll-area" id="detections">
+                <div class="empty-state">
+                    Waiting for live detections from TRAX Safety...
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER PANEL: MAP -->
+        <section class="panel map-panel">
+            <div class="map-overlay">
+                <h1>TRAX Safety Intelligence Map</h1>
+                <p>Real-time vehicle intelligence and analytics</p>
+            </div>
+
+            <div id="map"></div>
+        </section>
+
+        <!-- RIGHT PANEL: ALERTS & SYSTEM STATUS -->
+        <aside class="panel right-panel">
+            <div class="panel-header">
+                <h2>Alerts & Intelligence</h2>
+                <p>Watchlists, camera status, and analytics</p>
+            </div>
+
+            <div class="scroll-area">
+
+                <div class="alert-card">
+                    <h3>⚡ System Status</h3>
+                    <div class="metric">
+                        <span>Cameras Online</span>
+                        <strong id="camerasOnline">1</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Detection Engine</span>
+                        <strong>Active</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Database</span>
+                        <strong>Connected</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Map Service</span>
+                        <strong>Mapbox</strong>
+                    </div>
+                </div>
+
+                <div class="alert-card">
+                    <h3>🚨 Watchlist Alerts</h3>
+                    <p>
+                        Monitor vehicles of interest and receive real-time
+                        notifications when a tagged plate is detected.
+                    </p>
+                </div>
+
+                <div class="alert-card">
+                    <h3>📈 Today's Analytics</h3>
+                    <div class="metric">
+                        <span>Detections</span>
+                        <strong id="todayDetections">0</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Avg. Speed</span>
+                        <strong id="avgSpeed">0 mph</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Active Alerts</span>
+                        <strong id="activeAlerts">0</strong>
+                    </div>
+                </div>
+
+                <div class="alert-card">
+                    <h3>🛡️ Protected Communities</h3>
+                    <p>
+                        Homeowners Associations, apartment communities,
+                        commercial properties, and law enforcement agencies.
+                    </p>
+                </div>
+
+            </div>
+        </aside>
+
+    </main>
+    <footer class="bottom-bar">
+        <div class="stat-card">
+            <div class="label">Cameras Online</div>
+            <div class="value" id="statCameras">1</div>
         </div>
 
-        <div id="map"></div>
-
-        <div class="status-bar">
-            <span class="status-dot"></span>
-            System Online
+        <div class="stat-card">
+            <div class="label">Detections Today</div>
+            <div class="value" id="statDetections">0</div>
         </div>
-    </div>
-</div>
 
+        <div class="stat-card">
+            <div class="label">Average Speed</div>
+            <div class="value" id="statSpeed">0 mph</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">Active Alerts</div>
+            <div class="value" id="statAlerts">0</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">System Status</div>
+            <div class="value">ONLINE</div>
+        </div>
+    </footer>
+
+</div> <!-- End .app -->
+
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-// Initialize map centered on Indianapolis, Indiana
-const map = L.map('map').setView([39.7684, -86.1581], 11);
 
-// Replace with your actual Mapbox public token
+<script>
+// ==========================================================
+// MAPBOX CONFIGURATION
+// Replace with your actual Mapbox public access token
+// ==========================================================
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2RhdmlzMTczMTciLCJhIjoiY21udnAybWE0MWIwbjJ3b2dkZXVuZGNpZyJ9.7Rx4AjPcnyGv_XIwMjXGfw';
 
-// Mapbox satellite streets layer
+// Initialize map centered on Indianapolis, Indiana
+const map = L.map('map', {
+    zoomControl: true
+}).setView([39.7684, -86.1581], 11);
+
+// Mapbox tactical dark style
 L.tileLayer(
-    `https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
+    `https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
     {
         tileSize: 512,
         zoomOffset: -1,
         maxZoom: 20,
-        attribution:
-            '&copy; OpenStreetMap contributors &copy; Mapbox'
+        attribution: '&copy; OpenStreetMap contributors &copy; Mapbox'
     }
 ).addTo(map);
 
-// Store current map markers
+// Store current markers
 let markers = [];
+
+// Store all loaded sightings
+let allSightings = [];
 
 // Remove all markers from the map
 function clearMarkers() {
@@ -287,14 +568,37 @@ function clearMarkers() {
     markers = [];
 }
 
-// Render detections in the left sidebar
+// Create glowing blue detection dots
+function createDetectionMarker(lat, lng, sighting) {
+    const marker = L.circleMarker([lat, lng], {
+        radius: 8,
+        color: '#00d4ff',
+        fillColor: '#00bfff',
+        fillOpacity: 0.95,
+        weight: 2
+    }).addTo(map);
+
+    // Glow effect
+    marker.getElement()?.classList.add('glow-marker');
+
+    marker.bindPopup(`
+        <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
+        ${sighting.vehicle || 'Unknown Vehicle'}<br>
+        ${sighting.speed || 0} mph<br>
+        ${sighting.location || 'Unknown Location'}
+    `);
+
+    markers.push(marker);
+}
+
+// Render detections in the left panel
 function renderDetections(sightings) {
     const container = document.getElementById('detections');
 
     if (!sightings || sightings.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
-                Waiting for TRAX Safety detections...
+                Waiting for live detections from TRAX Safety...
             </div>
         `;
         return;
@@ -302,7 +606,7 @@ function renderDetections(sightings) {
 
     container.innerHTML = '';
 
-    sightings.forEach(sighting => {
+    sightings.slice(0, 100).forEach(sighting => {
         const card = document.createElement('div');
         card.className = 'detection-card';
 
@@ -313,42 +617,107 @@ function renderDetections(sightings) {
             <p><strong>Location:</strong> ${sighting.location || 'Unknown Location'}</p>
         `;
 
+        // Center map when a detection is clicked
+        card.addEventListener('click', () => {
+            const lat = sighting.latitude ||
+                (39.7684 + (Math.random() - 0.5) * 0.1);
+            const lng = sighting.longitude ||
+                (-86.1581 + (Math.random() - 0.5) * 0.1);
+
+            map.flyTo([lat, lng], 14, { duration: 1.5 });
+        });
+
         container.appendChild(card);
     });
 }
 
-// Add markers to the map
+// Render glowing markers on the map
 function renderMarkers(sightings) {
     clearMarkers();
 
     sightings.forEach(sighting => {
-        // Use saved coordinates if available,
-        // otherwise place markers near Indianapolis.
         const lat = sighting.latitude ||
-                    (39.7684 + (Math.random() - 0.5) * 0.1);
+            (39.7684 + (Math.random() - 0.5) * 0.1);
 
         const lng = sighting.longitude ||
-                    (-86.1581 + (Math.random() - 0.5) * 0.1);
+            (-86.1581 + (Math.random() - 0.5) * 0.1);
 
-        const marker = L.circleMarker([lat, lng], {
-    radius: 8,
-    color: '#00d4ff',
-    fillColor: '#00bfff',
-    fillOpacity: 0.95,
-    weight: 2
-}).addTo(map);
-
-        marker.bindPopup(`
-            <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
-            ${sighting.vehicle || 'Unknown Vehicle'}<br>
-            ${sighting.speed || 0} mph<br>
-            ${sighting.location || 'Unknown Location'}
-        `);
-
-        markers.push(marker);
+        createDetectionMarker(lat, lng, sighting);
     });
 }
 
+// Update analytics cards
+function updateStats(sightings) {
+    const count = sightings.length;
+
+    const avgSpeed = count > 0
+        ? Math.round(
+            sightings.reduce((sum, s) => sum + (Number(s.speed) || 0), 0) / count
+          )
+        : 0;
+
+    document.getElementById('todayDetections').textContent = count;
+    document.getElementById('avgSpeed').textContent = `${avgSpeed} mph`;
+    document.getElementById('activeAlerts').textContent = 0;
+
+    document.getElementById('statDetections').textContent = count;
+    document.getElementById('statSpeed').textContent = `${avgSpeed} mph`;
+    document.getElementById('statAlerts').textContent = 0;
+}
+
+// Filter detections using the search bar
+function filterSightings() {
+    const query = document
+        .getElementById('searchInput')
+        .value
+        .toLowerCase()
+        .trim();
+
+    if (!query) {
+        renderDetections(allSightings);
+        renderMarkers(allSightings);
+        updateStats(allSightings);
+        return;
+    }
+
+    const filtered = allSightings.filter(sighting => {
+        const text = [
+            sighting.plate || '',
+            sighting.vehicle || '',
+            sighting.location || ''
+        ]
+        .join(' ')
+        .toLowerCase();
+
+        return text.includes(query);
+    });
+
+    renderDetections(filtered);
+    renderMarkers(filtered);
+    updateStats(filtered);
+}
+
+// Load sightings from the CTRAX API
+async function loadSightings() {
+    try {
+        const response = await fetch('/api/sightings');
+        const data = await response.json();
+
+        // Supports:
+        // 1. { success: true, sightings: [...] }
+        // 2. [ ... ]
+        allSightings = Array.isArray(data)
+            ? data
+            : (data.sightings || []);
+
+        filterSightings();
+
+    } catch (error) {
+        console.error('Failed to load sightings:', error);
+    }
+}
+
+// Navigation tabs
 function setView(view, element) {
     document.querySelectorAll('.tabs span').forEach(tab => {
         tab.classList.remove('active');
@@ -372,38 +741,26 @@ function setView(view, element) {
         case 'vin':
             alert('VIN search activated');
             break;
+        case 'people':
+            alert('People search activated');
+            break;
         default:
+            // Plate view is the default
             break;
     }
 }
 
-// Load sightings from the CTRAX API
-async function loadSightings() {
-    try {
-        const response = await fetch('/api/sightings');
-        const data = await response.json();
-
-        // Support both response formats:
-        // 1. { success: true, sightings: [...] }
-        // 2. [ ... ]
-        const sightings = Array.isArray(data)
-            ? data
-            : (data.sightings || []);
-
-        renderDetections(sightings);
-        renderMarkers(sightings);
-
-    } catch (error) {
-        console.error('Failed to load sightings:', error);
-    }
-}
+// Search bar listener
+document
+    .getElementById('searchInput')
+    .addEventListener('input', filterSightings);
 
 // Initial load
 loadSightings();
 
-// Refresh every 10 seconds
+// Auto-refresh every 5 seconds
 setInterval(loadSightings, 5000);
-</script>
 
+</script>
 </body>
 </html>
