@@ -1,17 +1,235 @@
-import cv2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRAX Safety Dashboard | CTRAX Technologies</title>
 
-cam = cv2.VideoCapture(0)
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-while True:
-    ret, frame = cam.read()
-    if not ret:
-        print("Camera not working")
-        break
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #03101f 0%, #0b2f78 50%, #0a84ff 100%);
+    color: white;
+    min-height: 100vh;
+}
 
-    cv2.imshow("Camera Test", frame)
+.header {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    if cv2.waitKey(1) == 27:  # press ESC to exit
-        break
+.logo {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 6px;
+}
 
-cam.release()
-cv2.destroyAllWindows()
+.logo span {
+    color: #00bfff;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #0a84ff, #00bfff);
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.card h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #00d4ff;
+}
+
+.card p {
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.card ul {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.card li {
+    margin-bottom: 10px;
+    line-height: 1.7;
+}
+
+.status {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: rgba(0, 255, 128, 0.18);
+    color: #6dffb3;
+    border: 1px solid rgba(0, 255, 128, 0.25);
+}
+
+.footer {
+    text-align: center;
+    padding: 30px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">CTRAX <span>SAFETY</span></div>
+
+    <div class="user-info">
+        <span>Welcome to TRAX Safety</span>
+        <a href="/login.html" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>TRAX Safety Command Center</h1>
+    <p>
+        Real-time vehicle intelligence, license plate recognition, speed analytics,
+        historical search, and AI-powered public safety insights for law enforcement,
+        homeowners associations, commercial properties, and enterprise security teams.
+    </p>
+</section>
+
+<section class="grid">
+
+    <div class="card">
+        <h2>📷 Live Camera Feed</h2>
+        <p>
+            Monitor TRAX Safety cameras and capture real-time vehicle detections.
+        </p>
+        <span class="status">System Ready</span>
+    </div>
+
+    <div class="card">
+        <h2>🚗 License Plate Recognition</h2>
+        <p>
+            Automatically detect and read vehicle license plates with historical search.
+        </p>
+        <span class="status">AI Active</span>
+    </div>
+
+    <div class="card">
+        <h2>⚡ Speed Detection</h2>
+        <p>
+            Measure vehicle speed and identify traffic violations and unsafe driving.
+        </p>
+        <span class="status">Monitoring</span>
+    </div>
+
+    <div class="card">
+        <h2>🎯 Add Sighting</h2>
+        <p>
+            Manually create vehicle sightings for testing and demonstrations.
+        </p>
+        <span class="status">Available</span>
+    </div>
+
+    <div class="card">
+        <h2>📊 Historical Search</h2>
+        <p>
+            Search prior detections by plate, date, location, and vehicle attributes.
+        </p>
+        <span class="status">Online</span>
+    </div>
+
+    <div class="card">
+        <h2>🛡️ Watch Lists</h2>
+        <p>
+            Receive alerts when stolen vehicles or persons of interest are detected.
+        </p>
+        <span class="status">Protected</span>
+    </div>
+
+    <div class="card">
+        <h2>🏘️ Community Applications</h2>
+        <ul>
+            <li>Homeowners Associations</li>
+            <li>Apartment Communities</li>
+            <li>Commercial Properties</li>
+            <li>Retail Parking Lots</li>
+            <li>Law Enforcement Agencies</li>
+            <li>Private Investigators</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🚀 Investor Demonstration Ready</h2>
+        <p>
+            Your CTRAX platform now includes secure signup, login authentication,
+            session protection, and a private dashboard experience.
+        </p>
+        <span class="status">Production Ready</span>
+    </div>
+
+</section>
+
+<footer class="footer">
+    © 2026 CTRAX Technologies. Safer Roads. Smarter Communities.
+</footer>
+
+</body>
+</html>
