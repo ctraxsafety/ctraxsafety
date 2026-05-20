@@ -758,16 +758,17 @@ function renderDetections(sightings) {
 
         // Zoom to marker when clicked
         card.addEventListener('click', () => {
-            const lat = sighting.latitude ||
-                (39.7684 + (Math.random() - 0.5) * 0.1);
+    const lat = Number(sighting.latitude);
+    const lng = Number(sighting.longitude);
 
-            const lng = sighting.longitude ||
-                (-86.1581 + (Math.random() - 0.5) * 0.1);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+        return;
+    }
 
-            map.flyTo([lat, lng], 15, {
-                duration: 1.5
-            });
-        });
+    map.flyTo([lat, lng], 15, {
+        duration: 1.5
+    });
+});
 
         container.appendChild(card);
     });
@@ -781,11 +782,13 @@ function renderMarkers(sightings) {
     clearMarkers();
 
     sightings.forEach(sighting => {
-        const lat = Number(sighting.latitude) ||
-            (39.7684 + (Math.random() - 0.5) * 0.1);
+        const lat = Number(sighting.latitude);
+        const lng = Number(sighting.longitude);
 
-        const lng = Number(sighting.longitude) ||
-            (-86.1581 + (Math.random() - 0.5) * 0.1);
+        // Only create markers when valid coordinates exist
+        if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+            return;
+        }
 
         createMarker(lat, lng, sighting);
     });
