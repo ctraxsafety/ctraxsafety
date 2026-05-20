@@ -513,6 +513,84 @@ body::before {
 
 <div class="app">
 
+/* ==========================================================
+   ANIMATED PULSE MARKERS
+========================================================== */
+
+.pulse-marker-blue,
+.pulse-marker-red {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseRing 2s infinite ease-out;
+}
+
+.pulse-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* BLUE MARKERS */
+.pulse-marker-blue .pulse-ring {
+    background: rgba(10, 61, 255, 0.25);
+    box-shadow:
+        0 0 10px rgba(10, 61, 255, 0.8),
+        0 0 22px rgba(10, 61, 255, 0.5);
+}
+
+.pulse-marker-blue .pulse-core {
+    background: #0a3dff;
+    box-shadow:
+        0 0 8px rgba(10, 61, 255, 1),
+        0 0 16px rgba(10, 61, 255, 0.8);
+}
+
+/* RED MARKERS */
+.pulse-marker-red .pulse-ring {
+    background: rgba(255, 59, 77, 0.22);
+    box-shadow:
+        0 0 10px rgba(255, 59, 77, 0.8),
+        0 0 22px rgba(255, 59, 77, 0.5);
+}
+
+.pulse-marker-red .pulse-core {
+    background: #ff3b4d;
+    box-shadow:
+        0 0 8px rgba(255, 59, 77, 1),
+        0 0 16px rgba(255, 59, 77, 0.8);
+}
+
+/* SHARED ANIMATION */
+@keyframes pulseRing {
+    0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.95;
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(2.4);
+        opacity: 0.12;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2.8);
+        opacity: 0;
+    }
+}
+
     <!-- ======================================================
          HEADER
     ======================================================= -->
@@ -626,37 +704,43 @@ body::before {
     }
 
     function createMarker(lat, lng, sighting) {
-        // Red = watchlist / priority, Blue = normal
-        const isRed = sighting.alert === true ||
-                      sighting.watchlist === true ||
-                      (Number(sighting.speed) || 0) >= 80;
+    // Red = watchlist / speeding / alert
+    // Blue = normal detection
+    const isRed =
+        sighting.alert === true ||
+        sighting.watchlist === true ||
+        (Number(sighting.speed) || 0) >= 80;
 
-        const marker = L.circleMarker([lat, lng], {
-        radius: 4,
-        color: isRed ? '#ff3b4d' : '#0a3dff',
-        fillColor: isRed ? '#ff3b4d' : '#0a3dff',
-        fillOpacity: 1,
-        weight: 1
-        }).addTo(map);
+    const color = isRed ? '#ff3b4d' : '#0a3dff';
+    const className = isRed ? 'pulse-marker-red' : 'pulse-marker-blue';
 
-        // Apply glow class
-        const element = marker.getElement();
-        if (element) {
-            element.classList.add(
-                isRed ? 'glow-marker-red' : 'glow-marker-blue'
-            );
-        }
+    // Create animated HTML marker
+    const icon = L.divIcon({
+        className: '',
+        html: `
+            <div class="${className}">
+                <div class="pulse-ring"></div>
+                <div class="pulse-core"></div>
+            </div>
+        `,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+    });
 
-        marker.bindPopup(`
-            <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
-            ${sighting.vehicle || 'Unknown Vehicle'}<br>
-            ${sighting.speed || 0} mph<br>
-            ${sighting.location || 'Unknown Location'}<br>
-            ${sighting.direction || 'Direction Unknown'}
-        `);
+    const marker = L.marker([lat, lng], {
+        icon: icon
+    }).addTo(map);
 
-        markers.push(marker);
-    }
+    marker.bindPopup(`
+        <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
+        ${sighting.vehicle || 'Unknown Vehicle'}<br>
+        ${sighting.speed || 0} mph<br>
+        ${sighting.location || 'Unknown Location'}<br>
+        ${sighting.direction || 'Direction Unknown'}
+    `);
+
+    markers.push(marker);
+}
 
     // ==========================================================
     // RENDER DETECTION CARDS
