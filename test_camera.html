@@ -3,43 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CTRAX SAFETY | Cyber Intelligence Platform</title>
+<title>CTRAX SAFETY | TRAX Safety Intelligence Platform</title>
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
+/* ==========================================================
+   RESET
+========================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* ==========================================================
+   COLOR SYSTEM
+========================================================== */
 :root {
-    --bg-primary: #020611;
-    --bg-secondary: #071224;
-    --bg-panel: rgba(8, 18, 36, 0.88);
-    --bg-glass: rgba(10, 24, 48, 0.72);
+    --bg-main: #020611;
+    --bg-header: rgba(3, 8, 20, 0.96);
+    --bg-panel: rgba(5, 15, 32, 0.94);
+    --bg-card: rgba(255, 255, 255, 0.02);
 
-    --blue-primary: #00bfff;
-    --blue-bright: #34d9ff;
-    --blue-glow: #00e5ff;
-    --cyan: #7ff7ff;
-
-    --green: #00ff88;
-    --amber: #ffcb6b;
-    --red: #ff5f7a;
+    --blue: #00bfff;
+    --blue-bright: #00d8ff;
+    --red: #ff3b4d;
 
     --text-primary: #ffffff;
-    --text-secondary: rgba(255,255,255,0.72);
-    --text-muted: rgba(255,255,255,0.45);
+    --text-secondary: rgba(255, 255, 255, 0.78);
+    --text-muted: rgba(255, 255, 255, 0.45);
 
     --border: rgba(0, 191, 255, 0.12);
-    --shadow-blue: 0 0 30px rgba(0, 191, 255, 0.12);
-    --shadow-dark: 0 24px 80px rgba(0, 0, 0, 0.55);
+    --shadow-dark: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
-html, body {
+/* ==========================================================
+   GLOBAL
+========================================================== */
+html,
+body {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -47,43 +51,24 @@ html, body {
 
 body {
     font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(circle at top right, rgba(0,191,255,0.08), transparent 35%),
-        radial-gradient(circle at bottom left, rgba(0,229,255,0.05), transparent 30%),
-        linear-gradient(135deg, #01040c 0%, #04111f 40%, #020611 100%);
     color: var(--text-primary);
+    background:
+        radial-gradient(circle at top right,
+            rgba(0,191,255,0.08),
+            transparent 35%),
+        linear-gradient(135deg,
+            #01040c 0%,
+            #04111f 45%,
+            #020611 100%);
 }
 
-/* Main App Layout */
-.app {
-    display: grid;
-    grid-template-rows: 78px 1fr 110px;
-    height: 100vh;
-    width: 100vw;
-}
-
-/* Shared Panel Style */
-.panel {
-    background: linear-gradient(
-        180deg,
-        rgba(8,18,36,0.95) 0%,
-        rgba(4,10,22,0.95) 100%
-    );
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    backdrop-filter: blur(18px);
-    box-shadow:
-        var(--shadow-dark),
-        inset 0 0 40px rgba(0,191,255,0.02);
-}
-
-/* Subtle animated grid overlay */
+/* Subtle cyber grid */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: 0.05;
+    opacity: 0.04;
     background-image:
         linear-gradient(rgba(0,191,255,0.35) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0,191,255,0.35) 1px, transparent 1px);
@@ -100,79 +85,94 @@ body::before {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(0,191,255,0.25);
+    background: rgba(0,191,255,0.22);
     border-radius: 999px;
 }
 
-/* =========================
-   TOP COMMAND BAR
-========================= */
-.topbar {
+/* ==========================================================
+   MAIN LAYOUT
+========================================================== */
+.app {
     display: grid;
-    grid-template-columns: 240px 1fr auto auto;
+    grid-template-rows: 86px 1fr;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Shared glass panel style */
+.panel {
+    background: linear-gradient(
+        180deg,
+        rgba(8,18,36,0.96) 0%,
+        rgba(3,9,22,0.96) 100%
+    );
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    backdrop-filter: blur(16px);
+    box-shadow:
+        var(--shadow-dark),
+        inset 0 0 30px rgba(0,191,255,0.02);
+}
+
+/* ==========================================================
+   TOP HEADER
+========================================================== */
+.header {
+    display: grid;
+    grid-template-columns: 220px 480px 1fr auto;
     align-items: center;
     gap: 24px;
     padding: 0 24px;
     background: linear-gradient(
         180deg,
-        rgba(6, 14, 30, 0.98) 0%,
-        rgba(3, 8, 18, 0.96) 100%
+        rgba(3, 8, 20, 0.98) 0%,
+        rgba(2, 6, 17, 0.96) 100%
     );
-    border-bottom: 1px solid rgba(0,191,255,0.10);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.55);
+    border-bottom: 1px solid rgba(0,191,255,0.08);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.55);
+    z-index: 1000;
 }
 
-/* Branding */
-.brand {
+/* ==========================================================
+   CTRAX LOGO
+========================================================== */
+.logo {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
-.brand-title {
-    font-size: 2.2rem;
-    font-weight: 900;
-    letter-spacing: 4px;
-    line-height: 1;
-    text-transform: uppercase;
+.logo img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0,191,255,0.08));
 }
 
-.brand-title span {
-    color: var(--blue-primary);
-    text-shadow: 0 0 18px rgba(0,191,255,0.35);
-}
-
-.brand-tagline {
-    margin-top: 5px;
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
-/* Search Bar */
-.search-bar {
+/* ==========================================================
+   SEARCH BAR
+========================================================== */
+.search-container {
     display: flex;
     align-items: center;
     gap: 12px;
     height: 50px;
     padding: 0 18px;
     border-radius: 14px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(0,191,255,0.10);
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(0,191,255,0.14);
     box-shadow:
         inset 0 0 30px rgba(0,191,255,0.03),
-        0 0 20px rgba(0,191,255,0.03);
+        0 0 20px rgba(0,191,255,0.02);
 }
 
-.search-bar::before {
-    content: "⌕";
-    color: var(--blue-primary);
+.search-icon {
+    color: var(--blue);
     font-size: 1.1rem;
     font-weight: 700;
 }
 
-.search-bar input {
+.search-container input {
     flex: 1;
     background: transparent;
     border: none;
@@ -181,259 +181,253 @@ body::before {
     font-size: 1rem;
 }
 
-.search-bar input::placeholder {
+.search-container input::placeholder {
     color: var(--text-muted);
 }
 
-/* Navigation Tabs */
-.tabs {
+/* ==========================================================
+   NAVIGATION TABS
+========================================================== */
+.nav-tabs {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.tabs span {
-    padding: 12px 16px;
-    border-radius: 12px;
-    font-size: 0.92rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
+.nav-tabs button {
+    background: transparent;
+    border: none;
     color: var(--text-secondary);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.25s ease;
-    user-select: none;
 }
 
-.tabs span:hover {
+.nav-tabs button:hover {
     color: #ffffff;
-    background: rgba(0,191,255,0.06);
+    background: rgba(0,191,255,0.05);
 }
 
-.tabs span.active {
-    color: var(--cyan);
+.nav-tabs button.active {
+    color: #ffffff;
     background: linear-gradient(
         135deg,
-        rgba(0,122,255,0.20),
-        rgba(0,191,255,0.10)
+        rgba(0,122,255,0.25),
+        rgba(0,191,255,0.12)
     );
-    border: 1px solid rgba(0,191,255,0.16);
+    border: 1px solid rgba(0,191,255,0.18);
     box-shadow:
         0 0 20px rgba(0,191,255,0.10),
         inset 0 0 20px rgba(0,191,255,0.03);
 }
 
-/* Top Actions */
-.top-actions {
+/* ==========================================================
+   HEADER ACTIONS
+========================================================== */
+.header-actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
 }
 
-/* Live Status */
-.live-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: var(--green);
-    text-transform: uppercase;
-}
-
-.live-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow:
-        0 0 10px var(--green),
-        0 0 20px rgba(0,255,136,0.5);
-    animation: pulse-live 1.6s infinite;
-}
-
-@keyframes pulse-live {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.35);
-        opacity: 0.7;
-    }
-}
-
-/* Logout Button */
-.logout-btn {
-    padding: 10px 18px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #0a84ff, #00bfff);
-    color: #ffffff;
+.header-link {
+    color: var(--text-secondary);
     text-decoration: none;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    box-shadow:
-        0 12px 28px rgba(0,140,255,0.25),
-        0 0 18px rgba(0,191,255,0.10);
-    transition: all 0.25s ease;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: color 0.25s ease;
 }
 
-.logout-btn:hover {
-    transform: translateY(-1px);
-    box-shadow:
-        0 16px 34px rgba(0,140,255,0.30),
-        0 0 24px rgba(0,191,255,0.14);
+.header-link:hover {
+    color: #ffffff;
 }
 
-/* =========================
-   MAIN GRID LAYOUT
-========================= */
+/* ==========================================================
+   MAIN CONTENT AREA
+========================================================== */
 .main {
     display: grid;
-    grid-template-columns: 360px 1fr 320px;
+    grid-template-columns: 360px 1fr;
     gap: 18px;
     padding: 18px;
+    height: calc(100vh - 86px);
     overflow: hidden;
 }
 
-/* Left and Right Side Panels */
-.left-panel,
-.right-panel {
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+@media (max-width: 1400px) {
+    .header {
+        grid-template-columns: 220px 360px 1fr auto;
+    }
+}
+
+@media (max-width: 1100px) {
+    .header {
+        grid-template-columns: 220px 1fr auto;
+    }
+
+    .nav-tabs {
+        display: none;
+    }
+
+    .main {
+        grid-template-columns: 320px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+        height: auto;
+    }
+
+    .main {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+}
+
+/* ==========================================================
+   LEFT PANEL — LIVE DETECTIONS
+========================================================== */
+.sidebar {
     display: flex;
     flex-direction: column;
     min-height: 0;
 }
 
-/* Panel Header */
-.panel-header {
+.sidebar-header {
     padding: 22px 24px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     background: linear-gradient(
         180deg,
         rgba(255,255,255,0.015),
-        rgba(255,255,255,0.0)
+        rgba(255,255,255,0)
     );
 }
 
-.panel-header h2 {
-    font-size: 1.2rem;
+.sidebar-header h2 {
+    font-size: 1.25rem;
     font-weight: 800;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
     margin-bottom: 6px;
 }
 
-.panel-header p {
-    font-size: 0.86rem;
+.sidebar-header p {
+    font-size: 0.88rem;
     color: var(--text-muted);
 }
 
-/* Scrollable Content Area */
-.scroll-area {
+.detections {
     flex: 1;
     overflow-y: auto;
     padding: 18px;
 }
 
-/* =========================
-   LIVE DETECTION CARDS
-========================= */
+/* ==========================================================
+   DETECTION CARD
+========================================================== */
 .detection-card {
     position: relative;
+    margin-bottom: 16px;
     padding: 18px;
-    margin-bottom: 14px;
     border-radius: 18px;
-    background: rgba(255,255,255,0.025);
+    background: var(--bg-card);
     border: 1px solid rgba(255,255,255,0.05);
     cursor: pointer;
     transition: all 0.25s ease;
 }
 
+.detection-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0,191,255,0.18);
+    box-shadow:
+        0 0 24px rgba(0,191,255,0.08),
+        inset 0 0 20px rgba(0,191,255,0.02);
+}
+
+/* Blue or Red status glow strip */
 .detection-card::before {
     content: "";
     position: absolute;
     left: 0;
     top: 14px;
     bottom: 14px;
-    width: 3px;
+    width: 4px;
     border-radius: 999px;
+}
+
+.detection-card.blue::before {
     background: linear-gradient(
         180deg,
-        var(--blue-primary),
-        var(--blue-glow)
+        var(--blue),
+        var(--blue-bright)
     );
-    box-shadow: 0 0 14px rgba(0,191,255,0.45);
+    box-shadow: 0 0 14px rgba(0,191,255,0.55);
 }
 
-.detection-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(0,191,255,0.16);
-    box-shadow:
-        0 0 24px rgba(0,191,255,0.08),
-        inset 0 0 20px rgba(0,191,255,0.02);
+.detection-card.red::before {
+    background: linear-gradient(
+        180deg,
+        #ff5a6a,
+        var(--red)
+    );
+    box-shadow: 0 0 14px rgba(255,59,77,0.55);
 }
 
+/* Plate number */
 .detection-card h3 {
     margin-left: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-size: 1.15rem;
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: 1px;
-    color: var(--cyan);
     text-transform: uppercase;
+    color: #ffffff;
 }
 
+/* Plate thumbnail image only */
+.plate-image {
+    width: 100%;
+    height: 78px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 8px;
+    margin-bottom: 12px;
+}
+
+/* Detection details */
 .detection-card p {
     margin-left: 10px;
     margin-bottom: 4px;
     font-size: 0.9rem;
-    color: rgba(255,255,255,0.82);
+    color: var(--text-secondary);
 }
 
 .detection-card strong {
     color: #ffffff;
 }
 
-/* =========================
-   ALERT / INTELLIGENCE CARDS
-========================= */
-.alert-card {
-    padding: 18px;
-    margin-bottom: 14px;
-    border-radius: 18px;
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(255,255,255,0.05);
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    line-height: 1.8;
+    color: var(--text-muted);
 }
 
-.alert-card h3 {
-    font-size: 1rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    color: var(--amber);
-}
-
-.alert-card p {
-    font-size: 0.88rem;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.78);
-}
-
-/* Metrics inside alert cards */
-.metric {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.78);
-}
-
-.metric strong {
-    color: var(--cyan);
-    font-weight: 800;
-}
-
-/* =========================
+/* ==========================================================
    MAP PANEL
-========================= */
+========================================================== */
 .map-panel {
     position: relative;
     overflow: hidden;
@@ -442,7 +436,7 @@ body::before {
 #map {
     width: 100%;
     height: 100%;
-    border-radius: 24px;
+    border-radius: 22px;
 }
 
 /* Floating title overlay */
@@ -462,7 +456,7 @@ body::before {
 }
 
 .map-overlay h1 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 800;
     margin-bottom: 4px;
     letter-spacing: 0.3px;
@@ -473,12 +467,28 @@ body::before {
     color: var(--text-muted);
 }
 
-/* Optional scan line effect */
+/* Blue and Red glowing map markers */
+.glow-marker-blue {
+    filter:
+        drop-shadow(0 0 8px rgba(0,191,255,0.95))
+        drop-shadow(0 0 16px rgba(0,216,255,0.75))
+        drop-shadow(0 0 26px rgba(0,191,255,0.45));
+}
+
+.glow-marker-red {
+    filter:
+        drop-shadow(0 0 8px rgba(255,59,77,0.95))
+        drop-shadow(0 0 16px rgba(255,90,106,0.75))
+        drop-shadow(0 0 26px rgba(255,59,77,0.45));
+}
+
+/* Optional subtle scan line effect */
 .map-panel::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
+    opacity: 0.15;
     background:
         repeating-linear-gradient(
             to bottom,
@@ -487,153 +497,26 @@ body::before {
             transparent 2px,
             transparent 4px
         );
-    opacity: 0.18;
 }
 
-/* =========================
-   GLOWING DETECTION MARKERS
-========================= */
-.glow-marker {
-    filter:
-        drop-shadow(0 0 8px rgba(0,191,255,0.95))
-        drop-shadow(0 0 16px rgba(0,229,255,0.75))
-        drop-shadow(0 0 26px rgba(0,191,255,0.45));
-}
-
-/* =========================
-   EMPTY STATE
-========================= */
-.empty-state {
-    text-align: center;
-    padding: 50px 20px;
-    line-height: 1.8;
-    color: var(--text-muted);
-}
-
-/* =========================
-   RESPONSIVE LAYOUT
-========================= */
-@media (max-width: 1400px) {
-    .main {
-        grid-template-columns: 320px 1fr 280px;
-    }
-}
-
-@media (max-width: 1100px) {
-    .main {
-        grid-template-columns: 320px 1fr;
-    }
-
-    .right-panel {
-        display: none;
-    }
-
-    .tabs {
-        display: none;
-    }
-
-    .app {
-        grid-template-rows: 78px 1fr 160px;
-    }
-}
-
-@media (max-width: 768px) {
-    .topbar {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 16px;
-        height: auto;
-    }
-
-    .main {
-        grid-template-columns: 1fr;
-    }
-
-    .left-panel {
-        display: none;
-    }
-
-    .app {
-        grid-template-rows: auto 1fr auto;
-    }
-}
-
-/* =========================
-   BOTTOM ANALYTICS BAR
-========================= */
-.bottom-bar {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 18px;
-    padding: 0 18px 18px;
-}
-
-.stat-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 18px 22px;
-    border-radius: 18px;
-    background: linear-gradient(
-        180deg,
-        rgba(8,18,36,0.95),
-        rgba(4,10,22,0.95)
-    );
-    border: 1px solid rgba(0,191,255,0.08);
-    box-shadow:
-        0 14px 40px rgba(0,0,0,0.35),
-        inset 0 0 20px rgba(0,191,255,0.02);
-}
-
-.stat-card .label {
-    font-size: 0.76rem;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-}
-
-.stat-card .value {
-    font-size: 1.55rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    color: var(--cyan);
-    text-shadow: 0 0 14px rgba(0,191,255,0.12);
-}
-
-/* Responsive bottom bar */
-@media (max-width: 1100px) {
-    .bottom-bar {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .bottom-bar {
-        grid-template-columns: 1fr;
-    }
-}
-
+/* Close the CSS and head, then begin the page body */
 </style>
 </head>
 <body>
 
 <div class="app">
 
-    <!-- =========================
-         TOP COMMAND BAR
-    ========================== -->
-    <header class="topbar">
-        <div class="brand">
-            <div class="brand-title">
-                CTRAX <span>SAFETY</span>
-            </div>
-            <div class="brand-tagline">
-                SAFER ROADS. SMARTER COMMUNITIES.
-            </div>
+    <!-- ======================================================
+         HEADER
+    ======================================================= -->
+    <header class="header">
+        <div class="logo">
+            <!-- Replace ctrax-logo.png with your actual logo filename -->
+            <img src="ctrax-logo.png" alt="CTRAX Logo">
         </div>
 
-        <div class="search-bar">
+        <div class="search-container">
+            <span class="search-icon">⌕</span>
             <input
                 type="text"
                 id="searchInput"
@@ -641,429 +524,309 @@ body::before {
             >
         </div>
 
-        <div class="tabs">
-            <span class="active" onclick="setView('plate', this)">Plate</span>
-            <span onclick="setView('vin', this)">VIN</span>
-            <span onclick="setView('people', this)">People</span>
-            <span onclick="setView('heatmap', this)">Heatmap</span>
-            <span onclick="setView('playback', this)">Playback</span>
-            <span onclick="setView('reports', this)">Reports</span>
-            <span onclick="setView('account', this)">Account</span>
+        <div class="nav-tabs">
+            <button class="active" onclick="setView('plate', this)">Plate</button>
+            <button onclick="setView('vin', this)">VIN</button>
+            <button onclick="setView('heatmap', this)">Heatmap</button>
+            <button onclick="setView('playback', this)">Playback</button>
         </div>
 
-        <div class="top-actions">
-            <div class="live-status">
-                <span class="live-dot"></span>
-                LIVE
-            </div>
-
-            <a href="/login.html" class="logout-btn">
-                Logout
-            </a>
+        <div class="header-actions">
+            <a href="#" class="header-link">Reports</a>
+            <a href="#" class="header-link">Account</a>
+            <a href="/login.html" class="header-link">Logout</a>
         </div>
     </header>
 
-    <!-- =========================
-         MAIN CONTENT GRID
-    ========================== -->
+    <!-- ======================================================
+         MAIN CONTENT
+    ======================================================= -->
     <main class="main">
 
-        <!-- LEFT PANEL: LIVE THREAT FEED -->
-        <aside class="panel left-panel">
-            <div class="panel-header">
-                <h2>Live Threat Feed</h2>
-                <p>Real-time TRAX Safety detections and vehicle intelligence</p>
+        <!-- LEFT SIDEBAR -->
+        <aside class="panel sidebar">
+            <div class="sidebar-header">
+                <h2>Live Detections</h2>
+                <p>Real-time TRAX Safety vehicle sightings</p>
             </div>
 
-            <div class="scroll-area" id="detections">
+            <div class="detections" id="detections">
                 <div class="empty-state">
                     Waiting for live detections from TRAX Safety...
                 </div>
             </div>
         </aside>
 
-        <!-- CENTER PANEL: CYBER INTELLIGENCE MAP -->
+        <!-- MAP PANEL -->
         <section class="panel map-panel">
             <div class="map-overlay">
-                <h1>TRAX Safety Cyber Intelligence Map</h1>
-                <p>Real-time vehicle detection, watchlists, and analytics</p>
+                <h1>TRAX Safety Intelligence Map</h1>
+                <p>Real-time vehicle detection and route analytics</p>
             </div>
 
             <div id="map"></div>
         </section>
 
-        <!-- RIGHT PANEL: INTELLIGENCE & ALERTS -->
-        <aside class="panel right-panel">
-            <div class="panel-header">
-                <h2>Threat Intelligence</h2>
-                <p>System status, watchlists, and operational analytics</p>
-            </div>
-
-            <div class="scroll-area">
-
-                <!-- SYSTEM STATUS -->
-                <div class="alert-card">
-                    <h3>⚡ System Status</h3>
-
-                    <div class="metric">
-                        <span>Cameras Online</span>
-                        <strong id="camerasOnline">1</strong>
-                    </div>
-
-                    <div class="metric">
-                        <span>Detection Engine</span>
-                        <strong>ACTIVE</strong>
-                    </div>
-
-                    <div class="metric">
-                        <span>Database</span>
-                        <strong>CONNECTED</strong>
-                    </div>
-
-                    <div class="metric">
-                        <span>Map Service</span>
-                        <strong>MAPBOX</strong>
-                    </div>
-                </div>
-
-                <!-- WATCHLIST ALERTS -->
-                <div class="alert-card">
-                    <h3>🚨 Watchlist Alerts</h3>
-                    <p>
-                        Monitor vehicles of interest and receive immediate
-                        notifications when tagged plates are detected by
-                        TRAX Safety cameras.
-                    </p>
-                </div>
-
-                <!-- DAILY ANALYTICS -->
-                <div class="alert-card">
-                    <h3>📈 Operational Analytics</h3>
-
-                    <div class="metric">
-                        <span>Detections Today</span>
-                        <strong id="todayDetections">0</strong>
-                    </div>
-
-                    <div class="metric">
-                        <span>Average Speed</span>
-                        <strong id="avgSpeed">0 mph</strong>
-                    </div>
-
-                    <div class="metric">
-                        <span>Active Alerts</span>
-                        <strong id="activeAlerts">0</strong>
-                    </div>
-                </div>
-
-                <!-- MARKET APPLICATIONS -->
-                <div class="alert-card">
-                    <h3>🛡️ Protected Communities</h3>
-                    <p>
-                        HOAs, apartment communities, commercial properties,
-                        enterprise security teams, and law enforcement agencies.
-                    </p>
-                </div>
-
-            </div>
-        </aside>
-
     </main>
+    </div> <!-- End .app -->
 
-    <!-- =========================
-         BOTTOM ANALYTICS BAR
-    ========================== -->
-    <footer class="bottom-bar">
+    <!-- ======================================================
+         LEAFLET JS
+    ======================================================= -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-        <div class="stat-card">
-            <div class="label">Cameras Online</div>
-            <div class="value" id="statCameras">1</div>
-        </div>
+    <script>
+    // ==========================================================
+    // MAPBOX CONFIGURATION
+    // Replace with your actual Mapbox public token
+    // ==========================================================
+    const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2RhdmlzMTczMTciLCJhIjoiY21wY2hrOGkxMDFpMzJ3cTBtNDdpYjQ4ciJ9.BhFwz7u74_-US7-kitnblA';
 
-        <div class="stat-card">
-            <div class="label">Detections Today</div>
-            <div class="value" id="statDetections">0</div>
-        </div>
+    // ==========================================================
+    // INITIALIZE MAP
+    // ==========================================================
+    const map = L.map('map', {
+        zoomControl: true,
+        attributionControl: true
+    }).setView([39.7684, -86.1581], 11); // Indianapolis, Indiana
 
-        <div class="stat-card">
-            <div class="label">Average Speed</div>
-            <div class="value" id="statSpeed">0 mph</div>
-        </div>
+    L.tileLayer(
+        `https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
+        {
+            tileSize: 512,
+            zoomOffset: -1,
+            maxZoom: 20,
+            attribution: '&copy; OpenStreetMap contributors &copy; Mapbox'
+        }
+    ).addTo(map);
 
-        <div class="stat-card">
-            <div class="label">Active Alerts</div>
-            <div class="value" id="statAlerts">0</div>
-        </div>
+    // ==========================================================
+    // GLOBAL VARIABLES
+    // ==========================================================
+    let markers = [];
+    let allSightings = [];
 
-        <div class="stat-card">
-            <div class="label">System Status</div>
-            <div class="value">ONLINE</div>
-        </div>
+    // Placeholder license plate image (replace later with real crops)
+    const DEFAULT_PLATE_IMAGE =
+        'https://dummyimage.com/320x90/0b1320/ffffff&text=LICENSE+PLATE';
 
-    </footer>
-
-</div> <!-- End .app -->
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script>
-// ==========================================================
-// MAPBOX CONFIGURATION
-// Replace the token below with your Mapbox public access token
-// ==========================================================
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2RhdmlzMTczMTciLCJhIjoiY21wY2hrOGkxMDFpMzJ3cTBtNDdpYjQ4ciJ9.BhFwz7u74_-US7-kitnblA';
-
-// ==========================================================
-// INITIALIZE CYBER INTELLIGENCE MAP
-// ==========================================================
-const map = L.map('map', {
-    zoomControl: true,
-    attributionControl: true
-}).setView([39.7684, -86.1581], 11);
-
-// Tactical dark Mapbox style
-L.tileLayer(
-    `https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
-    {
-        tileSize: 512,
-        zoomOffset: -1,
-        maxZoom: 20,
-        attribution: '&copy; OpenStreetMap contributors &copy; Mapbox'
-    }
-).addTo(map);
-
-// Store all active markers
-let markers = [];
-
-// Store all sightings for filtering
-let allSightings = [];
-
-// ==========================================================
-// MAP MARKER HELPERS
-// ==========================================================
-function clearMarkers() {
-    markers.forEach(marker => map.removeLayer(marker));
-    markers = [];
-}
-
-function createDetectionMarker(lat, lng, sighting) {
-    const marker = L.circleMarker([lat, lng], {
-        radius: 8,
-        color: '#00d4ff',
-        fillColor: '#00bfff',
-        fillOpacity: 0.95,
-        weight: 2
-    }).addTo(map);
-
-    // Add glow effect to marker
-    marker.getElement()?.classList.add('glow-marker');
-
-    // Popup content
-    marker.bindPopup(`
-        <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
-        ${sighting.vehicle || 'Unknown Vehicle'}<br>
-        ${sighting.speed || 0} mph<br>
-        ${sighting.location || 'Unknown Location'}
-    `);
-
-    markers.push(marker);
-}
-
-// ==========================================================
-// RENDER LIVE THREAT FEED
-// ==========================================================
-function renderDetections(sightings) {
-    const container = document.getElementById('detections');
-
-    if (!sightings || sightings.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                Waiting for live detections from TRAX Safety...
-            </div>
-        `;
-        return;
+    // ==========================================================
+    // MARKER HELPERS
+    // ==========================================================
+    function clearMarkers() {
+        markers.forEach(marker => map.removeLayer(marker));
+        markers = [];
     }
 
-    container.innerHTML = '';
+    function createMarker(lat, lng, sighting) {
+        // Red = watchlist / priority, Blue = normal
+        const isRed = sighting.alert === true ||
+                      sighting.watchlist === true ||
+                      (Number(sighting.speed) || 0) >= 80;
 
-    sightings.slice(0, 100).forEach(sighting => {
-        const card = document.createElement('div');
-        card.className = 'detection-card';
+        const marker = L.circleMarker([lat, lng], {
+            radius: 8,
+            color: isRed ? '#ff3b4d' : '#00bfff',
+            fillColor: isRed ? '#ff3b4d' : '#00bfff',
+            fillOpacity: 0.95,
+            weight: 2
+        }).addTo(map);
 
-        card.innerHTML = `
-            <h3>${sighting.plate || 'UNKNOWN'}</h3>
-            <p><strong>Vehicle:</strong> ${sighting.vehicle || 'Unknown Vehicle'}</p>
-            <p><strong>Speed:</strong> ${sighting.speed || 0} mph</p>
-            <p><strong>Location:</strong> ${sighting.location || 'Unknown Location'}</p>
-        `;
+        // Apply glow class
+        const element = marker.getElement();
+        if (element) {
+            element.classList.add(
+                isRed ? 'glow-marker-red' : 'glow-marker-blue'
+            );
+        }
 
-        // Fly to marker when a detection is clicked
-        card.addEventListener('click', () => {
+        marker.bindPopup(`
+            <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
+            ${sighting.vehicle || 'Unknown Vehicle'}<br>
+            ${sighting.speed || 0} mph<br>
+            ${sighting.location || 'Unknown Location'}<br>
+            ${sighting.direction || 'Direction Unknown'}
+        `);
+
+        markers.push(marker);
+    }
+
+    // ==========================================================
+    // RENDER DETECTION CARDS
+    // ==========================================================
+    function renderDetections(sightings) {
+        const container = document.getElementById('detections');
+
+        if (!sightings || sightings.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    Waiting for live detections from TRAX Safety...
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = '';
+
+        sightings.slice(0, 100).forEach(sighting => {
+            const isRed =
+                sighting.alert === true ||
+                sighting.watchlist === true ||
+                (Number(sighting.speed) || 0) >= 80;
+
+            const card = document.createElement('div');
+            card.className =
+                `detection-card ${isRed ? 'red' : 'blue'}`;
+
+            const plateImage =
+                sighting.plateImage ||
+                sighting.plate_image ||
+                DEFAULT_PLATE_IMAGE;
+
+            card.innerHTML = `
+                <h3>${sighting.plate || 'UNKNOWN'}</h3>
+
+                <img
+                    src="${plateImage}"
+                    alt="License Plate"
+                    class="plate-image"
+                    onerror="this.src='${DEFAULT_PLATE_IMAGE}'"
+                >
+
+                <p><strong>Vehicle:</strong> ${sighting.vehicle || 'Unknown Vehicle'}</p>
+                <p><strong>Speed:</strong> ${sighting.speed || 0} mph</p>
+                <p><strong>Location:</strong> ${sighting.location || 'Unknown Location'}</p>
+                <p><strong>Direction:</strong> ${sighting.direction || 'Unknown'}</p>
+            `;
+
+            // Zoom to detection when clicked
+            card.addEventListener('click', () => {
+                const lat = sighting.latitude ||
+                    (39.7684 + (Math.random() - 0.5) * 0.1);
+
+                const lng = sighting.longitude ||
+                    (-86.1581 + (Math.random() - 0.5) * 0.1);
+
+                map.flyTo([lat, lng], 14, {
+                    duration: 1.5
+                });
+            });
+
+            container.appendChild(card);
+        });
+    }
+    // ==========================================================
+    // RENDER MAP MARKERS
+    // ==========================================================
+    function renderMarkers(sightings) {
+        clearMarkers();
+
+        sightings.forEach(sighting => {
             const lat = sighting.latitude ||
                 (39.7684 + (Math.random() - 0.5) * 0.1);
 
             const lng = sighting.longitude ||
                 (-86.1581 + (Math.random() - 0.5) * 0.1);
 
-            map.flyTo([lat, lng], 14, {
-                duration: 1.5
-            });
+            createMarker(lat, lng, sighting);
+        });
+    }
+
+    // ==========================================================
+    // SEARCH FILTER
+    // ==========================================================
+    function filterSightings() {
+        const query = document
+            .getElementById('searchInput')
+            .value
+            .toLowerCase()
+            .trim();
+
+        if (!query) {
+            renderDetections(allSightings);
+            renderMarkers(allSightings);
+            return;
+        }
+
+        const filtered = allSightings.filter(sighting => {
+            const searchableText = [
+                sighting.plate || '',
+                sighting.vehicle || '',
+                sighting.location || '',
+                sighting.direction || ''
+            ]
+            .join(' ')
+            .toLowerCase();
+
+            return searchableText.includes(query);
         });
 
-        container.appendChild(card);
-    });
-}
+        renderDetections(filtered);
+        renderMarkers(filtered);
+    }
 
-// ==========================================================
-// RENDER GLOWING BLUE MARKERS
-// ==========================================================
-function renderMarkers(sightings) {
-    clearMarkers();
+    // ==========================================================
+    // LOAD SIGHTINGS FROM CTRAX API
+    // ==========================================================
+    async function loadSightings() {
+        try {
+            const response = await fetch('/api/sightings');
+            const data = await response.json();
 
-    sightings.forEach(sighting => {
-        const lat = sighting.latitude ||
-            (39.7684 + (Math.random() - 0.5) * 0.1);
+            // Supports:
+            // 1. { success: true, sightings: [...] }
+            // 2. [ ... ]
+            allSightings = Array.isArray(data)
+                ? data
+                : (data.sightings || []);
 
-        const lng = sighting.longitude ||
-            (-86.1581 + (Math.random() - 0.5) * 0.1);
+            filterSightings();
 
-        createDetectionMarker(lat, lng, sighting);
-    });
-}
+        } catch (error) {
+            console.error('Failed to load sightings:', error);
+        }
+    }
 
-// ==========================================================
-// UPDATE ANALYTICS
-// ==========================================================
-function updateStats(sightings) {
-    const count = sightings.length;
+    // ==========================================================
+    // TAB NAVIGATION
+    // ==========================================================
+    function setView(view, button) {
+        document.querySelectorAll('.nav-tabs button')
+            .forEach(btn => btn.classList.remove('active'));
 
-    const avgSpeed = count > 0
-        ? Math.round(
-            sightings.reduce(
-                (sum, s) => sum + (Number(s.speed) || 0),
-                0
-            ) / count
-        )
-        : 0;
+        button.classList.add('active');
 
-    // Right panel analytics
-    document.getElementById('todayDetections').textContent = count;
-    document.getElementById('avgSpeed').textContent = `${avgSpeed} mph`;
-    document.getElementById('activeAlerts').textContent = 0;
+        switch (view) {
+            case 'heatmap':
+                alert('Heatmap mode coming soon');
+                break;
+            case 'playback':
+                alert('Playback mode coming soon');
+                break;
+            case 'vin':
+                alert('VIN search activated');
+                break;
+            default:
+                // Plate view is the default live map
+                break;
+        }
+    }
 
-    // Bottom analytics bar
-    document.getElementById('statDetections').textContent = count;
-    document.getElementById('statSpeed').textContent = `${avgSpeed} mph`;
-    document.getElementById('statAlerts').textContent = 0;
-}
-
-// ==========================================================
-// SEARCH FILTER
-// ==========================================================
-function filterSightings() {
-    const query = document
+    // ==========================================================
+    // EVENT LISTENERS
+    // ==========================================================
+    document
         .getElementById('searchInput')
-        .value
-        .toLowerCase()
-        .trim();
+        .addEventListener('input', filterSightings);
 
-    if (!query) {
-        renderDetections(allSightings);
-        renderMarkers(allSightings);
-        updateStats(allSightings);
-        return;
-    }
+    // ==========================================================
+    // INITIALIZE DASHBOARD
+    // ==========================================================
+    loadSightings();
 
-    const filtered = allSightings.filter(sighting => {
-        const searchableText = [
-            sighting.plate || '',
-            sighting.vehicle || '',
-            sighting.location || ''
-        ]
-        .join(' ')
-        .toLowerCase();
+    // Refresh detections every 5 seconds
+    setInterval(loadSightings, 5000);
 
-        return searchableText.includes(query);
-    });
-
-    renderDetections(filtered);
-    renderMarkers(filtered);
-    updateStats(filtered);
-}
-
-// ==========================================================
-// LOAD SIGHTINGS FROM CTRAX API
-// ==========================================================
-async function loadSightings() {
-    try {
-        const response = await fetch('/api/sightings');
-        const data = await response.json();
-
-        // Supports:
-        // 1. { success: true, sightings: [...] }
-        // 2. [ ... ]
-        allSightings = Array.isArray(data)
-            ? data
-            : (data.sightings || []);
-
-        filterSightings();
-
-    } catch (error) {
-        console.error('Failed to load sightings:', error);
-    }
-}
-
-// ==========================================================
-// TAB NAVIGATION
-// ==========================================================
-function setView(view, element) {
-    document.querySelectorAll('.tabs span').forEach(tab => {
-        tab.classList.remove('active');
-    });
-
-    element.classList.add('active');
-
-    switch (view) {
-        case 'heatmap':
-            alert('Heatmap mode coming soon');
-            break;
-        case 'playback':
-            alert('Playback mode coming soon');
-            break;
-        case 'reports':
-            alert('Reports dashboard coming soon');
-            break;
-        case 'account':
-            alert('Account settings coming soon');
-            break;
-        case 'vin':
-            alert('VIN search activated');
-            break;
-        case 'people':
-            alert('People search activated');
-            break;
-        default:
-            // Plate view remains the default live map
-            break;
-    }
-}
-
-// ==========================================================
-// EVENT LISTENERS
-// ==========================================================
-document
-    .getElementById('searchInput')
-    .addEventListener('input', filterSightings);
-
-// ==========================================================
-// INITIALIZE DASHBOARD
-// ==========================================================
-loadSightings();
-
-// Refresh live detections every 5 seconds
-setInterval(loadSightings, 5000);
-
-</script>
+    </script>
 </body>
 </html>
