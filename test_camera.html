@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,19 +9,552 @@
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-<style></head>
+<style>
+/* ==========================================================
+   RESET
+========================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==========================================================
+   COLOR SYSTEM
+========================================================== */
+:root {
+    --bg-main: #020611;
+    --bg-header: rgba(3, 8, 20, 0.96);
+    --bg-panel: rgba(5, 15, 32, 0.94);
+    --bg-card: rgba(255, 255, 255, 0.02);
+
+    --blue: #0a3dff;
+    --blue-bright: #4d74ff;
+    --red: #ff3b4d;
+
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.78);
+    --text-muted: rgba(255, 255, 255, 0.45);
+
+    --border: rgba(0, 191, 255, 0.12);
+    --shadow-dark: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* ==========================================================
+   GLOBAL
+========================================================== */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: var(--text-primary);
+    background:
+        radial-gradient(circle at top right,
+            rgba(0,191,255,0.08),
+            transparent 35%),
+        linear-gradient(135deg,
+            #01040c 0%,
+            #04111f 45%,
+            #020611 100%);
+}
+
+/* Subtle cyber grid */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image:
+        linear-gradient(rgba(0,191,255,0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,191,255,0.35) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0,191,255,0.22);
+    border-radius: 999px;
+}
+
+/* ==========================================================
+   MAIN LAYOUT
+========================================================== */
+.app {
+    display: grid;
+    grid-template-rows: 86px 1fr;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Shared glass panel style */
+.panel {
+    background: linear-gradient(
+        180deg,
+        rgba(8,18,36,0.96) 0%,
+        rgba(3,9,22,0.96) 100%
+    );
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    backdrop-filter: blur(16px);
+    box-shadow:
+        var(--shadow-dark),
+        inset 0 0 30px rgba(0,191,255,0.02);
+}
+
+/* ==========================================================
+   TOP HEADER
+========================================================== */
+.header {
+    display: grid;
+    grid-template-columns: 220px 480px 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 0 24px;
+    background: linear-gradient(
+        180deg,
+        rgba(3, 8, 20, 0.98) 0%,
+        rgba(2, 6, 17, 0.96) 100%
+    );
+    border-bottom: 1px solid rgba(0,191,255,0.08);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.55);
+    z-index: 1000;
+}
+
+/* CTRAX Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.logo img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0,191,255,0.08));
+}
+
+/* Search Bar */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 50px;
+    padding: 0 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(0,191,255,0.14);
+    box-shadow:
+        inset 0 0 30px rgba(0,191,255,0.03),
+        0 0 20px rgba(0,191,255,0.02);
+}
+
+.search-icon {
+    color: var(--blue);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.search-container input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.search-container input::placeholder {
+    color: var(--text-muted);
+}
+
+/* ==========================================================
+   NAVIGATION TABS
+========================================================== */
+.nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-tabs button {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.nav-tabs button:hover {
+    color: #ffffff;
+    background: rgba(0,191,255,0.05);
+}
+
+.nav-tabs button.active {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        rgba(0,122,255,0.25),
+        rgba(0,191,255,0.12)
+    );
+    border: 1px solid rgba(0,191,255,0.18);
+    box-shadow:
+        0 0 20px rgba(0,191,255,0.10),
+        inset 0 0 20px rgba(0,191,255,0.03);
+}
+
+/* ==========================================================
+   HEADER ACTIONS
+========================================================== */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: color 0.25s ease;
+}
+
+.header-link:hover {
+    color: #ffffff;
+}
+
+/* ==========================================================
+   MAIN CONTENT AREA
+========================================================== */
+.main {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 18px;
+    padding: 18px;
+    height: calc(100vh - 86px);
+    overflow: hidden;
+}
+
+/* ==========================================================
+   LEFT PANEL — LIVE DETECTIONS
+========================================================== */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.sidebar-header {
+    padding: 22px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.015),
+        rgba(255,255,255,0)
+    );
+}
+
+.sidebar-header h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    margin-bottom: 6px;
+}
+
+.sidebar-header p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.detections {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+}
+
+/* ==========================================================
+   DETECTION CARDS
+========================================================== */
+.detection-card {
+    position: relative;
+    margin-bottom: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.detection-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0,191,255,0.18);
+    box-shadow:
+        0 0 24px rgba(0,191,255,0.08),
+        inset 0 0 20px rgba(0,191,255,0.02);
+}
+
+/* Blue or Red glowing strip on the left side */
+.detection-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 14px;
+    bottom: 14px;
+    width: 4px;
+    border-radius: 999px;
+}
+
+.detection-card.blue::before {
+    background: linear-gradient(
+        180deg,
+        var(--blue),
+        var(--blue-bright)
+    );
+    box-shadow: 0 0 14px rgba(10, 61, 255, 0.55);
+}
+
+.detection-card.red::before {
+    background: linear-gradient(
+        180deg,
+        #ff5a6a,
+        var(--red)
+    );
+    box-shadow: 0 0 14px rgba(255, 59, 77, 0.55);
+}
+
+/* Plate Number */
+.detection-card h3 {
+    margin-left: 10px;
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+/* License Plate Thumbnail Only */
+.plate-image {
+    width: 100%;
+    height: 78px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 8px;
+    margin-bottom: 12px;
+}
+
+/* Detection Details */
+.detection-card p {
+    margin-left: 10px;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.detection-card strong {
+    color: #ffffff;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+/* ==========================================================
+   FULL-WIDTH MAP PANEL
+========================================================== */
+.map-panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;   /* No boxed appearance */
+    box-shadow: none;   /* Remove panel shadow */
+    border: none;       /* Remove panel border */
+    background: transparent;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+/* Floating Map Title */
+.map-overlay {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 1000;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: rgba(2, 8, 20, 0.82);
+    border: 1px solid rgba(0,191,255,0.12);
+    backdrop-filter: blur(14px);
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.45),
+        0 0 24px rgba(0,191,255,0.05);
+}
+
+.map-overlay h1 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+}
+
+.map-overlay p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================
+   SYNCHRONIZED PULSE MARKERS
+========================================================== */
+.pulse-marker-blue,
+.pulse-marker-red {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseRing 2s infinite ease-out;
+}
+
+.pulse-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Blue Markers */
+.pulse-marker-blue .pulse-ring {
+    background: rgba(10, 61, 255, 0.25);
+    box-shadow:
+        0 0 10px rgba(10, 61, 255, 0.8),
+        0 0 22px rgba(10, 61, 255, 0.5);
+}
+
+.pulse-marker-blue .pulse-core {
+    background: #0a3dff;
+    box-shadow:
+        0 0 8px rgba(10, 61, 255, 1),
+        0 0 16px rgba(10, 61, 255, 0.8);
+}
+
+/* Red Markers */
+.pulse-marker-red .pulse-ring {
+    background: rgba(255, 59, 77, 0.22);
+    box-shadow:
+        0 0 10px rgba(255, 59, 77, 0.8),
+        0 0 22px rgba(255, 59, 77, 0.5);
+}
+
+.pulse-marker-red .pulse-core {
+    background: #ff3b4d;
+    box-shadow:
+        0 0 8px rgba(255, 59, 77, 1),
+        0 0 16px rgba(255, 59, 77, 0.8);
+}
+
+/* Shared Pulse Animation */
+@keyframes pulseRing {
+    0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.95;
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(2.4);
+        opacity: 0.12;
+    }
+    100% {
+        transform: translate(-50%, -50()) scale(2.8);
+        opacity: 0;
+    }
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+@media (max-width: 1400px) {
+    .header {
+        grid-template-columns: 220px 360px 1fr auto;
+    }
+}
+
+@media (max-width: 1100px) {
+    .header {
+        grid-template-columns: 220px 1fr auto;
+    }
+
+    .nav-tabs {
+        display: none;
+    }
+
+    .main {
+        grid-template-columns: 320px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+        height: auto;
+    }
+
+    .main {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+}
+
+/* Close CSS */
+</style>
+</head>
 <body>
 
 <div class="app">
 
-
-
-    <!-- ======================================================
-         HEADER
-    ======================================================= -->
+    <!-- HEADER -->
     <header class="header">
         <div class="logo">
-            <!-- Replace ctrax-logo.png with your actual logo filename -->
             <img src="ctrax-logo.png" alt="CTRAX Logo">
         </div>
 
@@ -47,9 +581,7 @@
         </div>
     </header>
 
-    <!-- ======================================================
-         MAIN CONTENT
-    ======================================================= -->
+    <!-- MAIN CONTENT -->
     <main class="main">
 
         <!-- LEFT SIDEBAR -->
@@ -66,7 +598,7 @@
             </div>
         </aside>
 
-        <!-- MAP PANEL -->
+        <!-- FULL MAP -->
         <section class="map-panel">
             <div class="map-overlay">
                 <h1>TRAX Safety Intelligence Map</h1>
@@ -77,66 +609,67 @@
         </section>
 
     </main>
-    </div> <!-- End .app -->
+</div> <!-- End .app -->
 
-    <!-- ======================================================
-         LEAFLET JS
-    ======================================================= -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <script>
-    // ==========================================================
-    // MAPBOX CONFIGURATION
-    // Replace with your actual Mapbox public token
-    // ==========================================================
-    const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2RhdmlzMTczMTciLCJhIjoiY21wY2hrOGkxMDFpMzJ3cTBtNDdpYjQ4ciJ9.BhFwz7u74_-US7-kitnblA';
+<script>
+// ==========================================================
+// MAPBOX CONFIGURATION
+// Replace with your actual Mapbox public token
+// ==========================================================
+const MAPBOX_TOKEN = 'PASTE_YOUR_MAPBOX_PUBLIC_TOKEN_HERE';
 
-    // ==========================================================
-    // INITIALIZE MAP
-    // ==========================================================
-    const map = L.map('map', {
-        zoomControl: true,
-        attributionControl: true
-    }).setView([39.7684, -86.1581], 11); // Indianapolis, Indiana
+// ==========================================================
+// INITIALIZE MAP
+// ==========================================================
+const map = L.map('map', {
+    zoomControl: true,
+    attributionControl: true
+}).setView([39.7684, -86.1581], 11); // Indianapolis, Indiana
 
-    L.tileLayer(
-        `https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
-        {
-            tileSize: 512,
-            zoomOffset: -1,
-            maxZoom: 20,
-            attribution: '&copy; OpenStreetMap contributors &copy; Mapbox'
-        }
-    ).addTo(map);
-
-    // ==========================================================
-    // GLOBAL VARIABLES
-    // ==========================================================
-    let markers = [];
-    let allSightings = [];
-
-    // Placeholder license plate image (replace later with real crops)
-    const DEFAULT_PLATE_IMAGE =
-        'https://dummyimage.com/320x90/0b1320/ffffff&text=LICENSE+PLATE';
-
-    // ==========================================================
-    // MARKER HELPERS
-    // ==========================================================
-    function clearMarkers() {
-        markers.forEach(marker => map.removeLayer(marker));
-        markers = [];
+L.tileLayer(
+    `https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
+    {
+        tileSize: 512,
+        zoomOffset: -1,
+        maxZoom: 20,
+        attribution: '&copy; OpenStreetMap contributors &copy; Mapbox'
     }
+).addTo(map);
 
-    function createMarker(lat, lng, sighting) {
-    // Red = watchlist / speeding / alert
+// ==========================================================
+// GLOBAL VARIABLES
+// ==========================================================
+let markers = [];
+let allSightings = [];
+let playbackTimer = null;
+let heatmapEnabled = false;
+
+// Placeholder plate image (used if no plate crop is provided)
+const DEFAULT_PLATE_IMAGE =
+    'https://dummyimage.com/320x90/0b1320/ffffff&text=LICENSE+PLATE';
+
+// ==========================================================
+// MARKER HELPERS
+// ==========================================================
+function clearMarkers() {
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
+}
+
+function createMarker(lat, lng, sighting) {
+    // Red = alert/watchlist/high-speed
     // Blue = normal detection
     const isRed =
         sighting.alert === true ||
         sighting.watchlist === true ||
         (Number(sighting.speed) || 0) >= 80;
 
-    const color = isRed ? '#ff3b4d' : '#0a3dff';
-    const className = isRed ? 'pulse-marker-red' : 'pulse-marker-blue';
+    const className = isRed
+        ? 'pulse-marker-red'
+        : 'pulse-marker-blue';
 
     // Create animated HTML marker
     const icon = L.divIcon({
@@ -155,6 +688,16 @@
         icon: icon
     }).addTo(map);
 
+    // Heatmap mode enlarges the pulse effect
+    if (heatmapEnabled) {
+        const el = marker.getElement();
+        if (el) {
+            el.style.transform = 'scale(1.8)';
+            el.style.opacity = '0.75';
+        }
+    }
+
+    // Popup
     marker.bindPopup(`
         <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
         ${sighting.vehicle || 'Unknown Vehicle'}<br>
@@ -166,210 +709,238 @@
     markers.push(marker);
 }
 
-    // ==========================================================
-    // RENDER DETECTION CARDS
-    // ==========================================================
-    function renderDetections(sightings) {
-        const container = document.getElementById('detections');
+// ==========================================================
+// RENDER DETECTION CARDS
+// ==========================================================
+function renderDetections(sightings) {
+    const container = document.getElementById('detections');
 
-        if (!sightings || sightings.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    Waiting for live detections from TRAX Safety...
-                </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = '';
-
-        sightings.slice(0, 100).forEach(sighting => {
-            const isRed =
-                sighting.alert === true ||
-                sighting.watchlist === true ||
-                (Number(sighting.speed) || 0) >= 80;
-
-            const card = document.createElement('div');
-            card.className =
-                `detection-card ${isRed ? 'red' : 'blue'}`;
-
-            const plateImage =
-                sighting.plateImage ||
-                sighting.plate_image ||
-                DEFAULT_PLATE_IMAGE;
-
-            card.innerHTML = `
-                <h3>${sighting.plate || 'UNKNOWN'}</h3>
-
-                <img
-                    src="${plateImage}"
-                    alt="License Plate"
-                    class="plate-image"
-                    onerror="this.src='${DEFAULT_PLATE_IMAGE}'"
-                >
-
-                <p><strong>Vehicle:</strong> ${sighting.vehicle || 'Unknown Vehicle'}</p>
-                <p><strong>Speed:</strong> ${sighting.speed || 0} mph</p>
-                <p><strong>Location:</strong> ${sighting.location || 'Unknown Location'}</p>
-                <p><strong>Direction:</strong> ${sighting.direction || 'Unknown'}</p>
-            `;
-
-            // Zoom to detection when clicked
-            card.addEventListener('click', () => {
-                const lat = sighting.latitude ||
-                    (39.7684 + (Math.random() - 0.5) * 0.1);
-
-                const lng = sighting.longitude ||
-                    (-86.1581 + (Math.random() - 0.5) * 0.1);
-
-                map.flyTo([lat, lng], 14, {
-                    duration: 1.5
-                });
-            });
-
-            container.appendChild(card);
-        });
+    if (!sightings || sightings.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                Waiting for live detections from TRAX Safety...
+            </div>
+        `;
+        return;
     }
-    // ==========================================================
-    // RENDER MAP MARKERS
-    // ==========================================================
-    function renderMarkers(sightings) {
-        clearMarkers();
 
-        sightings.forEach(sighting => {
+    container.innerHTML = '';
+
+    sightings.slice(0, 100).forEach(sighting => {
+        const isRed =
+            sighting.alert === true ||
+            sighting.watchlist === true ||
+            (Number(sighting.speed) || 0) >= 80;
+
+        const card = document.createElement('div');
+        card.className = `detection-card ${isRed ? 'red' : 'blue'}`;
+
+        const plateImage =
+            sighting.plateImage ||
+            sighting.plate_image ||
+            DEFAULT_PLATE_IMAGE;
+
+        card.innerHTML = `
+            <h3>${sighting.plate || 'UNKNOWN'}</h3>
+
+            <img
+                src="${plateImage}"
+                alt="License Plate"
+                class="plate-image"
+                onerror="this.src='${DEFAULT_PLATE_IMAGE}'"
+            >
+
+            <p><strong>Vehicle:</strong> ${sighting.vehicle || 'Unknown Vehicle'}</p>
+            <p><strong>Speed:</strong> ${sighting.speed || 0} mph</p>
+            <p><strong>Location:</strong> ${sighting.location || 'Unknown Location'}</p>
+            <p><strong>Direction:</strong> ${sighting.direction || 'Unknown'}</p>
+        `;
+
+        // Zoom to marker when clicked
+        card.addEventListener('click', () => {
             const lat = sighting.latitude ||
                 (39.7684 + (Math.random() - 0.5) * 0.1);
 
             const lng = sighting.longitude ||
                 (-86.1581 + (Math.random() - 0.5) * 0.1);
 
-            createMarker(lat, lng, sighting);
-        });
-    }
-
-    // ==========================================================
-    // SEARCH FILTER
-    // ==========================================================
-    function filterSightings() {
-        const query = document
-            .getElementById('searchInput')
-            .value
-            .toLowerCase()
-            .trim();
-
-        if (!query) {
-            renderDetections(allSightings);
-            renderMarkers(allSightings);
-            return;
-        }
-
-        const filtered = allSightings.filter(sighting => {
-            const searchableText = [
-                sighting.plate || '',
-                sighting.vehicle || '',
-                sighting.location || '',
-                sighting.direction || ''
-            ]
-            .join(' ')
-            .toLowerCase();
-
-            return searchableText.includes(query);
+            map.flyTo([lat, lng], 15, {
+                duration: 1.5
+            });
         });
 
-        renderDetections(filtered);
-        renderMarkers(filtered);
+        container.appendChild(card);
+    });
+}
+
+//
+// ==========================================================
+// RENDER MAP MARKERS
+// ==========================================================
+function renderMarkers(sightings) {
+    clearMarkers();
+
+    sightings.forEach(sighting => {
+        const lat = Number(sighting.latitude) ||
+            (39.7684 + (Math.random() - 0.5) * 0.1);
+
+        const lng = Number(sighting.longitude) ||
+            (-86.1581 + (Math.random() - 0.5) * 0.1);
+
+        createMarker(lat, lng, sighting);
+    });
+}
+
+// ==========================================================
+// SEARCH FILTER
+// ==========================================================
+function filterSightings() {
+    const query = document
+        .getElementById('searchInput')
+        .value
+        .toLowerCase()
+        .trim();
+
+    if (!query) {
+        renderDetections(allSightings);
+        renderMarkers(allSightings);
+        return;
     }
 
-    // ==========================================================
-    // LOAD SIGHTINGS FROM CTRAX API
-    // ==========================================================
-    async function loadSightings() {
-        try {
-            const response = await fetch('/api/sightings');
-            const data = await response.json();
+    const filtered = allSightings.filter(sighting => {
+        const searchableText = [
+            sighting.plate || '',
+            sighting.vehicle || '',
+            sighting.location || '',
+            sighting.direction || ''
+        ]
+        .join(' ')
+        .toLowerCase();
 
-            // Supports:
-            // 1. { success: true, sightings: [...] }
-            // 2. [ ... ]
-            allSightings = Array.isArray(data)
-                ? data
-                : (data.sightings || []);
+        return searchableText.includes(query);
+    });
 
-            filterSightings();
+    renderDetections(filtered);
+    renderMarkers(filtered);
+}
 
-        } catch (error) {
-            console.error('Failed to load sightings:', error);
-        }
+// ==========================================================
+// LOAD SIGHTINGS FROM CTRAX API
+// ==========================================================
+async function loadSightings() {
+    try {
+        const response = await fetch('/api/sightings');
+        const data = await response.json();
+
+        // Supports:
+        // 1. { success: true, sightings: [...] }
+        // 2. [ ... ]
+        allSightings = Array.isArray(data)
+            ? data
+            : (data.sightings || []);
+
+        filterSightings();
+
+    } catch (error) {
+        console.error('Failed to load sightings:', error);
+    }
+}
+
+// ==========================================================
+// HEATMAP MODE
+// ==========================================================
+function toggleHeatmap() {
+    heatmapEnabled = !heatmapEnabled;
+    filterSightings();
+}
+
+// ==========================================================
+// PLAYBACK MODE
+// ==========================================================
+function startPlayback() {
+    // Stop existing playback if already running
+    if (playbackTimer) {
+        clearInterval(playbackTimer);
+        playbackTimer = null;
+        return;
     }
 
-    // ==========================================================
-    // TAB NAVIGATION
-    // ==========================================================
-    function setView(view, button) {
-        document.querySelectorAll('.nav-tabs button')
-            .forEach(btn => btn.classList.remove('active'));
+    if (!allSightings.length) return;
 
-        button.classList.add('active');
-
-        switch (view) {
-           case 'heatmap':
-    if (markers.length > 0) {
-        markers.forEach(marker => {
-            const element = marker.getElement();
-            if (element) {
-                element.style.opacity = '0.35';
-                element.style.transform = 'scale(2.2)';
-            }
-        });
-    }
-    break;
-            case 'playback':
     let index = 0;
 
-    if (allSightings.length === 0) return;
-
-    const playbackInterval = setInterval(() => {
+    playbackTimer = setInterval(() => {
         if (index >= allSightings.length) {
-            clearInterval(playbackInterval);
+            clearInterval(playbackTimer);
+            playbackTimer = null;
             return;
         }
 
         const sighting = allSightings[index];
 
-        const lat = sighting.latitude || 39.7684;
-        const lng = sighting.longitude || -86.1581;
+        const lat = Number(sighting.latitude) || 39.7684;
+        const lng = Number(sighting.longitude) || -86.1581;
 
-        map.flyTo([lat, lng], 14, {
+        map.flyTo([lat, lng], 15, {
             duration: 1.5
         });
 
         index++;
     }, 2000);
-    break;
-            case 'vin':
-                alert('VIN search activated');
-                break;
-            default:
-                // Plate view is the default live map
-                break;
-        }
+}
+
+// ==========================================================
+// TAB NAVIGATION
+// ==========================================================
+function setView(view, button) {
+    document.querySelectorAll('.nav-tabs button')
+        .forEach(btn => btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    switch (view) {
+        case 'heatmap':
+            toggleHeatmap();
+            break;
+
+        case 'playback':
+            startPlayback();
+            break;
+
+        case 'vin':
+            alert('VIN search activated');
+            break;
+
+        case 'plate':
+        default:
+            // Return to normal view
+            heatmapEnabled = false;
+
+            if (playbackTimer) {
+                clearInterval(playbackTimer);
+                playbackTimer = null;
+            }
+
+            filterSightings();
+            break;
     }
+}
 
-    // ==========================================================
-    // EVENT LISTENERS
-    // ==========================================================
-    document
-        .getElementById('searchInput')
-        .addEventListener('input', filterSightings);
+// ==========================================================
+// EVENT LISTENERS
+// ==========================================================
+document
+    .getElementById('searchInput')
+    .addEventListener('input', filterSightings);
 
-    // ==========================================================
-    // INITIALIZE DASHBOARD
-    // ==========================================================
-    loadSightings();
+// ==========================================================
+// INITIALIZE DASHBOARD
+// ==========================================================
+loadSightings();
 
-    // Refresh detections every 5 seconds
-    setInterval(loadSightings, 5000);
+// Refresh detections every 5 seconds
+setInterval(loadSightings, 5000);
 
-    </script>
+</script>
 </body>
 </html>
