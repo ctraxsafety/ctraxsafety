@@ -6,204 +6,155 @@
 <title>CTRAX Login</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background:
-    radial-gradient(circle at top right, rgba(0,122,255,0.18), transparent 40%),
-    radial-gradient(circle at bottom left, rgba(0,122,255,0.10), transparent 35%),
-    linear-gradient(135deg, #020814 0%, #071a38 45%, #03101f 100%);
-  color: #ffffff;
+body{
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(
+135deg,
+#01040c,
+#02152f,
+#001d5a
+);
+position:relative;
 }
 
-.login-card {
-  width: 100%;
-  max-width: 420px;
-  padding: 48px 40px;
-  border-radius: 22px;
-  background: rgba(9, 22, 48, 0.82);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-  backdrop-filter: blur(14px);
+/* Camera Background */
+.camera-bg{
+position:absolute;
+width:900px;
+max-width:90%;
+opacity:.45;
+z-index:1;
 }
 
-.logo {
-  text-align: center;
-  font-size: 42px;
-  font-weight: 900;
-  letter-spacing: 10px;
-  margin-bottom: 36px;
-  color: #ffffff;
+/* Login Card */
+.login-card{
+position:relative;
+z-index:10;
+
+width:480px;
+
+padding:50px;
+
+border-radius:30px;
+
+background:rgba(8,15,35,.65);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 30px 80px rgba(0,0,0,.5);
 }
 
-.form-group {
-  margin-bottom: 18px;
+/* Logo */
+.logo{
+display:block;
+width:320px;
+margin:0 auto 35px;
 }
 
-input {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.96);
-  color: #111827;
-  font-size: 15px;
-  outline: none;
+.input{
+width:100%;
+padding:16px;
+margin-bottom:20px;
+
+border-radius:12px;
+
+border:1px solid rgba(255,255,255,.08);
+
+background:rgba(255,255,255,.03);
+
+color:white;
+
+font-size:16px;
 }
 
-input:focus {
-  border-color: #0a84ff;
-  box-shadow: 0 0 0 3px rgba(10,132,255,0.18);
+.input:focus{
+outline:none;
+border-color:#2f7cff;
 }
 
-button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #0a84ff, #2ea8ff);
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 6px;
+.signin{
+width:100%;
+padding:18px;
+
+background:#0d5dff;
+
+border:none;
+
+border-radius:14px;
+
+font-size:18px;
+
+font-weight:700;
+
+color:white;
+
+cursor:pointer;
 }
 
-button:hover {
-  opacity: 0.96;
-}
-
-#error {
-  color: #ff5f57;
-  margin-top: 12px;
-  min-height: 20px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.signup-link {
-  margin-top: 24px;
-  text-align: center;
-  color: rgba(255,255,255,0.75);
-  font-size: 14px;
-}
-
-.signup-link a {
-  color: #2ea8ff;
-  text-decoration: none;
-}
-
-.signup-link a:hover {
-  text-decoration: underline;
+.signin:hover{
+background:#1d6bff;
 }
 </style>
 </head>
 <body>
 
+<img
+src="/trax-camera-bg.png"
+class="camera-bg"
+alt="TRAX Safety Camera"
+>
+
 <div class="login-card">
-  <div class="logo">CTRAX</div>
 
-  <form id="loginForm">
-    <div class="form-group">
-        <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email Address"
-            required
-        >
-    </div>
+<img
+src="/ctrax-logo.png"
+class="logo"
+alt="CTRAX"
+>
 
-    <div class="form-group">
-        <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            required
-        >
-    </div>
+<form action="/login" method="POST">
 
-    <button type="submit">Sign In</button>
+<input
+type="email"
+name="email"
+placeholder="Email"
+class="input"
+required
+>
 
-    <div id="message"></div>
+<input
+type="password"
+name="password"
+placeholder="Password"
+class="input"
+required
+>
+
+<button
+type="submit"
+class="signin"
+>
+Sign In
+</button>
+
 </form>
 
-  <div class="signup-link">
-    Don't have an account?
-    <a href="signup.html">Sign up</a>
-  </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('loginForm');
-  const message = document.getElementById('message');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Clear previous message
-    message.textContent = '';
-    message.style.color = '';
-
-    // Get form values
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-
-    // Basic validation
-    if (!email || !password) {
-      message.textContent = 'Email and password are required';
-      message.style.color = '#ff4d4f';
-      return;
-    }
-
-    try {
-      // Send login request
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          password
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Show success message briefly
-        message.textContent = 'Login successful...';
-        message.style.color = '#00ff99';
-
-        // Redirect to dashboard
-        setTimeout(() => {
-          window.location.href = data.redirect || '/dashboard';
-        }, 500);
-      } else {
-        // Show server-provided message
-        message.textContent = data.message || 'Login failed';
-        message.style.color = '#ff4d4f';
-      }
-
-    } catch (error) {
-      console.error('Login error:', error);
-      message.textContent = 'Unable to connect to server';
-      message.style.color = '#ff4d4f';
-    }
-  });
-});
-</script>
 </body>
 </html>
