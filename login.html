@@ -3,225 +3,275 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CTRAX Login</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
 body{
-height:100vh;
-overflow:hidden;
 
-background:
-linear-gradient(
-180deg,
-#010817,
-#03132d,
-#010817
-);
+    height:100vh;
+    overflow:hidden;
 
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
-}
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-/* Background */
-.bg{
-position:absolute;
-inset:0;
+    background:
+    linear-gradient(
+        rgba(0,0,0,.25),
+        rgba(0,0,0,.25)
+    ),
+    url('/images/ctrax-login-bg.jpg');
 
-background:
-radial-gradient(circle at center,
-#06205a 0%,
-#02132f 45%,
-#010817 100%);
-
-z-index:0;
-
-}
-
-/* TRAX Camera */
-.camera{
-position:absolute;
-top:20px;
-left:50%;
-transform:translateX(-50%) scale(.82);
-width:520px;
-z-index:1;
-}
-
-/* TRAX CAM MAP */
-.trax-map{
-position:absolute;
-right:90px;
-top:160px;
-width:320px;
-opacity:.95;
-z-index:1;
-}
-
-/* Active Zone */
-.active-zone{
-position:absolute;
-right:115px;
-top:120px;
-color:#1e88ff;
-z-index:2;
-}
-
-.active-zone h3{
-font-size:30px;
-font-weight:600;
-}
-
-.active-zone p{
-font-size:18px;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
 }
 
 /* Login Card */
+
 .login-card{
 
-position:relative;
-z-index:5;
+    width:420px;
 
-width:420px;
+    padding:40px;
 
-padding:45px;
+    border-radius:28px;
 
-border-radius:28px;
+    background:
+    rgba(0,8,25,.72);
 
-background:
-rgba(0,10,30,.65);
+    backdrop-filter:blur(18px);
 
-backdrop-filter:blur(18px);
+    border:
+    1px solid rgba(255,255,255,.12);
 
-border:
-1px solid rgba(255,255,255,.12);
-
-box-shadow:
-0 0 50px rgba(0,80,255,.18);
+    box-shadow:
+    0 0 60px rgba(0,80,255,.18);
 
 }
 
-/* Logo */
+/* CTRAX Logo */
+
 .logo{
-display:block;
-width:290px;
-margin:0 auto 30px;
+
+    display:block;
+
+    width:280px;
+
+    margin:0 auto 30px auto;
+
 }
 
 /* Inputs */
+
 .input{
-width:100%;
-padding:18px;
-margin-bottom:18px;
 
-border-radius:14px;
+    width:100%;
 
-background:
-rgba(0,0,0,.35);
+    padding:18px;
 
-border:
-1px solid rgba(255,255,255,.08);
+    margin-bottom:18px;
 
-color:white;
-font-size:16px;
+    border-radius:14px;
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    background:
+    rgba(0,0,0,.30);
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+.input::placeholder{
+
+    color:#9aa6c3;
+
 }
 
 .input:focus{
-outline:none;
-border-color:#1e88ff;
+
+    outline:none;
+
+    border-color:#1e88ff;
+
 }
 
 /* Button */
+
 .btn{
-width:100%;
-padding:18px;
 
-border:none;
+    width:100%;
 
-border-radius:14px;
+    padding:18px;
 
-background:#0b5cff;
+    border:none;
 
-color:white;
+    border-radius:14px;
 
-font-size:20px;
-font-weight:700;
+    background:#0d5dff;
 
-cursor:pointer;
+    color:white;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
 }
 
 .btn:hover{
-background:#1d6cff;
+
+    background:#1f6cff;
+
 }
 
+/* Footer */
+
 .footer{
-margin-top:22px;
-text-align:center;
-color:#ccc;
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#d0d7e7;
+
+    font-size:14px;
+
 }
 
 .footer a{
-color:#1e88ff;
-text-decoration:none;
+
+    color:#1e88ff;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.footer a:hover{
+
+    text-decoration:underline;
+
+}
+
+.forgot{
+
+    display:block;
+
+    margin-bottom:15px;
+
+}
+
+.copyright{
+
+    position:absolute;
+
+    bottom:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    color:rgba(255,255,255,.45);
+
+    font-size:12px;
+
+}
+
+@media(max-width:768px){
+
+    .login-card{
+
+        width:92%;
+
+        max-width:420px;
+
+        padding:30px;
+
+    }
+
+    .logo{
+
+        width:220px;
+
+    }
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="bg"></div>
-
-<img src="/images/trax-camera.png" class="camera">
-
-<div class="active-zone">
-<h3>TRAX CAM</h3>
-<p>DOWNTOWN</p>
-</div>
-
-<img src="/images/trax-map.png" class="trax-map">
-
 <div class="login-card">
 
-<img src="/images/ctrax-logo.png" class="logo">
+    <img
+    src="/images/ctrax-logo.png"
+    class="logo"
+    alt="CTRAX">
 
-<form action="/login" method="POST">
+    <form action="/login" method="POST">
 
-<input
-class="input"
-type="email"
-name="email"
-placeholder="Email"
-required>
+        <input
+        type="email"
+        name="email"
+        class="input"
+        placeholder="Email Address"
+        required>
 
-<input
-class="input"
-type="password"
-name="password"
-placeholder="Password"
-required>
+        <input
+        type="password"
+        name="password"
+        class="input"
+        placeholder="Password"
+        required>
 
-<button class="btn">
-Sign In
-</button>
+        <button
+        type="submit"
+        class="btn">
+        Sign In
+        </button>
 
-</form>
+    </form>
 
-<div class="footer">
-Forgot Password?<br><br>
-Don't have an account?
-<a href="/signup">Sign Up</a>
+    <div class="footer">
+
+        <a
+        href="/forgot-password"
+        class="forgot">
+        Forgot Password?
+        </a>
+
+        Don't have an account?
+
+        <a href="/signup">
+        Sign Up
+        </a>
+
+    </div>
+
 </div>
 
+<div class="copyright">
+© 2026 CTRAX SAFETY SYSTEMS. ALL RIGHTS RESERVED.
 </div>
 
 </body>
