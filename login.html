@@ -3,276 +3,207 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>CTRAX Login</title>
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-
-    height:100vh;
-    overflow:hidden;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background:
-    linear-gradient(
-        rgba(0,0,0,.25),
-        rgba(0,0,0,.25)
-    ),
-    url('/images/ctrax-login-bg.jpg');
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at top right, rgba(0,122,255,0.18), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(0,122,255,0.10), transparent 35%),
+    linear-gradient(135deg, #020814 0%, #071a38 45%, #03101f 100%);
+  color: #ffffff;
 }
 
-/* Login Card */
-
-.login-card{
-
-    width:420px;
-
-    padding:40px;
-
-    border-radius:28px;
-
-    background:
-    rgba(0,8,25,.72);
-
-    backdrop-filter:blur(18px);
-
-    border:
-    1px solid rgba(255,255,255,.12);
-
-    box-shadow:
-    0 0 60px rgba(0,80,255,.18);
-
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 48px 40px;
+  border-radius: 22px;
+  background: rgba(9, 22, 48, 0.82);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  backdrop-filter: blur(14px);
 }
 
-/* CTRAX Logo */
-
-.logo{
-
-    display:block;
-
-    width:280px;
-
-    margin:0 auto 30px auto;
-
+.logo {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 10px;
+  margin-bottom: 36px;
+  color: #ffffff;
 }
 
-/* Inputs */
-
-.input{
-
-    width:100%;
-
-    padding:18px;
-
-    margin-bottom:18px;
-
-    border-radius:14px;
-
-    border:
-    1px solid rgba(255,255,255,.08);
-
-    background:
-    rgba(0,0,0,.30);
-
-    color:white;
-
-    font-size:16px;
-
+.form-group {
+  margin-bottom: 18px;
 }
 
-.input::placeholder{
-
-    color:#9aa6c3;
-
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.96);
+  color: #111827;
+  font-size: 15px;
+  outline: none;
 }
 
-.input:focus{
-
-    outline:none;
-
-    border-color:#1e88ff;
-
+input:focus {
+  border-color: #0a84ff;
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.18);
 }
 
-/* Button */
-
-.btn{
-
-    width:100%;
-
-    padding:18px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:#0d5dff;
-
-    color:white;
-
-    font-size:20px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.25s;
-
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0a84ff, #2ea8ff);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
 }
 
-.btn:hover{
-
-    background:#1f6cff;
-
+button:hover {
+  opacity: 0.96;
 }
 
-/* Footer */
-
-.footer{
-
-    margin-top:25px;
-
-    text-align:center;
-
-    color:#d0d7e7;
-
-    font-size:14px;
-
+#error {
+  color: #ff5f57;
+  margin-top: 12px;
+  min-height: 20px;
+  text-align: center;
+  font-size: 14px;
 }
 
-.footer a{
-
-    color:#1e88ff;
-
-    text-decoration:none;
-
-    font-weight:600;
-
+.signup-link {
+  margin-top: 24px;
+  text-align: center;
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
 }
 
-.footer a:hover{
-
-    text-decoration:underline;
-
+.signup-link a {
+  color: #2ea8ff;
+  text-decoration: none;
 }
 
-.forgot{
-
-    display:block;
-
-    margin-bottom:15px;
-
+.signup-link a:hover {
+  text-decoration: underline;
 }
-
-.copyright{
-
-    position:absolute;
-
-    bottom:25px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    color:rgba(255,255,255,.45);
-
-    font-size:12px;
-
-}
-
-@media(max-width:768px){
-
-    .login-card{
-
-        width:92%;
-
-        max-width:420px;
-
-        padding:30px;
-
-    }
-
-    .logo{
-
-        width:220px;
-
-    }
-
-}
-
 </style>
-
 </head>
-
 <body>
 
 <div class="login-card">
+  <div class="logo">CTRAX</div>
 
-    <img
-    src="/images/ctrax-logo.png"
-    class="logo"
-    alt="CTRAX">
-
-    <form action="/login" method="POST">
-
+  <form id="loginForm">
+    <div class="form-group">
         <input
-        type="email"
-        name="email"
-        class="input"
-        placeholder="Email Address"
-        required>
-
-        <input
-        type="password"
-        name="password"
-        class="input"
-        placeholder="Password"
-        required>
-
-        <button
-        type="submit"
-        class="btn">
-        Sign In
-        </button>
-
-    </form>
-
-    <div class="footer">
-
-        <a
-        href="/forgot-password"
-        class="forgot">
-        Forgot Password?
-        </a>
-
-        Don't have an account?
-
-        <a href="/signup">
-        Sign Up
-        </a>
-
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email Address"
+            required
+        >
     </div>
 
+    <div class="form-group">
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+    </div>
+
+    <button type="submit">Sign In</button>
+
+    <div id="message"></div>
+</form>
+
+  <div class="signup-link">
+    Don't have an account?
+    <a href="signup.html">Sign up</a>
+  </div>
 </div>
 
-<div class="copyright">
-© 2026 CTRAX SAFETY SYSTEMS. ALL RIGHTS RESERVED.
-</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('loginForm');
+  const message = document.getElementById('message');
 
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Clear previous message
+    message.textContent = '';
+    message.style.color = '';
+
+    // Get form values
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    // Basic validation
+    if (!email || !password) {
+      message.textContent = 'Email and password are required';
+      message.style.color = '#ff4d4f';
+      return;
+    }
+
+    try {
+      // Send login request
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Show success message briefly
+        message.textContent = 'Login successful...';
+        message.style.color = '#00ff99';
+
+        // Redirect to dashboard
+        setTimeout(() => {
+          window.location.href = data.redirect || '/dashboard';
+        }, 500);
+      } else {
+        // Show server-provided message
+        message.textContent = data.message || 'Login failed';
+        message.style.color = '#ff4d4f';
+      }
+
+    } catch (error) {
+      console.error('Login error:', error);
+      message.textContent = 'Unable to connect to server';
+      message.style.color = '#ff4d4f';
+    }
+  });
+});
+</script>
 </body>
 </html>
