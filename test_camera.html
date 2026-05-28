@@ -614,30 +614,30 @@ body::before {
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+```html
 <script>
+
 // ==========================================================
 // MAPBOX CONFIGURATION
-// Replace with your actual Mapbox public token
 // ==========================================================
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiY2RhdmlzMTczMTciLCJhIjoiY21wZGw4emd3MDNsNTJzcHg4NHBkNW5pZSJ9.49OZ7ck21FA7CT1T9o7YWQ';
+const MAPBOX_TOKEN =
+'pk.eyJ1IjoiY2RhdmlzMTczMTciLCJhIjoiY21wZGw4emd3MDNsNTJzcHg4NHBkNW5pZSJ9.49OZ7ck21FA7CT1T9o7YWQ';
 
 // ==========================================================
 // INITIALIZE MAP
 // ==========================================================
 const map = L.map('map', {
     zoomControl: true,
-    attributionControl: true
-}).setView([39.7684, -86.1581], 11); // Indianapolis, Indiana
+    attributionControl: false
+}).setView([39.7684, -86.1581], 11);
 
 L.tileLayer(
-    `https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
-    {
-        tileSize: 512,
-        zoomOffset: -1,
-        maxZoom: 20,
-        attribution: '&copy; OpenStreetMap contributors &copy; Mapbox'
-    }
-).addTo(map);
+`https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/{z}/{x}/{y}?access_token=${MAPBOX_TOKEN}`,
+{
+    tileSize: 512,
+    zoomOffset: -1,
+    maxZoom: 20
+}).addTo(map);
 
 // ==========================================================
 // GLOBAL VARIABLES
@@ -647,97 +647,105 @@ let allSightings = [];
 let playbackTimer = null;
 let heatmapEnabled = false;
 
-// Placeholder plate image (used if no plate crop is provided)
 const DEFAULT_PLATE_IMAGE =
-    'https://dummyimage.com/320x90/0b1320/ffffff&text=LICENSE+PLATE';
+'https://dummyimage.com/320x90/0b1320/ffffff&text=LICENSE+PLATE';
 
 // ==========================================================
-// MARKER HELPERS
+// CLEAR MARKERS
 // ==========================================================
 function clearMarkers() {
-    markers.forEach(marker => map.removeLayer(marker));
+
+    markers.forEach(marker => {
+        map.removeLayer(marker);
+    });
+
     markers = [];
 }
 
+// ==========================================================
+// CREATE HYBRID PULSE MARKER
+// ==========================================================
 function createMarker(lat, lng, sighting) {
-    // Red = alert/watchlist/high-speed
-    // Blue = normal detection
+
     const isRed =
         sighting.alert === true ||
         sighting.watchlist === true ||
-        (Number(sighting.speed) || 0) >= 80;
+        Number(sighting.speed || 0) >= 80;
 
-    const className = isRed
+    const className =
+        isRed
         ? 'pulse-marker-red'
         : 'pulse-marker-blue';
 
-    // Create animated HTML marker
-    const icon = L.divIcon({
+    const pulseIcon = L.divIcon({
+
         className: '',
+
         html: `
             <div class="${className}">
                 <div class="pulse-ring"></div>
                 <div class="pulse-core"></div>
             </div>
         `,
+
         iconSize: [24, 24],
         iconAnchor: [12, 12]
+
     });
 
     const marker = L.marker([lat, lng], {
-        icon: icon
+        icon: pulseIcon
     }).addTo(map);
 
-    // Heatmap mode enlarges the pulse effect
-    if (heatmapEnabled) {
-        const el = marker.getElement();
-        if (el) {
-            el.style.transform = 'scale(1.8)';
-            el.style.opacity = '0.75';
-        }
-    }
-
-    // Popup
     marker.bindPopup(`
         <strong>${sighting.plate || 'UNKNOWN'}</strong><br>
         ${sighting.vehicle || 'Unknown Vehicle'}<br>
-        ${sighting.speed || 0} mph<br>
-        ${sighting.location || 'Unknown Location'}<br>
-        ${sighting.direction || 'Direction Unknown'}
+        ${sighting.speed || 0} MPH<br>
+        ${sighting.zone || 'Unknown Zone'}<br>
+        ${sighting.direction || 'Unknown Direction'}
     `);
 
     markers.push(marker);
 }
 
 // ==========================================================
-// RENDER DETECTION CARDS
+// RENDER DETECTION SIDEBAR
 // ==========================================================
 function renderDetections(sightings) {
-    const container = document.getElementById('detections');
 
-    if (!sightings || sightings.length === 0) {
+    const container =
+        document.getElementById('detections');
+
+    if (!sightings.length) {
+
         container.innerHTML = `
             <div class="empty-state">
-                Waiting for live detections from TRAX Safety...
+                Waiting for live detections...
             </div>
         `;
+
         return;
     }
 
     container.innerHTML = '';
 
-    sightings.slice(0, 100).forEach(sighting => {
+    sightings
+        .slice(0, 100)
+        .forEach(sighting => {
+
         const isRed =
             sighting.alert === true ||
             sighting.watchlist === true ||
-            (Number(sighting.speed) || 0) >= 80;
+            Number(sighting.speed || 0) >= 80;
 
-        const card = document.createElement('div');
-        card.className = `detection-card ${isRed ? 'red' : 'blue'}`;
+        const card =
+            document.createElement('div');
+
+        card.className =
+            `detection-card ${isRed ? 'red' : 'blue'}`;
 
         const plateImage =
             sighting.plateImage ||
-            sighting.plate_image ||
             DEFAULT_PLATE_IMAGE;
 
         card.innerHTML = `
@@ -745,52 +753,73 @@ function renderDetections(sightings) {
 
             <img
                 src="${plateImage}"
-                alt="License Plate"
                 class="plate-image"
-                onerror="this.src='${DEFAULT_PLATE_IMAGE}'"
             >
 
-            <p><strong>Vehicle:</strong> ${sighting.vehicle || 'Unknown Vehicle'}</p>
-            <p><strong>Speed:</strong> ${sighting.speed || 0} mph</p>
-            <p><strong>Location:</strong> ${sighting.location || 'Unknown Location'}</p>
-            <p><strong>Direction:</strong> ${sighting.direction || 'Unknown'}</p>
+            <p><strong>Vehicle:</strong>
+            ${sighting.vehicle || 'Unknown Vehicle'}</p>
+
+            <p><strong>Speed:</strong>
+            ${sighting.speed || 0} MPH</p>
+
+            <p><strong>Zone:</strong>
+            ${sighting.zone || 'Unknown Zone'}</p>
+
+            <p><strong>Direction:</strong>
+            ${sighting.direction || 'Unknown'}</p>
         `;
 
-        // Zoom to marker when clicked
         card.addEventListener('click', () => {
-    const lat = Number(sighting.latitude);
-    const lng = Number(sighting.longitude);
 
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-        return;
-    }
+            const lat =
+                Number(sighting.latitude);
 
-    map.flyTo([lat, lng], 15, {
-        duration: 1.5
-    });
-});
+            const lng =
+                Number(sighting.longitude);
+
+            if (
+                Number.isFinite(lat) &&
+                Number.isFinite(lng)
+            ) {
+
+                map.flyTo(
+                    [lat, lng],
+                    15,
+                    {
+                        duration: 1.5
+                    }
+                );
+            }
+        });
 
         container.appendChild(card);
     });
 }
 
-//
 // ==========================================================
 // RENDER MAP MARKERS
 // ==========================================================
 function renderMarkers(sightings) {
+
     clearMarkers();
 
     sightings.forEach(sighting => {
-        const lat = Number(sighting.latitude);
-        const lng = Number(sighting.longitude);
 
-        // Only create markers when valid coordinates exist
-        if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+        const lat =
+            Number(sighting.latitude);
+
+        const lng =
+            Number(sighting.longitude);
+
+        if (
+            !Number.isFinite(lat) ||
+            !Number.isFinite(lng)
+        ) {
             return;
         }
 
         createMarker(lat, lng, sighting);
+
     });
 }
 
@@ -798,29 +827,35 @@ function renderMarkers(sightings) {
 // SEARCH FILTER
 // ==========================================================
 function filterSightings() {
-    const query = document
+
+    const query =
+        document
         .getElementById('searchInput')
         .value
         .toLowerCase()
         .trim();
 
     if (!query) {
+
         renderDetections(allSightings);
         renderMarkers(allSightings);
+
         return;
     }
 
-    const filtered = allSightings.filter(sighting => {
-        const searchableText = [
+    const filtered =
+        allSightings.filter(sighting => {
+
+        return [
             sighting.plate || '',
             sighting.vehicle || '',
-            sighting.location || '',
+            sighting.zone || '',
             sighting.direction || ''
         ]
         .join(' ')
-        .toLowerCase();
+        .toLowerCase()
+        .includes(query);
 
-        return searchableText.includes(query);
     });
 
     renderDetections(filtered);
@@ -828,24 +863,31 @@ function filterSightings() {
 }
 
 // ==========================================================
-// LOAD SIGHTINGS FROM CTRAX API
+// LOAD LIVE SIGHTINGS
 // ==========================================================
 async function loadSightings() {
+
     try {
-        const response = await fetch('/api/sightings');
-        const data = await response.json();
 
-        // Supports:
-        // 1. { success: true, sightings: [...] }
-        // 2. [ ... ]
-        allSightings = Array.isArray(data)
-            ? data
-            : (data.sightings || []);
+        const response =
+            await fetch('/api/sightings');
 
-        filterSightings();
+        const data =
+            await response.json();
+
+        allSightings =
+            data.sightings || [];
+
+        renderDetections(allSightings);
+
+        renderMarkers(allSightings);
 
     } catch (error) {
-        console.error('Failed to load sightings:', error);
+
+        console.error(
+            'Failed to load sightings:',
+            error
+        );
     }
 }
 
@@ -853,42 +895,87 @@ async function loadSightings() {
 // HEATMAP MODE
 // ==========================================================
 function toggleHeatmap() {
-    heatmapEnabled = !heatmapEnabled;
-    filterSightings();
+
+    heatmapEnabled =
+        !heatmapEnabled;
+
+    markers.forEach(marker => {
+
+        const el =
+            marker.getElement();
+
+        if (!el) return;
+
+        el.style.transform =
+            heatmapEnabled
+            ? 'scale(1.8)'
+            : 'scale(1)';
+
+        el.style.opacity =
+            heatmapEnabled
+            ? '0.75'
+            : '1';
+    });
 }
 
 // ==========================================================
 // PLAYBACK MODE
 // ==========================================================
 function startPlayback() {
-    // Stop existing playback if already running
+
     if (playbackTimer) {
+
         clearInterval(playbackTimer);
+
         playbackTimer = null;
+
         return;
     }
 
-    if (!allSightings.length) return;
+    if (!allSightings.length)
+        return;
 
     let index = 0;
 
-    playbackTimer = setInterval(() => {
-        if (index >= allSightings.length) {
+    playbackTimer =
+        setInterval(() => {
+
+        if (
+            index >= allSightings.length
+        ) {
+
             clearInterval(playbackTimer);
+
             playbackTimer = null;
+
             return;
         }
 
-        const sighting = allSightings[index];
+        const sighting =
+            allSightings[index];
 
-        const lat = Number(sighting.latitude) || 39.7684;
-        const lng = Number(sighting.longitude) || -86.1581;
+        const lat =
+            Number(sighting.latitude);
 
-        map.flyTo([lat, lng], 15, {
-            duration: 1.5
-        });
+        const lng =
+            Number(sighting.longitude);
+
+        if (
+            Number.isFinite(lat) &&
+            Number.isFinite(lng)
+        ) {
+
+            map.flyTo(
+                [lat, lng],
+                15,
+                {
+                    duration: 1.5
+                }
+            );
+        }
 
         index++;
+
     }, 2000);
 }
 
@@ -896,12 +983,17 @@ function startPlayback() {
 // TAB NAVIGATION
 // ==========================================================
 function setView(view, button) {
-    document.querySelectorAll('.nav-tabs button')
-        .forEach(btn => btn.classList.remove('active'));
+
+    document
+        .querySelectorAll('.nav-tabs button')
+        .forEach(btn => {
+            btn.classList.remove('active');
+        });
 
     button.classList.add('active');
 
     switch (view) {
+
         case 'heatmap':
             toggleHeatmap();
             break;
@@ -911,20 +1003,23 @@ function setView(view, button) {
             break;
 
         case 'vin':
-            alert('VIN search activated');
+            alert('VIN mode activated');
             break;
 
         case 'plate':
         default:
-            // Return to normal view
+
             heatmapEnabled = false;
 
             if (playbackTimer) {
+
                 clearInterval(playbackTimer);
+
                 playbackTimer = null;
             }
 
             filterSightings();
+
             break;
     }
 }
@@ -933,17 +1028,23 @@ function setView(view, button) {
 // EVENT LISTENERS
 // ==========================================================
 document
-    .getElementById('searchInput')
-    .addEventListener('input', filterSightings);
+.getElementById('searchInput')
+.addEventListener(
+    'input',
+    filterSightings
+);
 
 // ==========================================================
 // INITIALIZE DASHBOARD
 // ==========================================================
 loadSightings();
 
-// Refresh detections every 5 seconds
-setInterval(loadSightings, 5000);
+setInterval(
+    loadSightings,
+    5000
+);
 
 </script>
+```
 </body>
 </html>
