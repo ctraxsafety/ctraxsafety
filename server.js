@@ -64,6 +64,9 @@ const sightingSchema = new mongoose.Schema({
   latitude: Number,
   longitude: Number,
 
+  cameraId: String,
+  zone: String,
+
   timestamp: {
     type: Date,
     default: Date.now
@@ -214,7 +217,7 @@ app.post('/add-sighting', async (req, res) => {
     console.log(req.body);
     console.log('===========================================\n');
 
-    const sighting = new Sighting({
+  const sighting = new Sighting({
   plate: req.body.plate || '',
   confidence: req.body.confidence || 0,
   vehicle: req.body.vehicle || '',
@@ -223,6 +226,9 @@ app.post('/add-sighting', async (req, res) => {
 
   latitude: req.body.latitude || 39.7684,
   longitude: req.body.longitude || -86.1581,
+
+  cameraId: req.body.cameraId || 'TRAX-INDY-01',
+  zone: req.body.zone || 'Downtown',
 
   timestamp: req.body.timestamp
     ? new Date(req.body.timestamp)
