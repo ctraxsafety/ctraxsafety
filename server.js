@@ -60,10 +60,15 @@ const sightingSchema = new mongoose.Schema({
   vehicle: String,
   speed: Number,
   direction: String,
+
+  latitude: Number,
+  longitude: Number,
+
   timestamp: {
     type: Date,
     default: Date.now
   },
+
   rawData: Object
 });
 
@@ -210,16 +215,21 @@ app.post('/add-sighting', async (req, res) => {
     console.log('===========================================\n');
 
     const sighting = new Sighting({
-      plate: req.body.plate || '',
-      confidence: req.body.confidence || 0,
-      vehicle: req.body.vehicle || '',
-      speed: req.body.speed || 0,
-      direction: req.body.direction || '',
-      timestamp: req.body.timestamp
-        ? new Date(req.body.timestamp)
-        : new Date(),
-      rawData: req.body
-    });
+  plate: req.body.plate || '',
+  confidence: req.body.confidence || 0,
+  vehicle: req.body.vehicle || '',
+  speed: req.body.speed || 0,
+  direction: req.body.direction || '',
+
+  latitude: req.body.latitude || 39.7684,
+  longitude: req.body.longitude || -86.1581,
+
+  timestamp: req.body.timestamp
+    ? new Date(req.body.timestamp)
+    : new Date(),
+
+  rawData: req.body
+});
 
     await sighting.save();
 
