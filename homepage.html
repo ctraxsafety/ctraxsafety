@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -467,28 +468,59 @@ header {
   font-size: .95rem;
 }
 
-/* FINAL CTA */
+/* FINAL DEMO CTA */
 
 .final-cta {
   padding-top: 0;
 }
 
 .cta-card {
-  padding: 55px 30px;
-  text-align: center;
-  background: linear-gradient(135deg,#eaf5ff,#ffffff);
+  padding: 48px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(55,169,245,.15), transparent 34%),
+    linear-gradient(135deg,#eaf5ff,#ffffff);
+  overflow: hidden;
+}
+
+.cta-layout {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  align-items: center;
+  gap: 30px;
+}
+
+.cta-copy {
+  text-align: left;
+  max-width: 680px;
 }
 
 .cta-card h2 {
   font-size: clamp(2.2rem,5vw,3.8rem);
   font-weight: 900;
+  line-height: 1.05;
   margin: 20px 0;
 }
 
 .cta-card p {
   color: var(--muted);
-  max-width: 750px;
-  margin: 0 auto 28px;
+  max-width: 620px;
+  margin: 0 0 28px;
+  font-size: 1.04rem;
+}
+
+.cta-camera {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.cta-camera img {
+  width: 100%;
+  max-width: 470px;
+  max-height: 340px;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 28px rgba(16,36,60,.2));
 }
 
 /* FOOTER */
@@ -583,6 +615,19 @@ footer {
   .industry-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 25px; }
   .platform-card, .ceo-card { padding: 23px; }
+  .cta-card { padding: 30px 22px; }
+  .cta-layout { grid-template-columns: 1fr; gap: 12px; }
+  .cta-copy { text-align: center; margin: 0 auto; }
+  .cta-card p { margin-left: auto; margin-right: auto; }
+  .cta-camera img { max-height: 260px; max-width: 360px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
 }
 </style>
 </head>
@@ -958,20 +1003,33 @@ footer {
 
     <div class="card cta-card">
 
-      <div class="section-badge">
-        CONNECT WITH CTRAX TECHNOLOGIES
+      <div class="cta-layout">
+        <div class="cta-copy">
+          <div class="section-badge">
+            CONNECT WITH CTRAX TECHNOLOGIES
+          </div>
+
+          <h2>REQUEST A DEMO TODAY.</h2>
+
+          <p>
+            See the TRAX Safety camera concept and explore the CTRAX platform
+            roadmap, planned capabilities, and potential organizational
+            applications with our team.
+          </p>
+
+          <a href="request-demo.html" class="btn btn-primary">
+            REQUEST A DEMO →
+          </a>
+        </div>
+
+        <div class="cta-camera">
+          <img
+            src="hero-camera.png"
+            alt="TRAX Safety signature three-lens camera concept"
+            loading="lazy"
+          >
+        </div>
       </div>
-
-      <h2>REQUEST A DEMO TODAY.</h2>
-
-      <p>
-        Connect with CTRAX to discuss the TRAX Safety concept,
-        platform roadmap, and potential organizational applications.
-      </p>
-
-      <a href="request-demo.html" class="btn btn-primary">
-        REQUEST A DEMO →
-      </a>
 
     </div>
 
